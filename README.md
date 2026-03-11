@@ -20,12 +20,15 @@ Each directory is a self-contained workspace with its own `program.md` (agent in
 4. **Launch your agent** in that directory — it reads `program.md` and starts the autonomous loop
 
 The agent will:
+- Create an experiment branch (main stays clean as the starter template)
 - Build the training setup (reward function, data, config) from your task description
 - Run experiments autonomously
 - Track results in `results.tsv` and observations in `notes.md`
-- Keep improvements, discard failures (via git commits)
+- Keep improvements, discard failures (via git commits on the experiment branch)
 - Scale difficulty via curriculum learning
 - Never stop until you tell it to (or it hits your cost budget)
+
+To reset after an experiment: `git checkout main` (or run `./clean.sh` to also remove generated files).
 
 ## Architecture
 
@@ -33,6 +36,7 @@ The agent will:
 posttrainer/
 ├── README.md              ← you are here
 ├── rules.md               ← hard rules from 70+ real experiments
+├── clean.sh               ← reset generated files (Prime scaffolding, caches)
 ├── tinker/
 │   ├── rl/                ← GRPO with Tinker SDK
 │   │   ├── program.md     ← agent instructions (edit Section 1)

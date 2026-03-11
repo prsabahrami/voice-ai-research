@@ -37,12 +37,17 @@ export TINKER_API_KEY="your-key-here"
 | `../rules.md` | Hard rules | NO — read before every experiment |
 
 ### Before Your First Experiment
-1. Read `rules.md` — these are hard constraints
-2. Read this entire program.md
-3. Read the task description in Section 1
-4. Source or generate appropriate training data for `data.jsonl`
-5. Set hyperparameters in `train.py` (especially `MODEL`, `MAX_LENGTH`, `BATCH_SIZE`)
-6. Do research — search for datasets, papers, and best practices for the task
+1. **Create an experiment branch** — NEVER work on main/master directly:
+   ```bash
+   git checkout -b experiment/<short-task-description>
+   ```
+   All commits, reverts, and mutations happen on this branch. Main stays clean as the starter template.
+2. Read `rules.md` — these are hard constraints
+3. Read this entire program.md
+4. Read the task description in Section 1
+5. Source or generate appropriate training data for `data.jsonl`
+6. Set hyperparameters in `train.py` (especially `MODEL`, `MAX_LENGTH`, `BATCH_SIZE`)
+7. Do research — search for datasets, papers, and best practices for the task
 
 ---
 

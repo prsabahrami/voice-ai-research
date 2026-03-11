@@ -62,13 +62,18 @@ CLAUDE.md                 # Claude Code instructions
 | `../rules.md` | Hard rules | NO — read before every experiment |
 
 ### Before Your First Experiment
-1. Read `rules.md` — hard constraints
-2. Read this entire program.md
-3. Read the task description in Section 1
-4. Run `prime lab setup` if not already done
-5. Design and implement the environment (Section 6)
-6. Write the training config (Section 7)
-7. Do research — search for papers, read Prime docs, check existing environments
+1. **Create an experiment branch** — NEVER work on main/master directly:
+   ```bash
+   git checkout -b experiment/<short-task-description>
+   ```
+   All commits, reverts, and mutations happen on this branch. Main stays clean as the starter template.
+2. Read `rules.md` — hard constraints
+3. Read this entire program.md
+4. Read the task description in Section 1
+5. Run `prime lab setup` if not already done
+6. Design and implement the environment (Section 6)
+7. Write the training config (Section 7)
+8. Do research — search for papers, read Prime docs, check existing environments
 
 ---
 

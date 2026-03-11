@@ -41,13 +41,18 @@ Get your API key from [Tinker](https://tinker.thinkingmachines.ai). See [install
 | `../rules.md` | Hard rules | NO — read before every experiment |
 
 ### Before Your First Experiment
-1. Read `rules.md` — these are hard constraints, not suggestions
-2. Read this entire program.md
-3. Read the task description in Section 1
-4. Customize `reward.py` for the task
-5. Generate or source `prompts.jsonl` and `eval_prompts.jsonl` for the task
-6. Set hyperparameters in `train.py` (especially `MODEL`, `MAX_TOKENS`, `BATCH_SIZE`)
-7. Do research if needed — search for papers, read Tinker docs, check tinker-cookbook for relevant recipes
+1. **Create an experiment branch** — NEVER work on main/master directly:
+   ```bash
+   git checkout -b experiment/<short-task-description>
+   ```
+   All commits, reverts, and mutations happen on this branch. Main stays clean as the starter template.
+2. Read `rules.md` — these are hard constraints, not suggestions
+3. Read this entire program.md
+4. Read the task description in Section 1
+5. Customize `reward.py` for the task
+6. Generate or source `prompts.jsonl` and `eval_prompts.jsonl` for the task
+7. Set hyperparameters in `train.py` (especially `MODEL`, `MAX_TOKENS`, `BATCH_SIZE`)
+8. Do research if needed — search for papers, read Tinker docs, check tinker-cookbook for relevant recipes
 
 ---
 
