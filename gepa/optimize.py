@@ -20,18 +20,7 @@ Grep-parsable output:
 
 import json
 import logging
-from collections import Counter
-from typing import cast
-
 import gepa
-from gepa.adapters.default_adapter.default_adapter import (
-    DefaultAdapter,
-    DefaultDataInst,
-    DefaultRolloutOutput,
-    DefaultTrajectory,
-    EvaluationBatch,
-    EvaluationResult,
-)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
@@ -45,87 +34,52 @@ TASK_LM = "openai/gpt-4.1-nano"        # weaker model to give GEPA more room
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
-MAX_METRIC_CALLS = 500
+MAX_METRIC_CALLS = 500  # stage 2: iterative seed from stage 1
 
-
-class MajorityVoteAdapter(DefaultAdapter):
-    """Calls the task LM 3 times and uses majority vote for each example."""
-
-    def __init__(self, *args, n_votes: int = 3, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.n_votes = n_votes
-
-    def evaluate(
-        self,
-        batch: list[DefaultDataInst],
-        candidate: dict[str, str],
-        capture_traces: bool = False,
-    ) -> EvaluationBatch[DefaultTrajectory, DefaultRolloutOutput]:
-        """Run evaluation n_votes times and take majority vote."""
-        # Collect all votes
-        all_results: list[EvaluationBatch] = []
-        for _ in range(self.n_votes):
-            result = super().evaluate(batch, candidate, capture_traces=capture_traces)
-            all_results.append(result)
-
-        # Majority vote per example
-        outputs: list[DefaultRolloutOutput] = []
-        scores: list[float] = []
-        trajectories: list[DefaultTrajectory] | None = [] if capture_traces else None
-
-        for i in range(len(batch)):
-            # Count votes for correct/incorrect
-            vote_scores = [r.scores[i] for r in all_results]
-            majority_score = 1.0 if sum(vote_scores) > self.n_votes / 2 else 0.0
-
-            # Use the first result's output/trajectory as representative
-            outputs.append(all_results[0].outputs[i])
-            scores.append(majority_score)
-
-            if trajectories is not None and all_results[0].trajectories is not None:
-                trajectories.append(all_results[0].trajectories[i])
-
-        return EvaluationBatch(
-            outputs=outputs,
-            scores=scores,
-            trajectories=trajectories if capture_traces else None,
-            objective_scores=None,
-        )
-
-# Seed prompt to optimize
+# Seed prompt to optimize (few-shot with worked examples)
 SEED = {
     "system_prompt": (
         "You are performing a strict binary classification task on exactly one code review comment.\n\n"
         "Output exactly one word: `good` or `bad`. Nothing else.\n\n"
-        "## Core standard\n"
+        "## Standard\n"
         "Label `good` only if ALL of these are satisfied:\n"
-        "1. Specific: identifies a concrete issue in the code.\n"
-        "2. Technically correct: the claimed issue and reasoning are materially correct.\n"
-        "3. Actionable: suggests or implies an appropriate fix.\n"
-        "4. Important: the issue matters for correctness, security, reliability, or performance.\n"
-        "5. Appropriate: does not recommend unnecessary, harmful, or misleading changes.\n\n"
+        "1. Identifies a concrete issue in the code.\n"
+        "2. Technically correct reasoning.\n"
+        "3. Actionable: suggests or implies a fix.\n"
+        "4. Important: matters for correctness, security, reliability, or performance.\n"
+        "5. Appropriate: does not recommend unnecessary or harmful changes.\n\n"
         "If any check fails, output `bad`.\n\n"
-        "## What should be `bad`\n"
+        "## What is `bad`\n"
         "- praise, approval, conversational commentary\n"
         "- vague or generic advice\n"
-        "- style-only, formatting, naming, idioms, conventions\n"
-        "- process or tooling complaints\n"
+        "- style-only, formatting, naming, conventions\n"
         "- speculative, exaggerated, or absolutist claims\n"
-        "- technically incorrect or misleading reasoning\n"
+        "- technically incorrect reasoning\n"
         "- recommending unnecessary or harmful changes\n"
-        "- pedantic observations where the practical impact is negligible or near-zero\n"
-        "- technically correct observations about issues that have no real-world consequence\n\n"
-        "## Conservative policy\n"
+        "- pedantic observations with negligible practical impact\n\n"
+        "## Worked examples\n"
+        "Comment: \"The regex is compiled inside the loop. At 100k iterations, this recompiles "
+        "the same pattern 100k times. Move re.compile() outside.\"\n"
+        "Analysis: concrete performance issue with volume data, technically correct, actionable.\n"
+        "Answer: good\n\n"
+        "Comment: \"This HashMap could degrade to O(n). The only safe option is TreeMap. "
+        "There is no scenario where HashMap is acceptable in production.\"\n"
+        "Analysis: real concern buried in absolutist language ('only safe option', 'no scenario'). "
+        "The absolutism makes the recommendation harmful.\n"
+        "Answer: bad\n\n"
+        "Comment: \"Double-free on line 45. free(ptr) called again in the error path.\"\n"
+        "Analysis: concrete bug, technically correct, actionable. Brevity is fine.\n"
+        "Answer: good\n\n"
+        "Comment: \"volatile isn't enough for double-checked locking. You need synchronized.\"\n"
+        "Analysis: technically incorrect in modern Java (volatile IS sufficient since Java 5).\n"
+        "Answer: bad\n\n"
+        "## Policy\n"
         "- Prefer `bad` when uncertain.\n"
-        "- Do not reward confidence, detail, or length alone.\n"
-        "- A short comment can be `good` if it identifies a real bug correctly.\n"
-        "- A detailed comment is still `bad` if the reasoning is wrong OR the issue is trivial.\n\n"
-        "## Domain-specific guidance\n"
-        "- volatile IS sufficient for double-checked locking in modern Java. Claiming otherwise is `bad`.\n"
-        "- Claiming @Transactional(readOnly=true) is unnecessary for reads is `bad`.\n"
-        "- Absolutist claims like 'recursion is never safe in Java' are `bad`.\n"
-        "- Pedantic REST/HTTP status code corrections with no practical impact are `bad`.\n"
-        "- Observations about negligible statistical bias (e.g. 1 in 2^53) are `bad`.\n\n"
+        "- Short comments can be `good` if they identify a real bug.\n"
+        "- Detailed comments are `bad` if reasoning is wrong or issue is trivial.\n"
+        "- Performance concerns with concrete volume data are NOT trivial.\n"
+        "- Absolutist language ('no other option', 'never safe') makes a comment `bad` even if "
+        "mixed with a valid concern.\n\n"
         "Return exactly one word: good or bad"
     )
 }
@@ -1049,12 +1003,11 @@ def main():
     log.info(f"Train: {len(TRAINSET)} examples, Val: {len(VALSET)} examples")
     log.info(f"Seed prompt: {SEED['system_prompt'][:100]}...")
 
-    adapter = MajorityVoteAdapter(model=TASK_LM, n_votes=3)
     result = gepa.optimize(
         seed_candidate=SEED,
         trainset=TRAINSET,
         valset=VALSET,
-        adapter=adapter,
+        task_lm=TASK_LM,
         reflection_lm=REFLECTION_LM,
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
