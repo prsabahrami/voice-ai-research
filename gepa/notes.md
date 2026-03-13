@@ -134,6 +134,10 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **Ensemble adapter**: 0.980. Missing propose_new_texts method; subsample scores too perfect for GEPA to find improvement targets
 - **epsilon_greedy + 2000 budget**: 0.970. More exploration still can't beat seed
 - **exact_match evaluator**: Higher GEPA scores (0.980-0.990) but seed still optimal
+- **skip_perfect_score=False**: Generated more mutations but all worse (0.981 evolved avg)
+- **Claude Sonnet reflection**: 0.950 — worse mutations than gpt-5.4
+- **Claude Opus reflection**: 0.980 — verbose prompt bloat, domain-specific rules degraded accuracy
+- **gpt-5.4 remains the best reflection model** — right balance of creativity and restraint
 
 ## Current Config (optimize.py)
 - TASK_LM: gpt-4.1-nano
@@ -145,7 +149,7 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **Seed: 11-example few-shot with balanced good+bad borderline examples**
 
 ## Experiment Count
-159+ experiments tracked via lab CLI (h1-h160, e1-e159)
+161+ experiments tracked via lab CLI (h1-h162, e1-e161)
 
 ## Timeline of Records
 | Date | Score | Method | Notes |

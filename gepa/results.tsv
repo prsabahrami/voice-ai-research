@@ -44,3 +44,5 @@ ae7d78b	0.960	discard	interleaved rules+examples (e156) — distinct sections su
 78e8c1d	0.981	discard	skip_perfect+custom reflection evolved (e157) — same FN→FP tradeoff
 93b36ae	0.992	discard	temperature sweep 0/0.001/0.01/0.1 (e158) — all within noise
 93b36ae	0.988	discard	user message framing: raw/prefix/quoted/codeblock (e159) — raw best
+57d06a6	0.950	discard	Claude Sonnet reflection (e160) — worse mutations than gpt-5.4
+99a2b4e	0.980	discard	Claude Opus reflection (e161) — verbose prompt bloat, degraded
