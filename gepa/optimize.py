@@ -1325,6 +1325,7 @@ def main():
         reflection_lm=REFLECTION_LM,
         evaluator=None,
         reflection_prompt_template=REFLECTION_PROMPT,
+        skip_perfect_score=False,
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
         cache_evaluation=True,
