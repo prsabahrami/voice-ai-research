@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 # ============================================================
 
 # Models
-TASK_LM = "openai/gpt-4.1-mini"        # test if GEPA can push mini past 0.984
+TASK_LM = "openai/gpt-4.1-nano"        # best model for this task
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
