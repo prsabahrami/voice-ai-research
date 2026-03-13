@@ -36,51 +36,13 @@ REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 # Budget
 MAX_METRIC_CALLS = 500  # stage 2: iterative seed from stage 1
 
-# Seed prompt to optimize (few-shot with worked examples)
+# Seed prompt to optimize (minimal — let GEPA build it up)
 SEED = {
     "system_prompt": (
-        "You are performing a strict binary classification task on exactly one code review comment.\n\n"
-        "Output exactly one word: `good` or `bad`. Nothing else.\n\n"
-        "## Standard\n"
-        "Label `good` only if ALL of these are satisfied:\n"
-        "1. Identifies a concrete issue in the code.\n"
-        "2. Technically correct reasoning.\n"
-        "3. Actionable: suggests or implies a fix.\n"
-        "4. Important: matters for correctness, security, reliability, or performance.\n"
-        "5. Appropriate: does not recommend unnecessary or harmful changes.\n\n"
-        "If any check fails, output `bad`.\n\n"
-        "## What is `bad`\n"
-        "- praise, approval, conversational commentary\n"
-        "- vague or generic advice\n"
-        "- style-only, formatting, naming, conventions\n"
-        "- speculative, exaggerated, or absolutist claims\n"
-        "- technically incorrect reasoning\n"
-        "- recommending unnecessary or harmful changes\n"
-        "- pedantic observations with negligible practical impact\n\n"
-        "## Worked examples\n"
-        "Comment: \"The regex is compiled inside the loop. At 100k iterations, this recompiles "
-        "the same pattern 100k times. Move re.compile() outside.\"\n"
-        "Analysis: concrete performance issue with volume data, technically correct, actionable.\n"
-        "Answer: good\n\n"
-        "Comment: \"This HashMap could degrade to O(n). The only safe option is TreeMap. "
-        "There is no scenario where HashMap is acceptable in production.\"\n"
-        "Analysis: real concern buried in absolutist language ('only safe option', 'no scenario'). "
-        "The absolutism makes the recommendation harmful.\n"
-        "Answer: bad\n\n"
-        "Comment: \"Double-free on line 45. free(ptr) called again in the error path.\"\n"
-        "Analysis: concrete bug, technically correct, actionable. Brevity is fine.\n"
-        "Answer: good\n\n"
-        "Comment: \"volatile isn't enough for double-checked locking. You need synchronized.\"\n"
-        "Analysis: technically incorrect in modern Java (volatile IS sufficient since Java 5).\n"
-        "Answer: bad\n\n"
-        "## Policy\n"
-        "- Prefer `bad` when uncertain.\n"
-        "- Short comments can be `good` if they identify a real bug.\n"
-        "- Detailed comments are `bad` if reasoning is wrong or issue is trivial.\n"
-        "- Performance concerns with concrete volume data are NOT trivial.\n"
-        "- Absolutist language ('no other option', 'never safe') makes a comment `bad` even if "
-        "mixed with a valid concern.\n\n"
-        "Return exactly one word: good or bad"
+        "Classify this code review comment as good or bad. Output one word only.\n\n"
+        "good = identifies a real, specific, technically correct bug or defect. "
+        "bad = everything else (praise, style nits, wrong reasoning, vague, pedantic).\n\n"
+        "When uncertain, prefer bad."
     )
 }
 
