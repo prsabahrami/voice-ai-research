@@ -41,3 +41,6 @@ ffbd0f7	0.982	discard	nano 2x agreement (e149) — correlated calls
 9569624	0.987	discard	hybrid prompt: evolved rules + wrong-fix guard (e152) — Pareto tradeoff
 ae7d78b	0.876	discard	examples-first ordering (e155) — catastrophic, rules must come first
 ae7d78b	0.960	discard	interleaved rules+examples (e156) — distinct sections superior
+78e8c1d	0.981	discard	skip_perfect+custom reflection evolved (e157) — same FN→FP tradeoff
+93b36ae	0.992	discard	temperature sweep 0/0.001/0.01/0.1 (e158) — all within noise
+93b36ae	0.988	discard	user message framing: raw/prefix/quoted/codeblock (e159) — raw best

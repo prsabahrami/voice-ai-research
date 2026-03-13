@@ -126,6 +126,8 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **nano+mini ensemble (mini tie-breaks bad)**: 0.983 — fixed 3 nano false negatives but introduced 2 persistent mini false positives (val[63], val[69])
 - **nano+mini agreement (both must say good)**: 0.992 — marginal improvement, 2x API cost. 5/10 perfect vs 4/10 baseline
 - **nano 2x agreement**: 0.982 — correlated temp=0 calls confirmed. Running same model twice doesn't help
+- **Temperature sweep (0/0.001/0.01/0.1)**: all 0.990-0.998 — within noise. Different temps shift which items miss but don't improve overall
+- **User message framing (prefix/quoted/codeblock)**: 0.956-0.974 — all worse. Raw input is optimal, any framing introduces new misses
 
 ### GEPA adapter experiments (all returned seed unchanged)
 - **temp=0 adapter**: 0.960 single eval (within stochastic range). Aligning eval temp doesn't help
@@ -143,7 +145,7 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **Seed: 11-example few-shot with balanced good+bad borderline examples**
 
 ## Experiment Count
-156+ experiments tracked via lab CLI (h1-h157, e1-e156)
+159+ experiments tracked via lab CLI (h1-h160, e1-e159)
 
 ## Timeline of Records
 | Date | Score | Method | Notes |
