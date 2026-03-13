@@ -106,6 +106,8 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **Rules + examples synergy**: 0.991 — neither works well alone, together they're extraordinary
 - **Adding 12th example (strncat)**: 0.979 — DEGRADED from 0.991. Fragile optimum at 11 examples
 - **Backtick formatting change**: 0.974 — DEGRADED from 0.991. Even tiny changes cascade
+- **Examples-first ordering**: 0.876 — catastrophic. Rules MUST come before examples. Nano needs the framework first.
+- **Interleaved rules+examples**: 0.960 — worse. Distinct sections work better than mixing.
 
 ### Seed rule modifications (Pareto frontier tradeoff)
 - Hypothetical-scenario rules → too restrictive
@@ -141,7 +143,7 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **Seed: 11-example few-shot with balanced good+bad borderline examples**
 
 ## Experiment Count
-152+ experiments tracked via lab CLI (h1-h153, e1-e152)
+156+ experiments tracked via lab CLI (h1-h157, e1-e156)
 
 ## Timeline of Records
 | Date | Score | Method | Notes |

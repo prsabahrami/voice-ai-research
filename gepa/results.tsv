@@ -39,3 +39,5 @@ ffbd0f7	0.982	discard	nano 2x agreement (e149) — correlated calls
 9585466	0.980	discard	GEPA ensemble adapter (e150) — missing reflection, seed unchanged
 9569624	0.987	discard	custom reflection evolved prompt (e151) — fixed FN but introduced FP
 9569624	0.987	discard	hybrid prompt: evolved rules + wrong-fix guard (e152) — Pareto tradeoff
+ae7d78b	0.876	discard	examples-first ordering (e155) — catastrophic, rules must come first
+ae7d78b	0.960	discard	interleaved rules+examples (e156) — distinct sections superior
