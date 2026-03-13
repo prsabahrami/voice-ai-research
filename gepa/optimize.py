@@ -1002,7 +1002,6 @@ def main():
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
         display_progress_bar=True,
-        reflection_minibatch_size=5,
     )
 
     # Extract results

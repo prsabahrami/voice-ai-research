@@ -43,7 +43,7 @@ MAX_TOKENS = 1024                           # Max response tokens — longer cha
 TEMPERATURE = 1.0                           # Sampling temperature (1.0 for GRPO, see rules.md)
 N_BATCHES = 100                             # Total training batches — long run for emergent behavior
 SAVE_EVERY = 10                             # Checkpoint every N batches (0 = disabled)
-LOSS_FN = "importance_sampling"             # Loss: importance_sampling, ppo, cispo, dro
+LOSS_FN = "ppo"                             # PPO: clipped trust region for stable gradients
 
 # Few-shot examples prepended to every prompt (set to [] for zero-shot)
 # EXPERIMENT: Zero scaffolding — no few-shot, no system prompt, no CoT instructions.
