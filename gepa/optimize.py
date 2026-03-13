@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 # ============================================================
 
 # Models
-TASK_LM = "anthropic/claude-haiku-4-5-20251001"  # different model family, may classify edge cases differently
+TASK_LM = "openai/gpt-4.1"              # full gpt-4.1 may nail borderline cases nano misses
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
