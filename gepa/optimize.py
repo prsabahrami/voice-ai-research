@@ -34,7 +34,7 @@ TASK_LM = "openai/gpt-4.1-nano"        # weaker model to give GEPA more room
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
-MAX_METRIC_CALLS = 500  # stage 2: iterative seed from stage 1
+MAX_METRIC_CALLS = 1000  # epsilon_greedy needs more budget to explore
 
 # Seed prompt to optimize
 SEED = {
@@ -1255,6 +1255,7 @@ def main():
         task_lm=TASK_LM,
         reflection_lm=REFLECTION_LM,
         max_metric_calls=MAX_METRIC_CALLS,
+        candidate_selection_strategy="epsilon_greedy",
         use_merge=True,
         cache_evaluation=True,
         display_progress_bar=True,
