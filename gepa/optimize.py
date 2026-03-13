@@ -34,7 +34,7 @@ TASK_LM = "openai/gpt-4.1-nano"        # best model for this task
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
-MAX_METRIC_CALLS = 2000  # max exploration with epsilon_greedy
+MAX_METRIC_CALLS = 500  # standard budget
 
 # Seed prompt to optimize (balanced few-shot with borderline examples)
 SEED = {
@@ -1285,14 +1285,22 @@ def main():
     log.info(f"Train: {len(TRAINSET)} examples, Val: {len(VALSET)} examples")
     log.info(f"Seed prompt: {SEED['system_prompt'][:100]}...")
 
+    # Custom adapter: evaluate at temp=0 (aligns GEPA's objective with our eval)
+    from gepa.adapters.default_adapter.default_adapter import DefaultAdapter
+    adapter = DefaultAdapter(
+        model=TASK_LM,
+        evaluator=exact_match_evaluator,
+        litellm_batch_completion_kwargs={"temperature": 0, "max_tokens": 5},
+    )
+
     result = gepa.optimize(
         seed_candidate=SEED,
         trainset=TRAINSET,
         valset=VALSET,
-        task_lm=TASK_LM,
+        adapter=adapter,
+        task_lm=None,
         reflection_lm=REFLECTION_LM,
-        evaluator=exact_match_evaluator,
-        candidate_selection_strategy="epsilon_greedy",
+        evaluator=None,
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
         cache_evaluation=True,
