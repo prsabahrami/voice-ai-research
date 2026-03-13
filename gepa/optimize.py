@@ -1277,29 +1277,6 @@ def exact_match_evaluator(data, response):
     return EvaluationResult(score=score, feedback=feedback, objective_scores=None)
 
 
-REFLECTION_PROMPT = """I have a binary classification system that labels code review comments as `good` or `bad`.
-
-The current instruction given to the classifier (gpt-4.1-nano at temperature=0) is:
-```
-<curr_instructions>
-```
-
-Here are examples where the classifier made errors:
-```
-<inputs_outputs_feedback>
-```
-
-IMPORTANT CONSTRAINTS:
-- The instruction is at a FRAGILE OPTIMUM. Adding, removing, or rephrasing examples causes cascading failures.
-- The main failure mode is FALSE NEGATIVES: short comments that identify REAL bugs get misclassified as `bad`.
-- Examples: "strncat arg wrong", "missing break in switch", "toString GC pressure on hot path" — all short but valid.
-- DO NOT add new few-shot examples. DO NOT remove existing ones. DO NOT reformat.
-- Focus ONLY on adjusting the RULES section to better recognize short-but-correct bug reports.
-- The assistant model is very small (nano) — keep instructions clear and concise.
-
-Write a new instruction within ``` blocks. Preserve ALL existing examples exactly as they are."""
-
-
 def main():
     log.info("Starting GEPA optimization")
     log.info(f"Task LM: {TASK_LM}")
@@ -1308,24 +1285,13 @@ def main():
     log.info(f"Train: {len(TRAINSET)} examples, Val: {len(VALSET)} examples")
     log.info(f"Seed prompt: {SEED['system_prompt'][:100]}...")
 
-    # Custom adapter: temp=0 evaluation
-    from gepa.adapters.default_adapter.default_adapter import DefaultAdapter
-    adapter = DefaultAdapter(
-        model=TASK_LM,
-        evaluator=exact_match_evaluator,
-        litellm_batch_completion_kwargs={"temperature": 0, "max_tokens": 5},
-    )
-
     result = gepa.optimize(
         seed_candidate=SEED,
         trainset=TRAINSET,
         valset=VALSET,
-        adapter=adapter,
-        task_lm=None,
+        task_lm=TASK_LM,
         reflection_lm=REFLECTION_LM,
-        evaluator=None,
-        reflection_prompt_template=REFLECTION_PROMPT,
-        skip_perfect_score=False,
+        evaluator=exact_match_evaluator,
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
         cache_evaluation=True,
