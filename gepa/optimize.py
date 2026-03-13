@@ -1256,6 +1256,27 @@ VALSET = [
 # RUN
 # ============================================================
 
+def exact_match_evaluator(data, response):
+    """Exact match evaluator — stricter than ContainsAnswer."""
+    from gepa.adapters.default_adapter.default_adapter import EvaluationResult
+    pred = response.strip().lower().split()[0] if response.strip() else ""
+    # Remove backticks and punctuation
+    pred = pred.strip("`.,!?;:'\"")
+    is_correct = pred == data["answer"]
+    score = 1.0 if is_correct else 0.0
+    if is_correct:
+        feedback = f"Correct. Model output '{pred}' matches expected '{data['answer']}'."
+    else:
+        additional_context_str = "\n".join(f"{k}: {v}" for k, v in data["additional_context"].items())
+        feedback = (
+            f"Incorrect. Model output '{response.strip()}' (parsed as '{pred}'), expected '{data['answer']}'. "
+            f"The model must output exactly one word: good or bad."
+        )
+        if additional_context_str:
+            feedback += f"\n{additional_context_str}"
+    return EvaluationResult(score=score, feedback=feedback, objective_scores=None)
+
+
 def main():
     log.info("Starting GEPA optimization")
     log.info(f"Task LM: {TASK_LM}")
@@ -1270,6 +1291,7 @@ def main():
         valset=VALSET,
         task_lm=TASK_LM,
         reflection_lm=REFLECTION_LM,
+        evaluator=exact_match_evaluator,
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
         cache_evaluation=True,
