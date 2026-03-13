@@ -1001,7 +1001,7 @@ def main():
         reflection_lm=REFLECTION_LM,
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
-        reflection_minibatch_size=10,
+        candidate_selection_strategy='epsilon_greedy',
         display_progress_bar=True,
     )
 
