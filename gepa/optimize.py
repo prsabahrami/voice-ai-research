@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 # ============================================================
 
 # Models
-TASK_LM = "openai/gpt-4.1-nano"  # nano with 4o-mini-evolved seed
+TASK_LM = "openai/gpt-4o-mini"  # older GPT-4o mini, different architecture
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
@@ -559,6 +559,32 @@ TRAINSET = [
         "`SimpleDateFormat` is thread-safe, you should create a single static instance and "
         "reuse it across all threads. This will reduce object allocation by 99% and "
         "significantly improve GC behavior.",
+        "bad"
+    ),
+
+    # ---- TARGETED: Throwable-catching (good) and broken-fix-proposals (bad) ----
+    _d(
+        "The catch block catches `Throwable` instead of `Exception`. This silently swallows "
+        "`Error` subclasses like `OutOfMemoryError` which the JVM cannot safely recover from. "
+        "Catch `Exception` to let `Error`s propagate.",
+        "good"
+    ),
+    _d(
+        "Catching `Throwable` in this handler means `StackOverflowError` and `OutOfMemoryError` "
+        "are caught and logged as normal errors. These are fatal JVM conditions that should "
+        "crash the process. Use `catch (Exception e)` instead.",
+        "good"
+    ),
+    _d(
+        "To fix the timezone, just subtract `getTimezoneOffset()` from the minutes: "
+        "`date.setMinutes(date.getMinutes() - date.getTimezoneOffset())`. This converts "
+        "local time to UTC without needing any external libraries.",
+        "bad"
+    ),
+    _d(
+        "The timezone is wrong. Fix it by doing `new Date(date.getTime() + "
+        "date.getTimezoneOffset() * 60000)`. This creates a new Date shifted to UTC "
+        "and is the standard JavaScript approach for timezone correction.",
         "bad"
     ),
 ]
