@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 # ============================================================
 
 # Models
-TASK_LM = "openai/o4-mini"              # reasoning model for borderline cases
+TASK_LM = "openai/gpt-4o-mini"  # older GPT-4o mini, different architecture
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
