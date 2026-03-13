@@ -2,18 +2,13 @@
 
 Autonomous prompt optimization using [GEPA](https://github.com/gepa-ai/gepa) (Genetic-Pareto). GEPA evolves text artifacts (prompts, rubrics, agent architectures) using LLM reflection and Pareto-efficient search. It outperforms GRPO by 6% on average while using 35x fewer rollouts.
 
-## 1. Task Description (USER: FILL THIS IN)
+## 1. Task Description
 
-**What to optimize**: [e.g., "system prompt for math reasoning", "evaluation rubric for code quality", "agent architecture for tool use"]
+**What to optimize**: Evaluation rubric that scores code review quality (0-1). The rubric itself is the text artifact being evolved — not a prompt for a model, but criteria for judging whether a code review is thorough, actionable, and catches real bugs vs. rubber-stamp/vague.
 
-**Task LM**: [e.g., `openai/gpt-4.1-mini`, `anthropic/claude-sonnet-4-20250514`]
+**Task LM**: `openai/gpt-5-mini` (applies the rubric to score reviews)
 
-**Evaluation data**: [describe your train/val data and what correct answers look like]
-
-> Replace this section with your optimization target. Examples:
-> - "Optimize a system prompt for GPT-4.1-mini to solve AIME competition math problems"
-> - "Evolve an evaluation rubric that discriminates good vs bad code reviews"
-> - "Optimize a multi-step agent prompt for tool-use tasks"
+**Evaluation data**: 100 GitHub PR reviews labeled binary (50 good, 50 bad). Good = catches bugs, provides actionable suggestions, references specific lines. Bad = "LGTM", vague comments, incorrect suggestions. Train: 70, Val: 30. Metric: discrimination accuracy (% correctly classified as good/bad using the evolved rubric).
 
 ## 2. Setup
 

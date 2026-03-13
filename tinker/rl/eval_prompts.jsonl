@@ -1,10 +1,50 @@
-{"prompt": "What is 67 + 48? Answer with just the number.", "ground_truth": "115"}
-{"prompt": "What is 31 + 92? Answer with just the number.", "ground_truth": "123"}
-{"prompt": "What is 84 + 57? Answer with just the number.", "ground_truth": "141"}
-{"prompt": "What is 25 + 76? Answer with just the number.", "ground_truth": "101"}
-{"prompt": "What is 93 + 18? Answer with just the number.", "ground_truth": "111"}
-{"prompt": "What is 42 + 59? Answer with just the number.", "ground_truth": "101"}
-{"prompt": "What is 78 + 33? Answer with just the number.", "ground_truth": "111"}
-{"prompt": "What is 55 + 46? Answer with just the number.", "ground_truth": "101"}
-{"prompt": "What is 17 + 86? Answer with just the number.", "ground_truth": "103"}
-{"prompt": "What is 69 + 74? Answer with just the number.", "ground_truth": "143"}
+{"prompt": "A gardener picked 43 tomatoes and 29 cucumbers from his garden. How many vegetables did he pick in total?", "ground_truth": "72"}
+{"prompt": "Maria has 95 beads. She uses 38 beads to make a necklace. How many beads does she have left?", "ground_truth": "57"}
+{"prompt": "A pack of crayons has 16 crayons. If a teacher buys 7 packs, how many crayons does she get?", "ground_truth": "112"}
+{"prompt": "A baker has 108 donuts. He puts them equally into 9 boxes. How many donuts are in each box?", "ground_truth": "12"}
+{"prompt": "A bookshelf has 11 shelves with 8 books on each shelf. How many books are on the bookshelf?", "ground_truth": "88"}
+{"prompt": "A class collected 267 cans for recycling in the first week and 185 cans in the second week. How many cans did they collect in total?", "ground_truth": "452"}
+{"prompt": "A stadium has 5000 seats. If 3247 are occupied, how many seats are empty?", "ground_truth": "1753"}
+{"prompt": "Each student brings 3 pencils to class. There are 26 students. How many pencils are there in total?", "ground_truth": "78"}
+{"prompt": "A farmer divides 84 strawberries equally among 7 baskets. How many strawberries are in each basket?", "ground_truth": "12"}
+{"prompt": "A painter has 6 cans of paint with 5 liters in each can. How many liters of paint does he have?", "ground_truth": "30"}
+{"prompt": "Olivia has 52 seashells and finds 19 more at the beach. How many seashells does she have now?", "ground_truth": "71"}
+{"prompt": "There are 144 eggs. If they are packed into cartons of 12, how many cartons are needed?", "ground_truth": "12"}
+{"prompt": "A toy costs 9 dollars. How much do 11 toys cost?", "ground_truth": "99"}
+{"prompt": "A box has 175 paper clips. 89 are used. How many paper clips are left?", "ground_truth": "86"}
+{"prompt": "A school ordered 15 pizzas with 8 slices each. How many slices of pizza are there?", "ground_truth": "120"}
+{"prompt": "A store sells markers for 2 dollars each and erasers for 1 dollar each. Nora buys 8 markers and 5 erasers. How much does she spend?", "ground_truth": "21"}
+{"prompt": "A jacket costs 80 dollars. It is on sale for 25% off. What is the sale price?", "ground_truth": "60"}
+{"prompt": "A train travels at 75 miles per hour for 4 hours. How far does it travel?", "ground_truth": "300"}
+{"prompt": "In a bag of 60 marbles, 2/3 are green. How many marbles are not green?", "ground_truth": "20"}
+{"prompt": "A recipe for 6 servings needs 9 eggs. How many eggs are needed for 18 servings?", "ground_truth": "27"}
+{"prompt": "A gym has 200 members. 55% are male. How many female members are there?", "ground_truth": "90"}
+{"prompt": "A worker earns 18 dollars per hour. She works 6 hours on Saturday and 4 hours on Sunday. How much does she earn for the weekend?", "ground_truth": "180"}
+{"prompt": "A square playground has a side length of 45 meters. What is its perimeter?", "ground_truth": "180"}
+{"prompt": "A box of chocolates has 24 pieces. Ben eats 1/4 of them and gives 1/3 of the original amount to his sister. How many chocolates are left?", "ground_truth": "10"}
+{"prompt": "A car uses 8 gallons of gas to travel 240 miles. How many gallons does it need for a 450-mile trip?", "ground_truth": "15"}
+{"prompt": "Three friends scored 85, 92, and 78 on a test. What is their average score?", "ground_truth": "85"}
+{"prompt": "A tank holds 600 liters of water. It is currently 3/4 full. How many more liters are needed to fill it?", "ground_truth": "150"}
+{"prompt": "A store bought 50 hats at 6 dollars each and sold them at 10 dollars each. What was the total profit?", "ground_truth": "200"}
+{"prompt": "A clock shows 10:45 AM. How many minutes until 1:15 PM?", "ground_truth": "150"}
+{"prompt": "A football team has won 12 games and lost 8 games. What percentage of their games have they won?", "ground_truth": "60"}
+{"prompt": "A farmer has chickens and cows. He counts 20 heads and 56 legs. How many cows does he have?", "ground_truth": "8"}
+{"prompt": "A swimming pool is 50 meters long. A swimmer does 14 laps (each lap is one length of the pool). How many meters does the swimmer swim?", "ground_truth": "700"}
+{"prompt": "A garden has 4 times as many flowers as a window box. The window box has 15 flowers. Together, how many flowers do they have?", "ground_truth": "75"}
+{"prompt": "An airplane flies at 600 miles per hour. It has 1200 miles to travel. If it has already flown for 1 hour, how many more hours of flying remain?", "ground_truth": "1"}
+{"prompt": "A ribbon is 72 inches long. It is cut into 3 equal pieces, then each piece is cut into 4 equal parts. How long is each small part in inches?", "ground_truth": "6"}
+{"prompt": "A shop sells coffee for 4 dollars a cup and tea for 3 dollars a cup. On Monday, they sold 50 cups of coffee and 30 cups of tea. On Tuesday, coffee sales went up 20% and tea sales went down by 10 cups. What was the total revenue for both days?", "ground_truth": "590"}
+{"prompt": "A company has 150 employees. 40% work in sales, 30% in engineering, and the rest in operations. Each sales employee earns 3000 dollars per month, each engineer earns 5000 dollars per month, and each operations employee earns 3500 dollars per month. What is the total monthly payroll?", "ground_truth": "562500"}
+{"prompt": "A rectangular field is 100 meters long and 60 meters wide. A farmer wants to plant trees every 10 meters along the boundary, starting at a corner. How many trees does he need?", "ground_truth": "32"}
+{"prompt": "A shop offers a deal: buy 3 items, get the cheapest one free. Alice picks items costing 25, 40, and 15 dollars. Bob picks items costing 30, 20, and 35 dollars. What is the total amount paid by both Alice and Bob?", "ground_truth": "130"}
+{"prompt": "Two pipes fill a tank. Pipe A fills it in 10 hours and Pipe B fills it in 15 hours. If both pipes are opened together, how many hours will it take to fill the tank?", "ground_truth": "6"}
+{"prompt": "A car dealership sells 5 sedans at 22000 dollars each and 3 SUVs at 35000 dollars each. They give a 5% discount on the total. What is the discounted total?", "ground_truth": "204250"}
+{"prompt": "A basketball player scored 18, 22, 15, 30, and 25 points in 5 games. He needs an average of 24 points over 6 games. How many points must he score in the 6th game?", "ground_truth": "34"}
+{"prompt": "A farmer sells milk at 4 dollars per gallon. His 12 cows each produce 5 gallons per day. He sells milk for 30 days but has to discard 10% due to spoilage. What is his revenue?", "ground_truth": "6480"}
+{"prompt": "A theater has 3 sections. Section A has 10 rows of 15 seats, Section B has 8 rows of 20 seats, and Section C has 6 rows of 25 seats. Tickets for Section A cost 50 dollars, Section B costs 35 dollars, and Section C costs 25 dollars. If all seats are sold, what is the total revenue?", "ground_truth": "16850"}
+{"prompt": "A warehouse stores boxes in stacks of 8. Each box weighs 15 pounds. A forklift can carry 480 pounds. How many complete stacks can the forklift carry at once?", "ground_truth": "4"}
+{"prompt": "A school has 240 students. 1/3 take Spanish, 1/4 take French, and 1/8 take German. The rest take no foreign language. How many students take no foreign language?", "ground_truth": "70"}
+{"prompt": "A painter charges 200 dollars per room for the first 3 rooms and 150 dollars for each additional room. If a house has 7 rooms, what is the total painting cost?", "ground_truth": "1200"}
+{"prompt": "A bus company runs 4 routes. Route A covers 25 miles, Route B covers 18 miles, Route C covers 32 miles, and Route D covers 15 miles. Each bus makes 6 round trips per day. How many total miles do all buses cover in a day?", "ground_truth": "1080"}
+{"prompt": "A clothing factory makes shirts in 3 sizes: small, medium, and large. They make 200 shirts total. 30% are small, 45% are medium, and the rest are large. Small shirts use 2 yards of fabric, medium use 3 yards, and large use 3 yards. How many total yards of fabric are needed?", "ground_truth": "540"}
+{"prompt": "A catering company charges 15 dollars per person for food, 5 dollars per person for drinks, and a flat 200 dollar setup fee. If 80 people attend a party, what is the total cost?", "ground_truth": "1800"}

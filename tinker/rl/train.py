@@ -39,22 +39,20 @@ LORA_RANK = 32                              # LoRA rank (32 = cookbook default)
 LEARNING_RATE = 4e-5                        # Constant LR (NEVER use cosine, see rules.md)
 BATCH_SIZE = 128                            # Prompts per training batch (>= 128, see rules.md)
 GROUP_SIZE = 16                             # Rollouts per prompt (GRPO group size)
-MAX_TOKENS = 64                             # Max response tokens (TASK-SPECIFIC, see rules.md)
+MAX_TOKENS = 512                            # Max response tokens — room for emergent reasoning
 TEMPERATURE = 1.0                           # Sampling temperature (1.0 for GRPO, see rules.md)
-N_BATCHES = 50                              # Total training batches (0 = use all data)
+N_BATCHES = 100                             # Total training batches — long run for emergent behavior
 SAVE_EVERY = 10                             # Checkpoint every N batches (0 = disabled)
 LOSS_FN = "importance_sampling"             # Loss: importance_sampling, ppo, cispo, dro
 
 # Few-shot examples prepended to every prompt (set to [] for zero-shot)
-FEW_SHOT = [
-    {"role": "user", "content": "What is 4 + 5? Answer with just the number."},
-    {"role": "assistant", "content": "9"},
-]
+# EXPERIMENT: Zero scaffolding — no few-shot, no system prompt, no CoT instructions.
+# Testing if reasoning emerges from pure RL signal (DeepSeek-R1-Zero style).
+FEW_SHOT = []
 
 # System prompt (set to None to skip)
-# NOTE: For Qwen3 models, set this to disable thinking mode.
-# Without it, the model wastes tokens on <think> tags.
-SYSTEM_PROMPT = "Respond directly without any thinking or reasoning process."
+# EXPERIMENT: No system prompt — pure RL signal only.
+SYSTEM_PROMPT = None
 
 # ============================================================================
 # FIXED — Do not modify unless you know what you're doing

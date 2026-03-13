@@ -9,12 +9,10 @@ This program is inspired by [Karpathy's autoresearch](https://github.com/karpath
 ## 1. Task Description (FILL THIS IN)
 
 **Model**: Qwen/Qwen3-8B
-**Task**: Arithmetic — train the model to solve addition problems and respond with just the number.
-**What "good" looks like**: The model outputs ONLY the correct numeric answer with no extra text.
+**Task**: Pure RL math reasoning — solve GSM8K problems with ZERO scaffolding. No system prompt, no few-shot, no CoT instructions. Just the problem and a binary reward. Testing if reasoning emerges from pure RL signal (DeepSeek-R1-Zero reproduction at 8B scale).
+**What "good" looks like**: The model develops its own reasoning strategy from scratch. Early: outputs bare numbers. Later: spontaneously shows work, self-verifies, produces chain-of-thought. Answer in \boxed{N} format.
 **Primary metric**: eval_reward_mean (higher = better, 1.0 = perfect)
-**Cost budget**: Stop if total Tinker cost exceeds $10 for this session.
-
-> **User: Replace this section with your actual task before starting the agent.** Describe what you want the model to learn, what correct behavior looks like, and your cost budget. Be specific — the agent builds everything from this description.
+**Cost budget**: Stop if total Tinker cost exceeds $25 for this session.
 
 ---
 
