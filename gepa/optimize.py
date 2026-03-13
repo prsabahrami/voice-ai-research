@@ -36,6 +36,32 @@ REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 # Budget
 MAX_METRIC_CALLS = 500  # stage 2: iterative seed from stage 1
 
+# Custom reflection template focusing on practical significance judgment
+REFLECTION_TEMPLATE = """I provided an assistant with the following instructions to classify code review comments as good or bad:
+```
+<curr_instructions>
+```
+
+The following are examples where the assistant's classification was WRONG, along with feedback:
+```
+<inputs_outputs_feedback>
+```
+
+Your task is to write improved instructions that fix these errors WITHOUT breaking other correct classifications.
+
+Key failure patterns to address:
+- The assistant sometimes labels technically-correct-but-trivial observations as `good` when they should be `bad` (e.g. pedantic spec compliance, negligible statistical effects)
+- The assistant sometimes labels real-but-absolutist comments as `good` when the absolutist framing should make them `bad`
+- The assistant sometimes labels concise-but-correct bug reports as `bad` when they should be `good`
+
+When proposing new instructions:
+1. Preserve ALL existing guidance that is working correctly
+2. Add or refine guidance ONLY for the specific error patterns shown in the feedback
+3. Be precise and concrete — vague additions hurt more than they help
+4. Include domain-specific factual information from the feedback examples
+
+Provide the new instructions within ``` blocks."""
+
 # Seed prompt to optimize
 SEED = {
     "system_prompt": (
@@ -1001,7 +1027,7 @@ def main():
         reflection_lm=REFLECTION_LM,
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
-        run_dir="./gepa_runs/persistent",
+        reflection_prompt_template=REFLECTION_TEMPLATE,
         display_progress_bar=True,
     )
 
