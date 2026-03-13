@@ -1277,6 +1277,80 @@ def exact_match_evaluator(data, response):
     return EvaluationResult(score=score, feedback=feedback, objective_scores=None)
 
 
+class EnsembleAdapter:
+    """Adapter that calls both nano and mini, requires agreement on 'good'."""
+
+    def __init__(self, models, evaluator):
+        import litellm
+        self.litellm = litellm
+        self.models = models  # e.g. ["openai/gpt-4.1-nano", "openai/gpt-4.1-mini"]
+        self.evaluator = evaluator
+
+    def evaluate(self, batch, candidate, capture_traces=False):
+        from gepa.core.adapter import EvaluationBatch
+        from gepa.adapters.default_adapter.default_adapter import (
+            DefaultTrajectory, DefaultRolloutOutput,
+        )
+
+        system_content = next(iter(candidate.values()))
+        litellm_requests = []
+        for data in batch:
+            litellm_requests.append([
+                {"role": "system", "content": system_content},
+                {"role": "user", "content": data["input"]},
+            ])
+
+        # Call each model
+        all_preds = []
+        for model in self.models:
+            responses = [
+                resp.choices[0].message.content.strip()
+                for resp in self.litellm.batch_completion(
+                    model=model, messages=litellm_requests,
+                    max_workers=10, temperature=0, max_tokens=5,
+                )
+            ]
+            preds = []
+            for r in responses:
+                p = r.lower().split()[0] if r.strip() else ""
+                p = p.strip("`.,!?;:'\"")
+                preds.append(p)
+            all_preds.append(preds)
+
+        # Agreement: both must say good, otherwise bad
+        outputs, scores, objective_scores = [], [], []
+        trajectories = [] if capture_traces else None
+        for idx, data in enumerate(batch):
+            ensemble_pred = "good" if all(p[idx] == "good" for p in all_preds) else "bad"
+            eval_result = self.evaluator(data, ensemble_pred)
+
+            outputs.append({"full_assistant_response": ensemble_pred})
+            scores.append(eval_result.score)
+            objective_scores.append(eval_result.objective_scores)
+            if trajectories is not None:
+                trajectories.append({
+                    "data": data,
+                    "full_assistant_response": ensemble_pred,
+                    "feedback": eval_result.feedback,
+                })
+
+        return EvaluationBatch(
+            outputs=outputs, scores=scores,
+            trajectories=trajectories, objective_scores=None,
+        )
+
+    def make_reflective_dataset(self, candidate, eval_batch, components_to_update):
+        comp = components_to_update[0]
+        items = []
+        for traj in eval_batch.trajectories:
+            items.append({
+                "Inputs": traj["data"]["input"],
+                "Generated Outputs": traj["full_assistant_response"],
+                "Feedback": traj["feedback"],
+            })
+        return {comp: items}
+
+
 def main():
     log.info("Starting GEPA optimization")
     log.info(f"Task LM: {TASK_LM}")
@@ -1285,12 +1359,10 @@ def main():
     log.info(f"Train: {len(TRAINSET)} examples, Val: {len(VALSET)} examples")
     log.info(f"Seed prompt: {SEED['system_prompt'][:100]}...")
 
-    # Custom adapter: evaluate at temp=0 (aligns GEPA's objective with our eval)
-    from gepa.adapters.default_adapter.default_adapter import DefaultAdapter
-    adapter = DefaultAdapter(
-        model=TASK_LM,
+    # Ensemble adapter: nano+mini agreement (both must say good)
+    adapter = EnsembleAdapter(
+        models=[TASK_LM, "openai/gpt-4.1-mini"],
         evaluator=exact_match_evaluator,
-        litellm_batch_completion_kwargs={"temperature": 0, "max_tokens": 5},
     )
 
     result = gepa.optimize(
