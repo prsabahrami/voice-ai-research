@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 # ============================================================
 
 # Models
-TASK_LM = "openai/gpt-4.1-mini"        # step up from nano for practical significance judgment
+TASK_LM = "openai/gpt-4.1-nano"        # weaker model to give GEPA more room
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
@@ -39,53 +39,38 @@ MAX_METRIC_CALLS = 500  # stage 2: iterative seed from stage 1
 # Seed prompt to optimize
 SEED = {
     "system_prompt": (
-        "You are performing a binary classification task on exactly one code review comment.\n\n"
-        "Goal\n"
-        "- Decide whether the single review comment should be classified as `good` or `bad`.\n\n"
-        "Input format\n"
-        "- You will receive exactly one review comment as plain text.\n"
-        "- There is no surrounding metadata, no code snippet unless the comment itself quotes one, and no additional context unless explicitly stated in the comment.\n"
-        "- Judge the comment only from what is written in that one comment.\n"
-        "- Do not assume unseen code, line contents, project conventions, intent, or hidden context.\n\n"
-        "Output requirements\n"
-        "- Output exactly one word:\n"
-        "  - `good`\n"
-        "  - `bad`\n"
-        "- Do not output any other text, punctuation, explanation, markdown, quotes, or formatting.\n\n"
-        "Decision rule\n"
-        "Classify the comment as `good` only if all of the following are clearly true from the comment alone:\n"
-        "1. It identifies a real, substantive, actionable issue in the code.\n"
-        "2. The issue is about correctness, reliability, safety, security, resource management, concurrency behavior, error handling, or another meaningful behavioral defect.\n"
-        "3. The technical claim is factually correct for the relevant language/framework/runtime semantics.\n"
-        "4. The comment is specific enough that an engineer could act on it.\n\n"
-        "If any condition is not clearly satisfied, output `bad`.\n\n"
-        "Core principles\n"
-        "- Factual correctness is mandatory.\n"
-        "- Be conservative: if the claim cannot be verified from the comment itself, prefer `bad`.\n"
-        "- The comment must point to a concrete defect, not merely a best practice, preference, convention, maintainability concern, or speculative risk.\n"
-        "- The comment must be actionable and tied to behavior.\n"
-        "- Overstated, overly absolute, or misleading claims are `bad` even if they sound technical.\n\n"
-        "Important evaluation guidance\n"
-        "- A concise but specific bug report can still be `good` if it names a concrete behavioral defect, e.g. `Division by zero when count is 0 on line 23.`\n"
-        "- A comment about leaked timers or missing cleanup in React can be `good` if it clearly states the behavioral consequence, e.g. unmounted components leaving intervals running and accumulating across mounts.\n"
-        "- Concurrency comments require extra care: classify as `bad` if the premise is inaccurate, outdated, or omits crucial semantics.\n"
-        "- Specifically, for Java double-checked locking: a comment claiming that `volatile` is insufficient because the JVM can still reorder initialization and assignment is false in modern Java. `volatile` is what prevents the problematic reordering, so such a comment is `bad`.\n\n"
-        "What counts as `bad`\n"
-        "- Praise, approval, summaries, or generic commentary.\n"
-        "- Style-only, formatting-only, naming, consistency, diff-noise, or documentation-only feedback.\n"
-        "- Comments that merely restate control flow or describe code without identifying a defect.\n"
-        "- Speculative concerns without enough evidence.\n"
-        "- Best-practice advice that does not establish an actual bug.\n"
-        "- Broad framework/language/performance claims that are not reliably correct from the comment alone.\n"
-        "- Proposed fixes not justified by a demonstrated defect.\n"
-        "- Claims using strong universals like 'always', 'never', 'only solution', or similarly absolute wording when that universality is not definitely correct.\n\n"
-        "Recommended process\n"
-        "1. Ask: does the comment identify a concrete behavioral defect?\n"
-        "2. Ask: is the technical premise definitely correct in the relevant language/framework/runtime?\n"
-        "3. Ask: is the comment specific and actionable from the text alone?\n"
-        "4. Ask: is the claim free of unjustified absolutism or overreach?\n"
-        "5. If any answer is no or uncertain, output `bad`; otherwise output `good`.\n\n"
-        "Return exactly one word: `good` or `bad`."
+        "You are performing a strict binary classification task on exactly one code review comment.\n\n"
+        "Output exactly one word: `good` or `bad`. Nothing else.\n\n"
+        "## Core standard\n"
+        "Label `good` only if ALL of these are satisfied:\n"
+        "1. Specific: identifies a concrete issue in the code.\n"
+        "2. Technically correct: the claimed issue and reasoning are materially correct.\n"
+        "3. Actionable: suggests or implies an appropriate fix.\n"
+        "4. Important: the issue matters for correctness, security, reliability, or performance.\n"
+        "5. Appropriate: does not recommend unnecessary, harmful, or misleading changes.\n\n"
+        "If any check fails, output `bad`.\n\n"
+        "## What should be `bad`\n"
+        "- praise, approval, conversational commentary\n"
+        "- vague or generic advice\n"
+        "- style-only, formatting, naming, idioms, conventions\n"
+        "- process or tooling complaints\n"
+        "- speculative, exaggerated, or absolutist claims\n"
+        "- technically incorrect or misleading reasoning\n"
+        "- recommending unnecessary or harmful changes\n"
+        "- pedantic observations where the practical impact is negligible or near-zero\n"
+        "- technically correct observations about issues that have no real-world consequence\n\n"
+        "## Conservative policy\n"
+        "- Prefer `bad` when uncertain.\n"
+        "- Do not reward confidence, detail, or length alone.\n"
+        "- A short comment can be `good` if it identifies a real bug correctly.\n"
+        "- A detailed comment is still `bad` if the reasoning is wrong OR the issue is trivial.\n\n"
+        "## Domain-specific guidance\n"
+        "- volatile IS sufficient for double-checked locking in modern Java. Claiming otherwise is `bad`.\n"
+        "- Claiming @Transactional(readOnly=true) is unnecessary for reads is `bad`.\n"
+        "- Absolutist claims like 'recursion is never safe in Java' are `bad`.\n"
+        "- Pedantic REST/HTTP status code corrections with no practical impact are `bad`.\n"
+        "- Observations about negligible statistical bias (e.g. 1 in 2^53) are `bad`.\n\n"
+        "Return exactly one word: good or bad"
     )
 }
 
@@ -1016,6 +1001,8 @@ def main():
         reflection_lm=REFLECTION_LM,
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
+        candidate_selection_strategy='current_best',
+        skip_perfect_score=False,
         display_progress_bar=True,
     )
 
