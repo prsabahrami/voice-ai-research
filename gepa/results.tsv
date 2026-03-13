@@ -1,5 +1,6 @@
 commit	val_score	status	description
-ffbd0f7	0.991	keep	*** BEST *** 11-example few-shot seed (e123) — 10-sample: 4/10 perfect 1.000!
+38fca80	0.999	keep	*** BEST *** nano+Haiku OR ensemble (e162) — 10-sample: 9/10 perfect 1.000!!!
+ffbd0f7	0.991	keep	best single-model: 11-example few-shot seed (e123) — 10-sample: 4/10 perfect
 2ae6d81	0.980	keep	9-example few-shot seed (e122) — perfectly deterministic
 1994518	0.968	keep	6-example few-shot seed (e121) — first few-shot breakthrough
 ffbd0f7	0.984	keep	gpt-4.1-mini + few-shot seed (e129) — mini jumped +0.074!
@@ -46,3 +47,5 @@ ae7d78b	0.960	discard	interleaved rules+examples (e156) — distinct sections su
 93b36ae	0.988	discard	user message framing: raw/prefix/quoted/codeblock (e159) — raw best
 57d06a6	0.950	discard	Claude Sonnet reflection (e160) — worse mutations than gpt-5.4
 99a2b4e	0.980	discard	Claude Opus reflection (e161) — verbose prompt bloat, degraded
+38fca80	0.980	keep	Claude Haiku as task model (e162) — deterministic, different error profile
+38fca80	0.999	keep	*** NEW RECORD *** nano+Haiku OR ensemble (e162) — 9/10 perfect!!!

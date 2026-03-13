@@ -4,10 +4,12 @@
 Binary classification of code review comments (good/bad) using gpt-4.1-nano with GEPA evolutionary prompt optimization.
 
 ## Best Result
-- **Best 10-sample avg**: **0.991** (range 0.980-1.000) — 11-example few-shot seed (e123) with gpt-4.1-nano
-- **Perfect 1.000 achieved**: 4 of 10 runs hit 100% accuracy
-- **Only remaining misses**: val[12] (strncat buffer, 4/10), val[13] (switch-fallthrough, 4/10), val[31] (hot-path perf, 1/10) — all intermittent, all short good comments near nano's stochastic boundary
-- **Fragile optimum**: Adding or modifying even 1 example degrades accuracy. 11 examples is the sweet spot.
+- **Best 10-sample avg**: **0.999** (range 0.990-1.000) — nano+Haiku OR ensemble (e162)
+- **Perfect 1.000 achieved**: 9 of 10 runs hit 100% accuracy!
+- **Only 1 miss in 1000 evaluations**: val[63] appeared once (both models wrong simultaneously)
+- **How it works**: gpt-4.1-nano and Claude Haiku have complementary error profiles. OR logic: if EITHER says good → label good. Eliminates both models' false negatives.
+- **Tradeoff**: 2x API cost (nano + Haiku per item). For single-model: 0.991 avg with nano alone.
+- **Previous single-model best**: 0.991 (nano, 4/10 perfect) — seed is Pareto-optimal for any single model.
 
 ## The Breakthrough: Few-Shot Examples (e121→e123)
 The single most impactful discovery across 90+ experiments: **replacing rules-only guidance with balanced good+bad few-shot examples** raised accuracy from 0.947 → 0.992.
@@ -44,11 +46,20 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 
 ## Model Ranking (temp=0)
 
-### With few-shot seed (11 examples)
+### Ensemble (2 models per item)
+| Ensemble | Avg | Range | Notes |
+|----------|-----|-------|-------|
+| **nano+Haiku OR** | **0.999** | 0.990-1.000 | **BEST**. 9/10 perfect! 2x cost |
+| nano+mini AND | 0.992 | 0.980-1.000 | Marginal. 2x cost |
+| nano+mini OR | 0.983 | 0.980-0.990 | Trades error types |
+| nano+Haiku AND | 0.974 | 0.970-0.980 | Union of misses |
+
+### Single model with few-shot seed (11 examples)
 | Model | Avg | Range | Notes |
 |-------|-----|-------|-------|
-| gpt-4.1-nano | **0.991** | 0.980-1.000 | **Best**. 40% perfect runs |
+| gpt-4.1-nano | **0.991** | 0.980-1.000 | **Best single**. 40% perfect runs |
 | gpt-4.1-mini | 0.984 | 0.980-0.990 | +0.074 vs rules-only! |
+| Claude Haiku | 0.980 | 0.980-0.980 | Perfectly deterministic |
 | gpt-4.1 | 0.980 | 0.980-0.980 | Perfectly deterministic |
 
 ### With rules-only seed (for reference)
@@ -149,7 +160,7 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **Seed: 11-example few-shot with balanced good+bad borderline examples**
 
 ## Experiment Count
-161+ experiments tracked via lab CLI (h1-h162, e1-e161)
+162+ experiments tracked via lab CLI (h1-h163, e1-e162)
 
 ## Timeline of Records
 | Date | Score | Method | Notes |
@@ -158,16 +169,17 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 | Mid | 0.947 | Rules-only seed + expanded data + targeted training | Pre-breakthrough ceiling |
 | Mid | 0.968 | 6-example few-shot seed (e121) | First few-shot breakthrough |
 | Mid | 0.980 | 9-example few-shot seed (e122) | Perfectly deterministic |
-| Latest | **0.991** | 11-example few-shot seed (e123) | **Current best**, 40% perfect runs |
+| Late | 0.991 | 11-example few-shot seed (e123) | Previous best, 40% perfect runs |
+| Latest | **0.999** | nano+Haiku OR ensemble (e162) | **CURRENT BEST**, 90% perfect runs! |
 
 ## Conclusion
 The few-shot examples discovery is the dominant finding across 150+ experiments. GEPA was useful for exploring the search space and confirming that hand-crafted prompts are optimal, but the actual improvement came from prompt engineering (adding balanced good+bad examples). The rules + examples format is synergistic — neither works well alone. The 11-example prompt sits at a fragile optimum that cannot be modified without degradation.
 
 Key conclusions:
 1. **GEPA cannot improve a well-crafted seed** — tested with every config, adapter, evaluator, and selection strategy
-2. **Inference-time tricks don't help** — CoT, verification, logit_bias, ensembles all either hurt or are marginal
-3. **The remaining ~1% error is irreducible** for nano at temp=0 on this task (val[12], val[13], val[31])
-4. **nano's snap classification beats deliberation** — CoT and multi-pass make it worse, not better
-5. **Cross-model ensembles trade error types**, not reduce them — different false positives replace false negatives
-6. **The seed is at the Pareto-optimal tradeoff** — relaxing rules to fix false negatives creates false positives (confirmed by e151/e152). You cannot improve one without worsening the other.
-7. **Custom reflection prompts produce better-targeted mutations** — but the mutations still can't beat the seed because the tradeoff is fundamental
+2. **Cross-family OR ensemble breaks the ceiling** — nano+Haiku OR: 0.999 (up from 0.991). Models from different families have complementary error profiles. OR logic eliminates both models' false negatives.
+3. **The seed is Pareto-optimal for ANY single model** — relaxing rules fixes false negatives but creates false positives. The tradeoff is fundamental.
+4. **nano's snap classification beats deliberation** — CoT, multi-pass, and verification all make it worse
+5. **Same-family ensembles don't help much** — nano+mini trades error types; nano+nano is correlated
+6. **AND vs OR matters enormously** — AND unions misses (worse), OR intersects misses (better). Use OR when false negatives are the problem, AND when false positives are.
+7. **Custom reflection prompts produce better-targeted mutations** — but the mutations still can't beat the single-model seed because the tradeoff is fundamental
