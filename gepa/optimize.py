@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 # ============================================================
 
 # Models
-TASK_LM = "openai/gpt-4.1-nano"        # weaker model to give GEPA more room
+TASK_LM = "anthropic/claude-haiku-4-5-20251001"  # different model family, may classify edge cases differently
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
@@ -1002,7 +1002,6 @@ def main():
         max_metric_calls=MAX_METRIC_CALLS,
         use_merge=True,
         display_progress_bar=True,
-        seed=42,
     )
 
     # Extract results
