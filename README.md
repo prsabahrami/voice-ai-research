@@ -1,6 +1,6 @@
 # posttrainer
 
-Autonomous training harness inspired by [Karpathy's autoresearch](https://github.com/karpathy/autoresearch). Point an AI agent at a task, and it builds, trains, and iterates forever — modifying model architectures, reward functions, training data, and hyperparameters to continuously improve. Supports both pre-training (from scratch) and post-training (fine-tuning existing models).
+Autonomous experiment harness inspired by [Karpathy's autoresearch](https://github.com/karpathy/autoresearch). Point an AI agent at a task, and it builds, trains, and iterates forever — modifying model architectures, reward functions, prompts, and hyperparameters to continuously improve. Supports pre-training, post-training, and prompt optimization.
 
 Each directory is a self-contained workspace with its own `program.md` (agent instructions), mutable training scripts, and experiment tracking. The agent reads `program.md`, builds the setup, then loops: hypothesize → modify → run → evaluate → keep or discard → repeat. It never stops.
 
@@ -12,6 +12,7 @@ Each directory is a self-contained workspace with its own `program.md` (agent in
 | **RL (GRPO) with Tinker SDK** | `tinker/rl/` |
 | **SFT with Tinker SDK** | `tinker/sl/` |
 | **RL with Prime Intellect** | `prime/` |
+| **Prompt optimization with GEPA** | `gepa/` |
 
 ### Step-by-step
 
@@ -63,8 +64,13 @@ posttrainer/
 │       ├── data.jsonl
 │       ├── notes.md
 │       └── results.tsv
-└── prime/                 ← Prime Intellect hosted RL
+├── prime/                 ← Prime Intellect hosted RL
+│   ├── program.md
+│   ├── notes.md
+│   └── results.tsv
+└── gepa/                  ← Prompt optimization with GEPA
     ├── program.md
+    ├── optimize.py        ← GEPA config + data (agent modifies)
     ├── notes.md
     └── results.tsv
 ```
@@ -109,6 +115,8 @@ For **pre-training** (`pretrain/`), the model is defined in `train.py` and train
 | Subjective quality (writing, conversation) | SFT | `tinker/sl/` |
 | Multi-turn / agentic (tool use, games, dialogue) | Prime RL | `prime/` |
 | Complex environments (sandboxed code, browser) | Prime RL | `prime/` |
+| Prompt/rubric optimization | GEPA | `gepa/` |
+| Agent architecture search | GEPA | `gepa/` |
 
 ## Hard Rules
 

@@ -7,6 +7,7 @@ Autonomous training harness inspired by Karpathy's autoresearch. Tree of self-co
 - `tinker/rl/` — GRPO/RL with Tinker SDK (train.py + reward.py + prompts)
 - `tinker/sl/` — SFT with Tinker SDK (train.py + data.jsonl)
 - `prime/` — Prime Intellect hosted RL (environment building + iteration)
+- `gepa/` — Prompt optimization with GEPA (evolutionary Pareto search + LLM reflection)
 - `lab` — Experiment tracking CLI (5 commands, SQLite, zero deps)
 - `data/` — Experiment database (experiments.db) — gitignored
 - `rules.md` — Universal hard rules from 70+ experiments (22 rules)
