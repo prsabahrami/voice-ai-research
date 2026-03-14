@@ -20,10 +20,16 @@ The prompt is **overfit to the val set**. Testing on the 98-item trainset (unsee
 | Config | Val | Train | Gap | Combined | Cost |
 |--------|-----|-------|-----|----------|------|
 | **Sonnet alone** | **0.996** | **0.980** | **0.016** | **0.988** | ~50x |
-| nano+Haiku lazy OR | 1.000 | 0.949* | 0.051 | 0.975* | ~1.5x |
+| **Sonnet 3x self-consistency** | **1.000** | **0.969** | **0.031** | **0.985** | ~150x |
+| 3-model majority (nano+Sonnet+Haiku) | 1.000 | 0.963 | 0.037 | 0.982 | ~52x |
+| nano+Haiku lazy OR | 1.000 | 0.949 | 0.051 | 0.975 | ~1.5x |
 | nano alone | 0.991 | 0.881 | 0.110 | 0.937 | 1x |
 
-*Estimated after train[50] relabel. Sonnet combined (0.988) is the best overall.
+**Optimal strategies by goal:**
+- **Best combined accuracy**: Sonnet alone (0.988), ~50x cost
+- **Val perfection + best generalization**: Sonnet 3x (1.000 val, 0.985 combined), ~150x cost
+- **Val perfection + cheapest**: nano+Haiku lazy OR (1.000 val, 0.975 combined), ~1.5x cost
+- **Cheapest acceptable**: nano alone (0.991 val, 0.937 combined), 1x cost
 
 ### Key Generalization Insights
 1. **Sonnet generalizes best** — smallest gap (0.033), highest combined (0.980)
@@ -72,11 +78,13 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 
 ## Model Ranking (temp=0)
 
-### Ensemble (2 models per item)
-| Ensemble | Avg | Range | Notes |
-|----------|-----|-------|-------|
-| **nano+Haiku OR** | **1.000** | 1.000-1.000 | **BEST**. 30/30 perfect! 2x cost |
-| **nano+Haiku lazy OR** | **1.000** | 1.000-1.000 | Same result, ~1.5x cost (only call Haiku when nano says bad) |
+### Ensemble / Multi-call
+| Config | Val Avg | Train Avg | Combined | Notes |
+|--------|---------|-----------|----------|-------|
+| **Sonnet 3x self-consistency** | **1.000** | **0.969** | **0.985** | Best val+generalization. ~150x cost |
+| 3-model majority (nano+Sonnet+Haiku) | 1.000 | 0.963 | 0.982 | ~52x cost |
+| nano+Haiku lazy OR | 1.000 | 0.949 | 0.975 | **Best cheap**: ~1.5x cost |
+| **nano+Haiku OR** | **1.000** | — | — | 30/30 perfect on val! 2x cost |
 | nano+mini AND | 0.992 | 0.980-1.000 | Marginal. 2x cost |
 | nano+mini OR | 0.983 | 0.980-0.990 | Trades error types |
 | nano+Haiku AND | 0.974 | 0.970-0.980 | Union of misses |
@@ -203,7 +211,7 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **Seed: 11-example few-shot with balanced good+bad borderline examples**
 
 ## Experiment Count
-187+ experiments tracked via lab CLI (h1-h191, e1-e187)
+190+ experiments tracked via lab CLI (h1-h194, e1-e190)
 
 ## Timeline of Records
 | Date | Score | Method | Notes |
