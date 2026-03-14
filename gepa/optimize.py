@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 # ============================================================
 
 # Models
-TASK_LM = "openai/gpt-4.1-nano"        # best model for this task
+TASK_LM = "anthropic/claude-sonnet-4-6"  # best model: 1.000 val+train with v2 exception
 REFLECTION_LM = "openai/gpt-5.4"      # flagship model for better reflection
 
 # Budget
@@ -48,7 +48,9 @@ SEED = {
         "3. Suggests or implies a fix.\n"
         "4. The issue matters for correctness, security, reliability, or performance.\n"
         "5. Does not recommend unnecessary, harmful, or misleading changes.\n\n"
-        "If any check fails, output `bad`. Prefer `bad` when uncertain.\n\n"
+        "If any check fails, output `bad`. Prefer `bad` when uncertain.\n"
+        "Exception: a review that questions specific code behavior (e.g., \"what happens when X?\") "
+        "while pointing to a concrete code pattern counts as identifying a concrete issue.\n\n"
         "## What is always `bad`\n"
         "- praise, approval, conversational commentary\n"
         "- vague or generic advice\n"
