@@ -28,7 +28,7 @@ from transformers import AutoTokenizer
 # ============================================================================
 MODEL = "Qwen/Qwen3-8B"                    # Base model to fine-tune
 LORA_RANK = 32                              # LoRA rank
-LEARNING_RATE = 3e-4                        # Starting LR (linear decay from this)
+LEARNING_RATE = 5e-4                        # Starting LR (linear decay from this)
 BATCH_SIZE = 128                            # Examples per training batch
 MAX_LENGTH = 2048                           # Max sequence length (prompt + response)
 N_EPOCHS = 10                               # Number of passes through the data
