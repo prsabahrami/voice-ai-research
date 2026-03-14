@@ -45,3 +45,4 @@ c77f42e	0.108	keep	e259: LR=4e-4 4ep 2148 traces, MV@5=90% (4th reproduction\!)
 c0fb5fb	0.120	keep	e260: fixed #12 Fibonacci but regressed elsewhere, net 44/50
 34e6c03	0.144	discard	e261: short traces hurt, MV 80% vs 90%
 e2dff39	0.125	discard	e262: long traces only 88% — full mix is best
+e7abf05	0.92ens	keep	e263: 2-model ensemble MV@10=92%, individuals 90%
