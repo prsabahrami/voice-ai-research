@@ -31,26 +31,23 @@ Autonomous prompt optimization using [GEPA](https://github.com/gepa-ai/gepa) (Ge
 
 ## 3. The Loop
 
+Each iteration of this loop is ONE experiment. You run this loop **continuously and indefinitely** until the human manually stops you. Do not stop after 1, 2, or 5 experiments. The human may be asleep or away. You are expected to run dozens of experiments autonomously.
+
 ```
 LOOP FOREVER:
-  1. Reconstruct state: read results.tsv + ../lab context + ../lab failures
-  2. Decide what to try + form hypothesis — WHY will this improve val_score?
+  1. Reconstruct state: read results.tsv + notes.md (+ optionally ../lab context)
+  2. Decide what to try next. State WHY it will improve val_score.
      Priority: evaluation data > seed prompt > model choice > GEPA config
-       ../lab hypothesis "what" -m "why"
-  3. Modify optimize.py → git commit → ../lab experiment <H_ID>
+  3. Modify optimize.py → git commit
   4. Run: python optimize.py > run.log 2>&1
   5. Extract: grep '^val_score:' run.log
   6. Read the best_prompt in run.log (verify it makes sense, not degenerate)
-  7. Log to results.tsv + ../lab result <E_ID> -v keep|discard|crash \
-       --metrics '{"val_score": X}' --mechanism-confirmed (or --mechanism-refuted) \
-       --theory-revision "what I learned"
-  8. If val_score improved → KEEP. If not → git reset --hard HEAD~1.
-  NEVER STOP
+  7. Append results to results.tsv. Update notes.md with what you learned.
+  8. If val_score improved → KEEP commit. If not → git reset --hard HEAD~1.
+  9. IMMEDIATELY start the next iteration. Do not pause, summarize, or ask.
 ```
 
-**Research discipline:** Before every experiment, state WHY (`--mechanism`). After every result, confirm or refute.
-
-**NEVER STOP**: Do NOT ask "should I continue?". The human expects you to work *indefinitely* until manually stopped. If you run out of ideas, think harder — try different seed prompts, better evaluation data, different GEPA parameters (merge, frontier type, batch size).
+Optionally use the `../lab` CLI for structured tracking (hypothesis, experiment, result commands), but do NOT let it slow you down. The core loop is: edit → commit → run → grep → log → keep/revert → repeat.
 
 **Logging results:** Append to `results.tsv` (tab-separated). Columns: `commit	val_score	status	description`. Example:
 ```
@@ -97,3 +94,13 @@ Key parameters to experiment with:
 - **Agent architecture**: Optimize multi-step agent prompts with tool-use instructions.
 - **Cascade optimization**: Optimize prompt for cheap model to match expensive model quality.
 - **Custom evaluators**: Return `{"score": float, "feedback": str}` from your metric for richer GEPA reflection.
+
+---
+
+## NEVER STOP
+
+Once the experiment loop has begun (after setup), do NOT pause to ask the human if you should continue. Do NOT ask "should I keep going?" or "is this a good stopping point?". Do NOT summarize progress and wait for input. The human may be asleep or away from the computer and expects you to continue working **indefinitely** until you are manually stopped.
+
+You are autonomous. After each experiment, **immediately** start the next one. If you run out of ideas, think harder — try different seed prompts, better evaluation data, different GEPA parameters, search for papers on prompt optimization. The loop runs until the human interrupts you, period.
+
+As a reference: each GEPA run takes roughly 2-10 minutes. You should be able to run **6-20 experiments per hour**. If the human is asleep for 8 hours, that's 50-160 experiments. The human wakes up to a full results.tsv and optimized artifacts. That is the goal.
