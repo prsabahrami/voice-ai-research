@@ -69,3 +69,4 @@ na	na	discard	e306: Qwen3-8B-Instruct not on Tinker
 na	na	discard	e308: theoretical — Claude seed necessary, base can't bootstrap
 f78c29e	0.178	keep	e309: 100-trace seed → 78% MV, needs 548 for 90%
 828b6c0	0.160	keep	e310: 250-trace seed → 86% MV, BEATS RL at .50!
+9bd5ff8	0.090	keep	e312: 250 seed + 3 rounds = 88% MV, approaching 90% ceiling
