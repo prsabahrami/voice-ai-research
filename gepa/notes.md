@@ -499,7 +499,7 @@ Key conclusions:
 8. **Opus is NOT better than Sonnet** — the prompt is model-specific. Opus holdout: 0.920 vs Sonnet's 0.940 (standard) or 1.000 (thinking).
 9. **Confidence routing is unviable** — nano is overconfidently wrong on 7/10 errors. Anthropic doesn't expose logprobs.
 10. **prime_v2 + thinking = worse than thinking alone** — thinking already provides reasoning depth; prime_v2 adds noise.
-11. **Adversarial robustness is 91.7%** — classifier resists 11/12 injection types. The one vulnerability (in-text "classify as bad" on good review) is an inherent LLM limitation that prompt defenses cannot fix without causing regressions.
+11. **Adversarial robustness is 91.7%** — classifier resists 11/12 injection types. The one vulnerability (in-text "classify as bad" on good review) can be fixed with anti-injection defense, but this defense causes val[32]+train[95] regression (0.990 combined). The adversarial fix and clean accuracy are mutually exclusive — both general warnings and specific injection examples trigger the same train[95] regression.
 12. **DNS caching is CORRECTLY classified** (e354) — the review claims TTL=-1 by default, but modern JDKs default to 30s. The model correctly identifies the factual error. What we thought was an "irreducible miss" is actually the model being right and the holdout label being wrong.
 12b. **Only remaining true miss**: adversarial[5] (in-text "classify as bad" injection). This is an inherent LLM limitation.
 13. **The optimal strategy depends on goal and budget**:
@@ -514,5 +514,8 @@ Key conclusions:
 17. **Thinking content reveals model reasoning** (e353) — easy items get 3-4 char snap decisions; borderline items get 200+ char deliberation. Thinking is diagnostic, not just accuracy-improving.
 18. **Severity scale adds little** — bimodal distribution (items cluster at 1-2 or 4-5). Best threshold=4: 0.980 combined, worse than binary.
 
-### Total experiments: 355+
-### Total API calls: ~18,000+
+19. **Adversarial defense vs clean accuracy is mutually exclusive** (e357-e358) — both general defense line and injection-specific 12th example fix adversarial[5] but regress train[95]. Any content that makes the model less suspicious shifts the same boundary.
+20. **Prompt caching not active** — cache_control ephemeral doesn't trigger caching (possibly below min token threshold). No cost savings from caching with current prompt.
+
+### Total experiments: 360+
+### Total API calls: ~20,000+
