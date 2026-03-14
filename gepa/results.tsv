@@ -114,3 +114,4 @@ fbdfc89	1.000	discard	config-impact rule (e300) — harmless but doesn't fix hol
 fbdfc89	0.333	discard	larger thinking budgets (e301) — DNS caching stochastic at best (1/3 at 2048,8192), fundamental model disagreement
 fbdfc89	0.990	keep	Haiku thinking tight (e305) — val 0.990, train 0.939, BUT holdout2[15] DNS 3/3 correct! different error profile
 fbdfc89	0.990	discard	Sonnet+Haiku thinking OR (e311) — fixes DNS but loses val[92]+train[95] to Haiku FPs, net negative
+fbdfc89	1.000	keep	3x Sonnet thinking majority (e313) — val 1.000, train 1.000, stabilizes stochastic misses, 3x cost

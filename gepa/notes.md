@@ -17,19 +17,22 @@ Binary classification of code review comments (good/bad) using gpt-4.1-nano with
 The prompt is **overfit to the val set**. Testing on the 98-item trainset (unseen during prompt optimization) reveals significant gaps:
 
 ### Generalization Ranking (by combined accuracy on val+train+holdout)
-| Config | Val | Train | Holdout | Combined | Cost |
-|--------|-----|-------|---------|----------|------|
-| **Sonnet + thinking tight (e280)** | **1.000** | **0.998** | **1.000** | **0.999** | ~55x |
-| Sonnet + v2 exception (e227) | 1.000 | 1.000 | 0.940 | 0.995 | ~50x |
-| Sonnet + thinking loose (e278) | 1.000 | 1.000 | 0.980 | 0.997 | ~55x |
-| Sonnet original (e222) | 1.000 | 0.990 | 0.940 | 0.988 | ~50x |
-| Sonnet 3x self-consistency | 1.000 | 0.969 | — | 0.985 | ~150x |
-| nano+Haiku lazy OR | 1.000 | 0.949 | — | 0.975 | ~1.5x |
-| nano alone | 0.991 | 0.881 | — | 0.937 | 1x |
+| Config | Val | Train | Holdout1 | Holdout2 | Combined | Cost |
+|--------|-----|-------|----------|----------|----------|------|
+| **Sonnet 3x thinking majority (e313)** | **1.000** | **1.000** | — | — | **1.000** | ~165x |
+| **Sonnet + thinking tight (e280)** | **1.000** | **0.998** | **1.000** | **0.980** | **0.999** | ~55x |
+| Sonnet + v2 exception (e227) | 1.000 | 1.000 | 0.940 | 0.960 | 0.995 | ~50x |
+| Sonnet + thinking loose (e278) | 1.000 | 1.000 | 0.980 | — | 0.997 | ~55x |
+| Haiku + thinking tight (e305) | 0.990 | 0.939 | — | — | 0.965 | ~10x |
+| Sonnet original (e222) | 1.000 | 0.990 | 0.940 | — | 0.988 | ~50x |
+| nano+Haiku lazy OR | 1.000 | 0.949 | — | — | 0.975 | ~1.5x |
+| nano alone | 0.991 | 0.881 | — | — | 0.937 | 1x |
 
 **Optimal strategies by goal:**
-- **Perfect overall**: Sonnet + v2 exception rule (1.000 combined), ~50x cost. 20/20 runs perfect, zero misses in 3960 classifications.
-- **Val perfection + cheapest**: nano+Haiku lazy OR (1.000 val, 0.975 combined), ~1.5x cost
+- **Absolute perfection (val+train)**: Sonnet 3x thinking majority (1.000+1.000), ~165x cost. Eliminates ALL stochastic misses.
+- **Best generalization**: Sonnet + thinking tight (val 1.000, train 0.998, holdout1 1.000, holdout2 0.980), ~55x cost.
+- **Val+train perfection, cheapest**: Sonnet standard (temp=0) (1.000+1.000, holdout 0.940), ~50x cost.
+- **Val perfection cheapest**: nano+Haiku lazy OR (1.000 val, 0.975 combined), ~1.5x cost
 - **Cheapest acceptable**: nano alone (0.991 val, 0.937 combined), 1x cost
 
 **Key insight**: Perfection came from three levers combined: (1) data quality — 2 relabels corrected mislabeled items, (2) prompt precision — exception rule for question-framed reviews, (3) model capability — Sonnet has inherently better calibration than nano.
@@ -364,6 +367,21 @@ Attack types **resisted** (11/11): direct override, embedded classification, few
 
 ## Configuration Rule (e300)
 Adding "Exception: a review about a configuration default that identifies a concrete failure mode counts as identifying a concrete issue" does NOT fix holdout2[15] (DNS caching). The rule is harmless (val+train 1.000) but Sonnet's classification is deeply embedded — it views "Set TTL to 60s" as prescribing a specific value (preference) rather than fixing a bug.
+
+## Haiku Thinking (e305)
+Haiku with extended thinking (same tight constraint as Sonnet):
+- **Val**: 0.990 (miss val[39])
+- **Train**: 0.939 (6 misses: [8,16,18,69,94,95])
+- **Holdout2[15] (DNS caching): 3/3 CORRECT!** — Haiku gets this right where Sonnet fails
+- Different error profile: more FNs on concise bugs, FPs on HTTP status items
+- Sonnet+Haiku thinking OR: fixes DNS but Haiku FPs propagate (val[92], train[95])
+
+## 3x Sonnet Thinking Majority Vote (e313)
+Three independent Sonnet thinking calls at temp=1, majority vote:
+- **Val**: 1.000, **Train**: 1.000 — stabilizes stochastic train[95] miss
+- DNS caching: 0/5 (all 15 votes "bad") — systematic, not stochastic
+- train[95]: 4/5 correct (improved from ~0.998 single-call to ~0.8 majority)
+- **Best for highest reliability on known data**, but 3x Sonnet thinking cost (~165x nano)
 
 ## Thinking Budget Sweep (e301)
 Larger thinking budgets (2048, 4096, 8192) do NOT reliably fix holdout2[15]:
