@@ -213,7 +213,7 @@ The single most impactful discovery across 90+ experiments: **replacing rules-on
 - **Seed: 11-example few-shot with balanced good+bad borderline examples**
 
 ## Experiment Count
-229+ experiments tracked via lab CLI (h1-h234, e1-e229)
+231+ experiments tracked via lab CLI (h1-h236, e1-e231)
 
 ## Robustness Verification
 - **Adversarial test (e229)**: 13 novel items designed to probe decision boundaries → 13/13 correct. The classifier generalizes beyond train/val patterns.
