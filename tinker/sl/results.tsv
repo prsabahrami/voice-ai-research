@@ -35,3 +35,4 @@ e57bc51	0.109	keep	e240: 3ep 2148 traces, greedy 80%, MV 86%
 fd72306	0.154	keep	e249: reproduce e234, eval_loss 0.154 exact, greedy 80% (88%=outlier), MV 88%
 4a1adeb	0.153	keep	e250: LR=4e-4 5ep 1348 traces, MV@5 90%, no overfitting
 b01e4dd	0.154	keep	e252: LR=4e-4 7ep, GREEDY 84% BEATS RL, MV 90%
+7792fd9	0.152	keep	e253: LR=4e-4 6ep, greedy 82%, MV@5=90% CONSISTENT 45/50
