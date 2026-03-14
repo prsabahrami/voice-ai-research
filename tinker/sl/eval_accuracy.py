@@ -86,10 +86,16 @@ def main():
         stop=stop_sequences if stop_sequences else None,
     )
 
+    # System prompt (must match training if used)
+    system_prompt = sys.argv[2] if len(sys.argv) > 2 else None
+
     # Submit all sampling requests
     futures = []
     for item in eval_prompts:
-        messages = [{"role": "user", "content": item["prompt"]}]
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": item["prompt"]})
         token_ids = tokenizer.apply_chat_template(
             messages, add_generation_prompt=True, tokenize=True
         )
