@@ -35,6 +35,7 @@ MAX_LENGTH = 2048                           # Max sequence length (prompt + resp
 N_EPOCHS = 4                                # Number of passes through the data
 SAVE_EVERY = 20                             # Checkpoint every N batches (0 = disabled)
 EVAL_SPLIT = 0.1                            # Fraction of data held out for eval
+ANSWER_WEIGHT = 3.0                         # Weight multiplier for tokens near \boxed{} answer
 RESUME_FROM = None                          # Tinker state path to resume from (e.g. "tinker://...weights/step_000020")
 
 # System prompt prepended to all examples (set to None to skip)
@@ -98,9 +99,26 @@ def build_sft_datum(
 
     # Build target tokens and weights
     # Weight = 0 for prompt tokens (don't train on prompt)
-    # Weight = 1 for response tokens (train on these)
+    # Weight = 1 for response tokens, 3.0 near \boxed{} answer
     target_tokens = full_tokens[:]
     weights = [0.0] * prompt_len + [1.0] * (len(full_tokens) - prompt_len)
+
+    # Upweight tokens near \boxed{} (answer region)
+    # Find \boxed in the decoded response and map to token positions
+    if ANSWER_WEIGHT > 1.0:
+        decoded = tokenizer.decode(full_tokens[prompt_len:], skip_special_tokens=False)
+        boxed_pos = decoded.find("\\boxed{")
+        if boxed_pos >= 0:
+            # Find token index corresponding to boxed_pos
+            chars_so_far = 0
+            for ti in range(prompt_len, len(full_tokens)):
+                tok_text = tokenizer.decode([full_tokens[ti]], skip_special_tokens=False)
+                chars_so_far += len(tok_text)
+                if chars_so_far >= boxed_pos:
+                    # Weight tokens from here to end of response at ANSWER_WEIGHT
+                    for wi in range(ti, len(weights)):
+                        weights[wi] = ANSWER_WEIGHT
+                    break
 
     # Skip if no response tokens
     if sum(weights) == 0:
