@@ -25,14 +25,14 @@
 
 **eval_loss consistently improves** with each round (0.221→0.109). Accuracy is noisy at n=50 (±8-10%) but consistently beats RL's 83%.
 
-## Best Configurations
-**Best greedy (88%)**:
-- 1348 traces (548 Claude + 400 self-distill round 1 + 400 round 2)
-- LR=5e-4, linear decay, N_EPOCHS=4, LoRA rank=32, MAX_LENGTH=2048
+## Best Configuration (REPRODUCIBLE)
+**MV@5 = 90% (45/50) — reproduced 3/3 times:**
+- 1348 traces (548 Claude + 400 self-distill r1 + 400 r2)
+- LR=4e-4, linear decay, N_EPOCHS=5-7, LoRA rank=32, MAX_LENGTH=2048
+- Eval: temp=0.5, 5 samples, majority vote
+- Greedy (temp=0): 74-84% (noisy at n=50)
 
-**Best MV@5 (94%)**:
-- 1748 traces (+ 400 self-distill round 3)
-- LR=5e-4, linear decay, N_EPOCHS=5, LoRA rank=32, MAX_LENGTH=2048
+**Definitive answer:** SFT beats RL by 7 points (90% vs 83%) with majority vote.
 
 ## Key Findings (20 experiments)
 
