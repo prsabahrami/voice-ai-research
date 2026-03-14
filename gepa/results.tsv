@@ -123,3 +123,4 @@ fbdfc89	0.990	discard	concise examples no explanations (e325) — saves 18% but 
 fbdfc89	0.800	keep	edge case stress test (e327) — 20/25 std, 19/25 thinking, format-sensitive on ultra-short and unusual formats
 fbdfc89	0.920	keep	corrected edge case labels (e328) — 3 mislabeled items fixed, real misses: emoji[17] and compliment[20]
 fbdfc89	0.840	keep	format guidance (e329) — fixes emoji+compliment (+2), breaks ultra-short (-1), val+train 1.000 preserved
+fbdfc89	0.980	keep	3x thinking majority holdout2 (e331) — 49/50, DNS [15] still 3/3 bad, identical to single-call
