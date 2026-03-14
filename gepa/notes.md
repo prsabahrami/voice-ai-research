@@ -374,6 +374,19 @@ Attack types **resisted** (11/11): direct override, embedded classification, few
 - XML tag wrapping (`<review>...</review>`): Fixes adversarial[5] but **destabilizes train[95]** (3/5 wrong at temp=0). Net negative.
 - **Conclusion**: The one injection vulnerability is an inherent LLM limitation. Prompt-level defenses either don't work or cause regressions.
 
+## Edge Case Stress Test (e327)
+25 unusual-format items: ultra-short (2-word), bullet lists, code-only, emoji, Japanese, ALL CAPS, meta-reviews, compliment sandwiches, etc.
+- **Standard**: 20/25 (0.800)
+- **Thinking**: 19/25 (0.760)
+
+**Format-sensitive patterns** (classifier struggles with):
+- Ultra-short (2 words): "SQL injection." → labeled good but arguably bad per rule 3 (no fix suggested)
+- Multi-issue lists: "Line 5 SQL injection + line 12 XSS + line 20 CSRF" → too terse
+- Compliment sandwiches: "Nice clean code! One thing — equals() NPE" → real issue buried in praise
+- Meta-reviews: "Previous reviewer's CopyOnWrite suggestion is wrong" → about review, not code
+
+**Classifier excels at**: Japanese reviews, ALL CAPS, sarcastic tone, code-diff format, LGTM/nit/+1 rejection. The classifier handles content variation well but struggles with extreme format deviations from well-formed review structure.
+
 ## Configuration Rule (e300)
 Adding "Exception: a review about a configuration default that identifies a concrete failure mode counts as identifying a concrete issue" does NOT fix holdout2[15] (DNS caching). The rule is harmless (val+train 1.000) but Sonnet's classification is deeply embedded — it views "Set TTL to 60s" as prescribing a specific value (preference) rather than fixing a bug.
 

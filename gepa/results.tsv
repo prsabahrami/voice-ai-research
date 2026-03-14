@@ -120,3 +120,4 @@ fbdfc89	1.000	discard	two-turn priming (e319) — DNS 5/5 but train[95] 0/5, bia
 fbdfc89	1.000	keep	*** CROSS-DOMAIN *** Python/JS/Go/Rust (e320) — 30/30 perfect, prompt generalizes across all languages
 fbdfc89	1.000	discard	output format (e323) — good/bad and 1/0 both perfect, yes/no and useful/not_useful degrade
 fbdfc89	0.990	discard	concise examples no explanations (e325) — saves 18% but val 0.990 (miss [32]), explanations load-bearing
+fbdfc89	0.800	keep	edge case stress test (e327) — 20/25 std, 19/25 thinking, format-sensitive on ultra-short and unusual formats
