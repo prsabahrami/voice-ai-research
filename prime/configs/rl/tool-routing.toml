@@ -5,7 +5,7 @@ rollouts_per_example = 64
 oversampling_factor = 2.5
 max_async_level = 1
 learning_rate = 1e-5
-lora_alpha = 64
+lora_alpha = 128
 
 [sampling]
 max_tokens = 1024
@@ -13,9 +13,11 @@ max_tokens = 1024
 [[env]]
 id = "salesbench/tool-routing"
 
-# [wandb]
-# project = "tool-routing"
-# name = "qwen3-30b-a3b-tool-routing-v1"
+env_file = ["../.env"]
+
+[wandb]
+project = "tool-routing"
+name = "e351-lora128-filter-64r"
 
 [eval]
 interval = 50
