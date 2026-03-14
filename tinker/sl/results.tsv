@@ -39,3 +39,4 @@ b01e4dd	0.154	keep	e252: LR=4e-4 7ep, GREEDY 84% BEATS RL, MV 90%
 7792fd9	na	keep	e254: max_tokens 3072 +2% over 2048 at eval
 0dbecbc	na	discard	e255: rank 48 failed — must be power of 2
 df56e02	0.154	keep	e256: system prompt neutral, greedy 82%, no change
+4019e86	0.154	discard	e257: EVAL_SPLIT 0.2, same results, revert
