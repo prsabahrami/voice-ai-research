@@ -121,3 +121,5 @@ fbdfc89	1.000	keep	*** CROSS-DOMAIN *** Python/JS/Go/Rust (e320) — 30/30 perfe
 fbdfc89	1.000	discard	output format (e323) — good/bad and 1/0 both perfect, yes/no and useful/not_useful degrade
 fbdfc89	0.990	discard	concise examples no explanations (e325) — saves 18% but val 0.990 (miss [32]), explanations load-bearing
 fbdfc89	0.800	keep	edge case stress test (e327) — 20/25 std, 19/25 thinking, format-sensitive on ultra-short and unusual formats
+fbdfc89	0.920	keep	corrected edge case labels (e328) — 3 mislabeled items fixed, real misses: emoji[17] and compliment[20]
+fbdfc89	0.840	keep	format guidance (e329) — fixes emoji+compliment (+2), breaks ultra-short (-1), val+train 1.000 preserved
