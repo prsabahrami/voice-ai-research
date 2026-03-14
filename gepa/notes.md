@@ -405,6 +405,14 @@ Three independent Sonnet thinking calls at temp=1, majority vote:
 - train[95]: 4/5 correct (improved from ~0.998 single-call to ~0.8 majority)
 - **Best for highest reliability on known data**, but 3x Sonnet thinking cost (~165x nano)
 
+## Rubric-Based 5-Dimension Scoring (e332)
+Reframing the prompt as a 5-dimension checklist (CONCRETE? CORRECT? FIX? IMPACT? HELPFUL?) instead of direct good/bad:
+- **Val**: 1.000 (both thinking and standard) — no regression
+- **DNS caching**: **2/3 correct** (vs 0/3 original!) — structured evaluation helps
+- **train[95]**: 0/3 (vs 2/3 original) — rubric makes HTTP 404 seem to pass all 5 rules
+
+**KEY INSIGHT**: DNS caching and train[95] are on opposite sides of the SAME decision boundary. Any prompt change that fixes one breaks the other. The "pedantic-vs-practical" distinction is fundamentally ambiguous at this boundary point. The original prompt is calibrated to get train[95] right (which matters more since it's in the training data), but this calibration unavoidably classifies DNS caching wrong.
+
 ## Thinking Budget Sweep (e301)
 Larger thinking budgets (2048, 4096, 8192) do NOT reliably fix holdout2[15]:
 - budget=1024: 0/3 correct on DNS caching
