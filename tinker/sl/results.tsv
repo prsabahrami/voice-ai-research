@@ -11,3 +11,12 @@ c2a6963	0.264	keep	e204: 548 verified Claude traces, accuracy 60%, no clear gain
 114ef22	0.221	keep	e208: LR=3e-4, 548 verified, accuracy 72%, boxed 84%, best eval_loss
 114ef22	0.86mv	keep	e210: MAJORITY VOTE 86% BEATS RL 83%! (greedy 74%, any 92%)
 114ef22	0.90mv32	keep	e211: 32-sample majority vote 90%, ANY-CORRECT 100%!
+e8d9460	0.221	keep	e212: LR=5e-4, GREEDY 80%\! boxed 90%, epoch 7 optimal
+42b1958	0.221	keep	e213: 7 epochs, greedy 78%, MAJORITY 88% (new best)
+1f9bc09	0.235	discard	e214: constant LR overfits, majority 82% < linear 88%
+50d59ec	0.220	discard	e215: constant LR 5ep, majority 78% — diversity too low
+d21cb37	0.221	discard	e216: LoRA 64, no gain, majority 82% < rank 32's 88%
+e1dbf98	0.212	keep	e217: 1054 traces, best eval_loss 0.212, accuracy 80%, MV 86%
+a6654d6	0.209	keep	e219: 1054 traces 5ep, accuracy 72%, underfitting
+ae4cb92	0.216	keep	e220: 1054 traces LR=3e-4 10ep, 78% greedy, MV16 88%, boxed 98%
+0808fe9	0.294	discard	e221: combined data HURTS, 76% greedy, MV 78%
