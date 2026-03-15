@@ -36,6 +36,8 @@ N_EPOCHS = 4                                # Number of passes through the data
 SAVE_EVERY = 20                             # Checkpoint every N batches (0 = disabled)
 EVAL_SPLIT = 0.1                            # Fraction of data held out for eval
 WARMUP_FRACTION = 0.0                       # Fraction of steps for LR warmup (0 = disabled)
+STAGE2_LR = 2e-4                            # LR for final epoch (0 = use main LR schedule)
+STAGE2_FRACTION = 0.25                      # Fraction of total steps for stage 2
 ANSWER_WEIGHT = 1.0                         # Weight multiplier for tokens near \boxed{} answer (1.0 = uniform)
 RESUME_FROM = None                          # Tinker state path to resume from (e.g. "tinker://...weights/step_000020")
 
@@ -45,7 +47,7 @@ SYSTEM_PROMPT = None
 # ============================================================================
 # FIXED — Do not modify unless you know what you're doing
 # ============================================================================
-ADAM_BETA1 = 0.85
+ADAM_BETA1 = 0.9
 ADAM_BETA2 = 0.95
 ADAM_EPS = 1e-8
 
@@ -273,13 +275,20 @@ def main():
                 with open(".last_checkpoint", "w") as f:
                     f.write(state_path.path)
 
-            # LR schedule: warmup then linear decay
+            # LR schedule: warmup → linear decay → optional stage 2
             warmup_steps = int(total_steps * WARMUP_FRACTION)
+            stage2_start = int(total_steps * (1.0 - STAGE2_FRACTION))
             if global_step < warmup_steps and warmup_steps > 0:
                 lr_mult = global_step / warmup_steps
+                current_lr = LEARNING_RATE * lr_mult
+            elif STAGE2_LR > 0 and global_step >= stage2_start:
+                # Stage 2: linear decay from STAGE2_LR to 0
+                remaining = total_steps - global_step
+                total_stage2 = total_steps - stage2_start
+                current_lr = STAGE2_LR * (remaining / total_stage2) if total_stage2 > 0 else STAGE2_LR
             else:
                 lr_mult = max(0.0, 1.0 - global_step / total_steps)
-            current_lr = LEARNING_RATE * lr_mult
+                current_lr = LEARNING_RATE * lr_mult
             adam_params = types.AdamParams(
                 learning_rate=current_lr,
                 beta1=ADAM_BETA1,
