@@ -42,7 +42,7 @@ TASK_LM = "anthropic/claude-sonnet-4-6"       # generates analyses
 EVALUATOR_LM = "openai/gpt-5.4"              # applies both rubrics
 REFLECTION_LM = "anthropic/claude-opus-4-6"   # proposes improvements
 
-MAX_METRIC_CALLS = 80
+MAX_METRIC_CALLS = 100
 
 # Fixed expert rubric — the "ground truth" evaluator (never evolved)
 EXPERT_RUBRIC = (
@@ -158,8 +158,8 @@ class CoEvolutionAdapter(GEPAAdapter):
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": item["input"]},
                     ],
-                    temperature=0,
-                    max_tokens=1500,
+                    temperature=0.3,
+                    max_tokens=800,
                 )
                 generated = gen_resp.choices[0].message.content
             except Exception as e:
@@ -263,7 +263,7 @@ def main():
         reflection_lm=REFLECTION_LM,
         max_metric_calls=MAX_METRIC_CALLS,
         module_selector="round_robin",
-        candidate_selection_strategy="pareto",
+        candidate_selection_strategy="current_best",
         frontier_type="hybrid",
         reflection_minibatch_size=4,
         use_merge=True,
