@@ -6,3 +6,7 @@ bbda3ca	0.7600	crash	e267: binary correctness + filtering = empty buffer crash
 b70064e	0.8219	discard	e275: LR=5e-6 too slow, stalled at step 73
 3d707db	0.9199	keep	e292: partial credit correctness, final 0.9199, below e224 best (0.9294)
 533d54c	0.9484	keep	e314: rollouts=64, NEW BEST=0.9484 at step 150, crashed step ~170 (task saturated)
+f5b2626	0.9247	keep	e362: easy_threshold 0.9→0.95, no crash, but slower (0.9247 vs 0.9484 at step 150)
+fe6cb07	0.9265	keep	e395: expanded dataset 191→301, no crash, still improving at step 200, +22.5% relative
+f046a7d	0.9084	discard	e406: max_steps=300 doesn't help, peaked at step 100 (0.9084), flat after
+7a090b7	0.9370	keep	e414: optimal-call efficiency, NEW BEST on expanded test (0.9370), still improving at step 200

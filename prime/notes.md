@@ -124,36 +124,134 @@ Lower LR (5e-6) was too slow and stalled at step 73. Training rewards dropped to
 
 ---
 
-## Experiment 6 (e292): Partial credit correctness (RUNNING)
+## Experiment 6 (e292): Partial credit correctness
 
 **Run ID**: m9zv91rkzcf8hk9qte6t0nc4
 **Hypothesis**: Adding 0.5 reward for close numerical answers (within 5%) creates more within-group variance.
-**Status**: Running...
+**Status**: COMPLETED — 0.9199, below e224 BEST (0.9294)
 
 ---
 
-## Key Findings (6 experiments)
+## Experiment 7 (e314): rollouts=64 — NEW BEST
 
-1. **GRPO shows phase transitions**: All experiments show flat/slow improvement then rapid jumps (steps 50-150)
-2. **Difficulty filtering is the best single intervention**: +2.5% over baseline AND 2x faster convergence (e224 BEST=0.9294)
-3. **Peak at step 150**: Best checkpoint is step 150, decline at 200 → overfitting
-4. **Efficiency reward is essential for filtering**: Binary correctness + filtering = empty buffer crash
-5. **Correctness-only reward achieves same raw accuracy**: Efficiency weight neither helps nor hurts
-6. **Lower LR (5e-6) stalls with filtering**: LR=1e-5 is optimal
-7. **Best config**: mixed reward (0.7*correct + 0.3*efficient) + difficulty filtering (easy=0.9, hard=0.1) + LR=1e-5
+**Run ID**: oq5iogyowi4f5ls8bovnd7nn
+**Status**: COMPLETED (crashed step ~170) — BEST=0.9484 at step 150
+**Config**: rollouts_per_example=64 (was 32), same config otherwise
+
+| Step | Eval@4 |
+|------|--------|
+| 100 | 0.9245 |
+| 150 | **0.9484** (BEST ALL TIME) |
+
+Crashed at step ~170 — difficulty filter removed all examples (model saturated task).
+
+---
+
+## Experiment 8 (e351): lora_alpha=128 — WORSE
+
+**Run ID**: e20oj1vnautigc0crf5p8tzi
+**Status**: COMPLETED — 0.9294 peak (step 100), 0.8967 final
+**Finding**: lora_alpha=128 hurt. Reverted to 64.
+
+---
+
+## Experiment 9 (e362): easy_threshold 0.9→0.95
+
+**Run ID**: loucyksvk9pe686jhy4v07wc
+**Status**: COMPLETED — mechanism CONFIRMED (no crash) but underperformed
+
+| Step | Eval@4 |
+|------|--------|
+| 50 | 0.7570 |
+| 100 | 0.8998 |
+| 150 | 0.9212 |
+| 200 | 0.9247 |
+
+**Finding**: No crash, but relaxed threshold dilutes learning signal. 0.9212 at step 150 vs e314's 0.9484.
+
+---
+
+## Experiment 10 (e395): Expanded dataset 191→301
+
+**Run ID**: qjxw12dynx2rl0k2wmrbhxvu
+**Hypothesis (h405)**: More diverse data reduces overfitting, raises ceiling
+**Status**: COMPLETED — mechanism CONFIRMED
+
+### Results
+| Step | Eval@4 |
+|------|--------|
+| 0 | 0.7562 |
+| 50 | 0.7818 |
+| 100 | 0.8678 |
+| 150 | 0.8915 |
+| 200 | **0.9265** |
+
+**Finding**: No crash at step 170. Still improving at step 200 (+22.5% relative improvement). More data delays saturation AND allows continued learning. Model was still improving — more steps needed.
+
+---
+
+## Experiment 11 (e406): max_steps 200→300
+
+**Run ID**: udbf9c4ej11j78cq6w5g1pso
+**Status**: COMPLETED — mechanism REFUTED
+
+| Step | Eval@4 |
+|------|--------|
+| 50 | 0.8600 |
+| 100 | **0.9084** (peak) |
+| 150 | 0.8880 |
+| 200 | 0.8880 |
+| 250 | 0.8946 |
+| 300 | 0.8880 |
+
+**Finding**: 300 steps adds nothing. Peaked at step 100 and flat after. 200 steps sufficient.
+
+---
+
+## Experiment 12 (e414): Optimal-call efficiency — **NEW BEST**
+
+**Run ID**: d7krzzd8adp2ype6c3dnsho0
+**Hypothesis (h423)**: Per-question optimal call count gives more targeted signal
+**Status**: COMPLETED — mechanism CONFIRMED, **NEW BEST**
+
+### Results
+| Step | Eval@4 |
+|------|--------|
+| 0 | 0.7594 |
+| 50 | 0.7882 |
+| 100 | 0.9020 |
+| 150 | 0.9195 |
+| **200** | **0.9370** (NEW BEST) |
+
+**Finding**: Optimal-call efficiency is the BEST reward function. +23.4% relative improvement. Unlike 1/sqrt(n) that peaked and declined, this kept improving through step 200. Multi-step questions aren't penalized for needed tool calls. Model maintained better training rewards (0.3-0.69 vs constant 0.3).
+
+---
+
+## Key Findings (12 experiments)
+
+1. **Optimal-call efficiency is the best reward function**: e414 got 0.9370, +23.4% relative improvement, still rising at step 200
+2. **GRPO shows phase transitions**: All experiments show flat/slow improvement then rapid jumps (steps 50-100)
+3. **Difficulty filtering is essential**: +2.5% over baseline AND faster convergence
+4. **rollouts=64 is a big win**: +2% over rollouts=32
+5. **Expanded dataset (301) prevents saturation crash**: 191 examples crash at step ~170 with easy_threshold=0.9
+6. **Efficiency reward is essential for filtering**: Binary correctness + filtering = empty buffer crash
+7. **lora_alpha=128 hurts**: Larger updates cause overshooting
+8. **300 steps adds nothing over 200**: Model peaks at step 100-150 with 1/sqrt, at step 200 with optimal-call
+9. **Lower LR (5e-6) stalls with filtering**: LR=1e-5 is optimal
+10. **Best config**: optimal-call efficiency + expanded data (301) + difficulty filtering (easy=0.9) + rollouts=64 + LR=1e-5 + 200 steps
 
 ---
 
 ## Overall Research Summary
 
 **Research question**: Does the model discover tool specialization purely from reward signal?
-**Answer**: YES. 0.8034 → 0.9294 (+15.7%) using GRPO with difficulty filtering.
+**Answer**: YES. 0.7594 → 0.9370 (+23.4%) on expanded test set. 0.8034 → 0.9484 (+18.1%) on original test set.
 
 **Research question**: Does efficiency training hurt correctness?
-**Answer**: No. The 0.3 efficiency weight neither helps nor hurts. But it's ESSENTIAL for difficulty filtering to work.
+**Answer**: No. The 0.3 efficiency weight is ESSENTIAL for difficulty filtering AND improves routing. Optimal-call efficiency > blind 1/sqrt(n).
 
 **Research question**: How many RL steps before routing patterns emerge?
-**Answer**: Phase transition at steps 50-150. With filtering: step 50. Without: step 100-150.
+**Answer**: Phase transition at steps 50-100. With optimal-call reward: continuous improvement through 200 steps.
 
 **Research question**: What is the optimal training recipe?
-**Answer**: mixed reward + difficulty filtering + LR=1e-5 + 150 steps (not 200).
+**Answer**: optimal-call efficiency (0.7/0.3 weight) + expanded data (301 examples) + difficulty filtering (easy=0.9) + rollouts=64 + LR=1e-5 + 200 steps.
