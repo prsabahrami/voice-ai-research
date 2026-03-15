@@ -278,7 +278,7 @@ def main():
         reflection_lm=REFLECTION_LM,
         max_metric_calls=MAX_METRIC_CALLS,
         module_selector="all",
-        candidate_selection_strategy="pareto",
+        candidate_selection_strategy="epsilon_greedy",
         frontier_type="hybrid",
         reflection_minibatch_size=4,
         use_merge=True,
