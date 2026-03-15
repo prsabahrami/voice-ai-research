@@ -135,11 +135,12 @@ def evaluate_with_rubric(rubric_text, question, response):
                     f"Scores (5 integers, comma-separated):"
                 )},
             ],
-            temperature=0,
+            # gpt-5.4 only supports temperature=1 (default)
             max_tokens=30,
         )
         return parse_multi_score(resp.choices[0].message.content)
-    except Exception:
+    except Exception as e:
+        log.warning(f"Evaluation failed: {e}")
         return 0.5
 
 
