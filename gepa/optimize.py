@@ -43,7 +43,7 @@ litellm.suppress_debug_info = True
 # CONFIGURATION (agent modifies these)
 # ============================================================
 
-TASK_LM = "openai/gpt-4.1-mini"
+TASK_LM = "openai/gpt-4.1-nano"
 EVALUATOR_LM = "openai/gpt-4.1-mini"
 REFLECTION_LM = "anthropic/claude-sonnet-4-6"
 
