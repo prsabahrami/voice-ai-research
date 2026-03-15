@@ -44,16 +44,16 @@ REFLECTION_LM = "anthropic/claude-opus-4-6"   # proposes improvements
 
 MAX_METRIC_CALLS = 100
 
-# Fixed expert rubric — the "ground truth" evaluator (never evolved)
+# Fixed expert rubric — multi-criteria for fine-grained ground truth (never evolved)
 EXPERT_RUBRIC = (
-    "You are an expert technical writing evaluator. Score the response 0.0 to 1.0.\n\n"
-    "Criteria (each worth ~0.2):\n"
-    "1. ACCURACY: Are all technical claims factually correct? No hallucinations?\n"
-    "2. DEPTH: Does it go beyond surface-level? Are mechanisms/tradeoffs explained?\n"
-    "3. STRUCTURE: Is it well-organized with clear progression of ideas?\n"
-    "4. ACTIONABILITY: Does it provide concrete insights someone could act on?\n"
-    "5. CONCISENESS: Is it appropriately detailed without unnecessary verbosity?\n\n"
-    "Respond with ONLY a single number between 0.0 and 1.0."
+    "You are an expert technical writing evaluator. Rate the response on 5 criteria.\n"
+    "For EACH criterion, give an integer score from 1 to 10.\n\n"
+    "1. ACCURACY (1-10): Are technical claims factually correct? No hallucinations?\n"
+    "2. DEPTH (1-10): Does it explain mechanisms/tradeoffs beyond surface level?\n"
+    "3. STRUCTURE (1-10): Well-organized with clear progression of ideas?\n"
+    "4. ACTIONABILITY (1-10): Concrete insights someone could act on?\n"
+    "5. CONCISENESS (1-10): Appropriately detailed without unnecessary verbosity?\n\n"
+    "Respond with EXACTLY 5 numbers separated by commas. Example: 8,7,9,6,8"
 )
 
 SEED = {
@@ -63,10 +63,14 @@ SEED = {
         "Be accurate, insightful, and concise."
     ),
     "evaluation_rubric": (
-        "You are an evaluation assistant. Given a question and a response, "
-        "score the response quality on a scale of 0.0 to 1.0.\n"
-        "Consider correctness, clarity, depth, and usefulness.\n"
-        "Respond with ONLY a single number between 0.0 and 1.0."
+        "You are an evaluation assistant. Rate the response on 5 criteria.\n"
+        "For EACH criterion, give an integer score from 1 to 10.\n\n"
+        "1. CORRECTNESS (1-10): Are the technical details accurate?\n"
+        "2. CLARITY (1-10): Is the explanation easy to follow?\n"
+        "3. DEPTH (1-10): Does it go beyond surface-level?\n"
+        "4. USEFULNESS (1-10): Does it provide actionable insights?\n"
+        "5. EFFICIENCY (1-10): Is it appropriately concise?\n\n"
+        "Respond with EXACTLY 5 numbers separated by commas. Example: 8,7,9,6,8"
     ),
 }
 
@@ -105,8 +109,13 @@ VALSET = [
 # HELPERS
 # ============================================================
 
-def extract_score(text):
-    """Extract a 0-1 score from evaluator response."""
+def parse_multi_score(text):
+    """Parse 5 comma-separated integers (1-10) into a 0-1 average."""
+    nums = re.findall(r'\b(\d+)\b', text.strip())
+    if len(nums) >= 5:
+        scores = [min(max(int(n), 1), 10) for n in nums[:5]]
+        return sum(scores) / 50.0  # normalize to 0-1
+    # Fallback: try single score
     m = re.search(r'(0?\.\d+|1\.0|1|0)', text.strip())
     if m:
         return min(max(float(m.group(1)), 0.0), 1.0)
@@ -114,7 +123,7 @@ def extract_score(text):
 
 
 def evaluate_with_rubric(rubric_text, question, response):
-    """Score a response using a given rubric via the evaluator LM."""
+    """Score a response using a multi-criteria rubric via the evaluator LM."""
     try:
         resp = litellm.completion(
             model=EVALUATOR_LM,
@@ -123,13 +132,13 @@ def evaluate_with_rubric(rubric_text, question, response):
                 {"role": "user", "content": (
                     f"Question: {question}\n\n"
                     f"Response to evaluate:\n{response}\n\n"
-                    f"Score (0.0 to 1.0):"
+                    f"Scores (5 integers, comma-separated):"
                 )},
             ],
             temperature=0,
-            max_tokens=10,
+            max_tokens=30,
         )
-        return extract_score(resp.choices[0].message.content)
+        return parse_multi_score(resp.choices[0].message.content)
     except Exception:
         return 0.5
 
@@ -217,10 +226,9 @@ class CoEvolutionAdapter(GEPAAdapter):
                         "Inputs": f"Topic: {traj['input']}",
                         "Generated Outputs": traj["generated"][:1000],
                         "Feedback": (
-                            f"Expert quality score: {traj['expert_score']:.2f}/1.0. "
-                            f"The expert evaluates on: accuracy, depth, structure, "
-                            f"actionability, and conciseness. "
-                            f"{traj['feedback']}"
+                            f"Expert quality score: {traj['expert_score']:.3f}/1.0 "
+                            f"(average of accuracy, depth, structure, actionability, conciseness "
+                            f"each rated 1-10). {traj['feedback']}"
                         ),
                     })
                 elif comp == "evaluation_rubric":
@@ -229,12 +237,12 @@ class CoEvolutionAdapter(GEPAAdapter):
                             f"Topic: {traj['input']}\n"
                             f"Response (truncated): {traj['generated'][:500]}"
                         ),
-                        "Generated Outputs": f"Rubric score: {traj['rubric_score']:.2f}",
+                        "Generated Outputs": f"Rubric avg: {traj['rubric_score']:.3f}",
                         "Feedback": (
-                            f"Expert score: {traj['expert_score']:.2f}. "
-                            f"Your rubric gave {traj['rubric_score']:.2f}. "
-                            f"Calibration error: {abs(traj['rubric_score'] - traj['expert_score']):.2f}. "
-                            f"The ideal rubric would match the expert's assessment."
+                            f"Expert avg: {traj['expert_score']:.3f}. "
+                            f"Your rubric avg: {traj['rubric_score']:.3f}. "
+                            f"Error: {abs(traj['rubric_score'] - traj['expert_score']):.3f}. "
+                            f"Improve criteria to better capture quality dimensions."
                         ),
                     })
             reflective_data[comp] = examples
