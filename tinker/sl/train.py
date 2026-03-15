@@ -179,7 +179,7 @@ def main():
         sys.exit(1)
 
     # Shuffle before splitting to avoid biased eval set
-    random.seed(42)
+    random.seed(123)
     all_data_shuffled = all_data[:]
     random.shuffle(all_data_shuffled)
 
