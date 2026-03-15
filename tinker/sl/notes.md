@@ -229,6 +229,16 @@ The optimal config walks a razor's edge: rough enough for diversity, smooth enou
 - Greedy: 86%
 - Any correct @16: 96-98% (48-49/50, only geometry unsolvable)
 
+## Best Checkpoint (for SFT→RL pipeline)
+- **State** (resume training): `tinker://f8dc78bb-ef57-5893-9a77-188d878fb351:train:0/weights/final`
+- **Sampler** (inference/RL base): `tinker://f8dc78bb-ef57-5893-9a77-188d878fb351:train:0/sampler_weights/final`
+- Config: LR=6e-4, 4ep, 4096, 3003 traces, batch=128, rank=32
+
+## Experiment Count
+- **Session 1**: 67 experiments (e192-e322), established 90% MV ceiling
+- **Session 2**: 12 experiments (e364-e393), pushed to 94% MV via LR=6e-4
+- **Total**: 79 experiments
+
 ## Open Questions
 1. Would SFT → RL sequential training exceed both alone?
 2. Does a larger base model (e.g. 14B) respond better to SFT distillation?
