@@ -7,7 +7,7 @@
 
 ## WHAT WORKED (ranked by impact)
 
-1. **MAX_TOKENS is THE lever** — 512→1024 (+4.8%), 1024→2048 (+5.0%), 2048→4096 (+2.4%). Diminishing returns but still the biggest single-knob impact.
+1. **MAX_TOKENS is THE lever** — 512→1024 (+4.8%), 1024→2048 (+5.0%), 2048→4096 (+2.4%), 4096→8192 (+1.75%). Diminishing returns, approaching asymptote.
 2. **Pure RL emergent reasoning** — `<think>` blocks, self-correction, `\boxed{}` ALL emerged from binary reward. No scaffolding needed.
 3. **Curriculum escalation** — GSM8K → MATH 1-3 → MATH 2-5. Each step improved eval.
 4. **PPO > all other losses** — PPO is fast, stable, best quality. IS slower. CISPO same quality but 3x slower. DRO catastrophic.
@@ -23,6 +23,8 @@
 5. **Mixed easy+hard data** — Easy data dilutes hard signal.
 6. **MoE models** — 3B active << 8B dense for math.
 7. **Qwen3.5 models** — Not available on Tinker (400 errors).
+8. **500 harder MATH prompts** — More data didn't help when GROUP_SIZE was too small (G=4: 96% skip rate). With G=8 at 4096tok, got 0.9275 (close but below 0.93).
+9. **SFT→RL transfer** — Starting from SFT checkpoint got 0.84 eval, worse than pure RL (0.93).
 
 ## PROGRESS
 
@@ -40,12 +42,19 @@
 | 22 | e304 | MAX_TOKENS 4096 | 0.9050 | KEEP |
 | 23 | e348 | N_BATCHES 75 | 0.9125 | KEEP |
 | **24** | **e390** | **MAX_TOKENS 8192** | **0.9300** | **BEST** |
+| 25 | e405 | 500 hard prompts G=4 8192tok | 0.9100 | DISCARD |
+| 26 | e411 | 500 hard prompts G=8 4096tok | 0.9275 | DISCARD |
+| 27 | e416 | G=16 4096tok | 0.9050 | DISCARD |
+| 28 | e420 | G=16 8192tok (stopped early) | — | DISCARD |
 
 ## CURRENT BEST CONFIG
-Model: Qwen/Qwen3-8B, PPO, LR=4e-5, **MAX_TOKENS=8192**, GROUP_SIZE=4, BATCH_SIZE=128, N_BATCHES=50, LoRA rank=32. Pure binary reward, zero scaffolding.
+Model: Qwen/Qwen3-8B, PPO, LR=4e-5, **MAX_TOKENS=8192**, GROUP_SIZE=8, BATCH_SIZE=128, N_BATCHES=50, LoRA rank=32. Pure binary reward, zero scaffolding.
 
-Checkpoint: `tinker://f492465f-d690-51c9-ade5-d82271bf3130:train:0/weights/final`
-Sampler: `tinker://f492465f-d690-51c9-ade5-d82271bf3130:train:0/sampler_weights/final`
+## GROUP_SIZE FINDINGS
+- G=4 at 8192tok: best eval (0.93) but 95% skip rate, very few datums
+- G=8 at 4096tok: good balance, 0.905 eval
+- G=16 at 4096tok: best training signal (976 datums/batch, 0% unsolved) but eval limited by 4096tok
+- G=16 at 8192tok: too compute-heavy (~6min/batch), stopped early
 
 ## LOSS FUNCTION RANKING
 1. **PPO** — fast, stable, best
