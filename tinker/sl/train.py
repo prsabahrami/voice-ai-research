@@ -45,7 +45,7 @@ SYSTEM_PROMPT = None
 # ============================================================================
 # FIXED — Do not modify unless you know what you're doing
 # ============================================================================
-ADAM_BETA1 = 0.9
+ADAM_BETA1 = 0.85
 ADAM_BETA2 = 0.95
 ADAM_EPS = 1e-8
 
