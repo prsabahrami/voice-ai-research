@@ -39,7 +39,7 @@ litellm.suppress_debug_info = True
 # ============================================================
 
 TASK_LM = "anthropic/claude-sonnet-4-6"       # generates analyses
-EVALUATOR_LM = "openai/gpt-5.4"              # applies both rubrics
+EVALUATOR_LM = "anthropic/claude-opus-4-6"    # applies both rubrics (stronger, temp=0 supported)
 REFLECTION_LM = "anthropic/claude-opus-4-6"   # proposes improvements
 
 MAX_METRIC_CALLS = 800
@@ -153,7 +153,7 @@ def evaluate_with_rubric(rubric_text, question, response):
                     f"Scores (5 integers, comma-separated):"
                 )},
             ],
-            # gpt-5.4 only supports temperature=1 (default)
+            temperature=0,
             max_tokens=30,
         )
         return parse_multi_score(resp.choices[0].message.content)
