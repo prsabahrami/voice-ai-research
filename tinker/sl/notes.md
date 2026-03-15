@@ -239,7 +239,17 @@ The optimal config walks a razor's edge: rough enough for diversity, smooth enou
 - **Session 2**: 12 experiments (e364-e393), pushed to 94% MV via LR=6e-4
 - **Total**: 79 experiments
 
+## ANSWERED: SFT → RL Sequential Training
+**YES — SFT→RL exceeds both alone!**
+- SFT-only: MV@5 93-95% at temp=0.5
+- RL-only: 91.25% at temp=1.0
+- **SFT→RL: 93.0% at temp=1.0** (harder sampling!)
+- SFT gives RL a massive head start (0.818 at batch 1 vs ~0.15 base)
+- RL refines SFT's reasoning patterns, reaching 0.959 train peak
+- Checkpoint: `tinker://8b052865-5f53-5e6b-971c-38d916b61070:train:0`
+
 ## Open Questions
-1. Would SFT → RL sequential training exceed both alone?
+1. ~~Would SFT → RL sequential training exceed both alone?~~ **YES — 93% at temp=1.0!**
 2. Does a larger base model (e.g. 14B) respond better to SFT distillation?
 3. Can a smaller but higher-quality Claude seed (<100 traces) bootstrap effectively?
+4. Can SFT→RL→SFT iterative training push even higher?
