@@ -19,7 +19,7 @@ Each directory is a self-contained workspace with its own `program.md` (agent in
 1. **Pick a directory** based on your training method and backend
 2. **Edit `program.md`** — fill in Section 1 with your task description, model, and cost budget
 3. **Set credentials** — `export TINKER_API_KEY=...`, `prime login`, or `modal setup`
-4. **Launch an agent** from the directory: `cd <directory> && claude -p "Read program.md, then begin."`
+4. **Spin up your favourite coding agent** with the prompt: `"Read program.md and begin the loop!"`
 
 The agent will:
 - Create a git worktree for the experiment (main stays clean as the starter template)
