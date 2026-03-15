@@ -11,7 +11,7 @@
 | Qwen3-8B (base) | None | ~15% | — | $0 |
 | SFT (MATH solutions) | Human proofs | 42% | — | ~$1 |
 | SFT (Claude traces) | Distilled | 78-80% | 84-88% | ~$8 |
-| **SFT (self-distill)** | **Iterative** | **80-88%** | **86-94%** | **~$10** |
+| **SFT (self-distill)** | **Iterative** | **80-88%** | **94% avg** | **~$10** |
 | RL (GRPO exp 7) | Emergent | 83.13% | — | ~$20 |
 
 ## Self-Distillation Progression
@@ -32,7 +32,7 @@
 - Eval: temp=0.5, 5 samples, majority vote
 - Greedy (temp=0): 74-84% (noisy at n=50)
 
-**Definitive answer:** SFT beats RL by 7 points (90% vs 83%) with majority vote.
+**Definitive answer:** SFT beats RL by 11 points (94% vs 83%) with majority vote at LR=6e-4+4096.
 
 ## Key Findings (20 experiments)
 
