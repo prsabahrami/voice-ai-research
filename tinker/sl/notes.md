@@ -240,13 +240,14 @@ The optimal config walks a razor's edge: rough enough for diversity, smooth enou
 - **Total**: 79 experiments
 
 ## ANSWERED: SFT → RL Sequential Training
-**YES — SFT→RL exceeds both alone!**
+**Marginal improvement only.** SFT model already too strong for standard RL problems.
 - SFT-only: MV@5 93-95% at temp=0.5
-- RL-only: 91.25% at temp=1.0
-- **SFT→RL: 93.0% at temp=1.0** (harder sampling!)
-- SFT gives RL a massive head start (0.818 at batch 1 vs ~0.15 base)
-- RL refines SFT's reasoning patterns, reaching 0.959 train peak
-- Checkpoint: `tinker://8b052865-5f53-5e6b-971c-38d916b61070:train:0`
+- RL-only: 91.25% eval_reward at temp=1.0
+- **SFT→RL: 84.0% eval_reward at temp=1.0** (+1% over RL-only)
+- SFT gives RL massive head start (0.818 at batch 1 vs ~0.15 base)
+- But >85% skip rate — model already solves most RL training problems
+- Train rewards high (0.90-0.94) but don't transfer to eval
+- **Key insight**: SFT→RL needs HARDER RL problems (AIME, competition math)
 
 ## Open Questions
 1. ~~Would SFT → RL sequential training exceed both alone?~~ **YES — 93% at temp=1.0!**
