@@ -15,8 +15,8 @@ from tinker import types
 from transformers import AutoTokenizer
 
 MODEL = "Qwen/Qwen3-8B"
-MAX_TOKENS = 2048
-TEMPERATURE = 0.7
+MAX_TOKENS = 4096
+TEMPERATURE = 0.5
 EVAL_PROMPTS_PATH = "../../tinker/rl/eval_prompts.jsonl"
 
 _BOXED_RE = re.compile(r"\\boxed\{([^}]+)\}")

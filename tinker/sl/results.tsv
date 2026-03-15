@@ -83,3 +83,4 @@ cf0e3aa	0.096	keep	e345+: longer Claude + 5 self-distill → 2612 traces, MV 88%
 33c68f4	0.096	keep	e356: MAX_LENGTH=4096, MV 90% at 4096 eval, 86% at 2048
 b683169	0.096	keep	MV@16(4096tok)=92%, any=96%, exceeds RL 90.5%
 e9e549f	na	keep	greedy(4096tok)=80%, boxed=94%, same as 2048
+613eba2	0.094	keep	e364: LR=5e-4 at 4096, MV@5=92%(avg 90.7%), MV@16=96%(avg 94%), any=96%, BREAKS 92% ceiling

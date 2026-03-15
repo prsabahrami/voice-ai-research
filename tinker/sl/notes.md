@@ -130,13 +130,13 @@
 - Targeted traces: fix one problem, regress another (SFT is fragile)
 
 ### 12. Self-Consistency Scaling (final, temp=0.5, 4096 tokens)
-| Samples | MV (2048tok) | MV (4096tok) | Any Correct |
-|---------|-------------|-------------|-------------|
-| 5 | **90%** (9/9 repro) | **90%** | 92-94% |
-| 16 | 92% | **92%** | **96%** |
-| 32 | 92% | — | 96% |
+| Samples | MV (2048tok) | MV (4096tok, LR=4e-4) | MV (4096tok, LR=5e-4) | Any Correct |
+|---------|-------------|-------------|-------------|-------------|
+| 5 | **90%** (9/9 repro) | **90%** | **92%** (avg 90.7%) | 92-96% |
+| 16 | 92% | **92%** | **96%** (avg 94%) | **96%** |
+| 32 | 92% | — | — | 96% |
 
-MAX_TOKENS=4096 at eval matches RL's advantage. Both SFT and RL converge at ~90%.
+LR=5e-4 at 4096: MV@16 avg 94% (up from 92%). The rougher training (epoch 2 eval spike) preserves more output diversity. Ceiling is 96% (48/50) — only geometry/Asymptote problems unsolvable.
 
 ### 13. The 5 Hard Problems (unsolvable at MV@5)
 - #12 Fibonacci sum: sometimes fixable with targeted data (fragile)
@@ -166,8 +166,10 @@ Too little: underfitting. Too much: kills output diversity. Sweet spot: ~2500.
 
 ### 16. eval_loss and MV Are Inversely Correlated at Extremes
 - LR=2e-4: eval_loss 0.074 (best!) but MV 84% (worst!)
-- LR=4e-4: eval_loss 0.102 but MV 90% (best!)
+- LR=4e-4: eval_loss 0.102 but MV 90%
+- **LR=5e-4: eval_loss 0.094, MV@16 avg 94% (BEST!)**
 - Training "roughness" maintains output diversity for MV
+- Epoch 2 spike at LR=5e-4 (0.094→0.104→0.094) = beneficial diversity
 
 ### 17. Claude Seed is Necessary — Self-Distillation Can't Bootstrap
 - Base model: ~15% accuracy → can't generate enough correct traces
