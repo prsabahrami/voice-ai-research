@@ -1,1 +1,15 @@
 commit	val_score	status	description
+789d38c	0.750000	discard	technical writing, temp=0 stalls GEPA
+264c35a	0.750000	discard	temp=0.3 still ties, evaluator too coarse
+1d80c0a	0.750000	discard	gpt-5.4 temp=0 bug caused all evals to fail
+55c11fe	0.871667	keep	co-evolution working\! rubric evolved significantly
+99e5374	0.850000	keep	budget 200, system_prompt evolved significantly
+d492915	0.858333	keep	second-gen optimization, 6 candidates
+1168941	0.860000	keep	module_selector=all, 11 candidates, rubric cal 0.957
+0afe0ed	0.906667	keep	NEW BEST\! max_tokens=1200, 22 candidates, output_quality 0.84
+9f28cbc	0.916667	keep	NEW BEST\! evolved seed + cache, output_quality 0.847, rubric_cal 0.987
+8f45b9e	0.920000	keep	NEW BEST\! epsilon_greedy 3rd gen, output_quality 0.857
+1988976	0.913333	discard	gpt-5.4 as task LM, worse than sonnet (0.920)
+6c8e378	0.938333	keep	NEW BEST\! diverse data, output_quality 0.883, rubric_cal 0.993
+35cea2a	0.903750	keep	budget 800, 8-item val set harder (honest 0.904)
+828ca5d	0.910000	keep	opus evaluator, deterministic, interrupted at iter 77

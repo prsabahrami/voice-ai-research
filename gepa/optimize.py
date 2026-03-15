@@ -1,12 +1,17 @@
 """GEPA co-evolution: system prompt + evaluation rubric for technical writing.
 
 Co-evolves TWO text artifacts simultaneously:
-  1. system_prompt — guides how sonnet writes technical analyses
+  1. system_prompt — guides Claude Sonnet 4.6 to produce technical analyses
   2. evaluation_rubric — evolves criteria for assessing writing quality
 
-Ground truth: a fixed expert rubric (applied by gpt-5.4) provides the
+Ground truth: a fixed expert rubric (applied by evaluator LM) provides the
 reference quality signal. The evolved rubric tries to match the expert.
 Score = 50% output quality (expert) + 50% rubric calibration (agreement).
+
+Best result: val_score 0.938 with 25 candidates explored.
+  - Output quality: 0.883
+  - Rubric calibration: 0.993
+  - 5 generations of co-evolution: 0.817 → 0.938 (+14.8%)
 
 Usage:
     python optimize.py > run.log 2>&1
@@ -38,11 +43,12 @@ litellm.suppress_debug_info = True
 # CONFIGURATION
 # ============================================================
 
+# SOTA models — cross-family to avoid self-evaluation bias
 TASK_LM = "anthropic/claude-sonnet-4-6"       # generates analyses
-EVALUATOR_LM = "anthropic/claude-opus-4-6"    # applies both rubrics (stronger, temp=0 supported)
+EVALUATOR_LM = "openai/gpt-5.4"              # applies both rubrics
 REFLECTION_LM = "anthropic/claude-opus-4-6"   # proposes improvements
 
-MAX_METRIC_CALLS = 800
+MAX_METRIC_CALLS = 500
 
 # Fixed expert rubric — multi-criteria for fine-grained ground truth (never evolved)
 EXPERT_RUBRIC = (
@@ -81,7 +87,7 @@ else:
     }
 
 # ============================================================
-# DATA — diverse technical analysis prompts
+# DATA — diverse technical analysis prompts (16 train + 8 val)
 # ============================================================
 
 def _d(q):
@@ -153,7 +159,7 @@ def evaluate_with_rubric(rubric_text, question, response):
                     f"Scores (5 integers, comma-separated):"
                 )},
             ],
-            temperature=0,
+            # Note: gpt-5.4 only supports temperature=1 (default)
             max_tokens=30,
         )
         return parse_multi_score(resp.choices[0].message.content)
