@@ -59,7 +59,6 @@ CLAUDE.md                 # Claude Code instructions
 | `configs/rl/<config>.toml` | Training configuration | YES |
 | `notes.md` | Your lab notebook | YES — update after every experiment |
 | `results.tsv` | Experiment log | YES — append, do NOT commit |
-| `../rules.md` | Hard rules | NO — read before every experiment |
 
 **What you CAN modify:**
 - `environments/<env_name>/<env_name>.py` — environment implementation and reward functions (highest impact)
@@ -68,7 +67,6 @@ CLAUDE.md                 # Claude Code instructions
 
 **What you CANNOT modify:**
 - `program.md` — read-only. The human edits this, not you.
-- `../rules.md` — read-only. Hard constraints from 70+ experiments.
 - The Prime CLI or verifiers library internals. You use them, you don't modify them.
 
 ### Before Your First Experiment
@@ -77,13 +75,12 @@ CLAUDE.md                 # Claude Code instructions
    git checkout -b experiment/<short-task-description>
    ```
    All commits, reverts, and mutations happen on this branch. Main stays clean as the starter template.
-2. Read `rules.md` — hard constraints
-3. Read this entire program.md
-4. Read the task description in Section 1
-5. Run `prime lab setup` if not already done
-6. Design and implement the environment (Section 6)
-7. Write the training config (Section 7)
-8. Do research — search for papers, read Prime docs, check existing environments
+2. Read this entire program.md
+3. Read the task description in Section 1
+4. Run `prime lab setup` if not already done
+5. Design and implement the environment (Section 6)
+6. Write the training config (Section 7)
+7. Do research — search for papers, read Prime docs, check existing environments
 
 ---
 
@@ -122,6 +119,19 @@ Check:
 - Baseline reward should be 10-80%. If 0%, task too hard. If >80%, too easy.
 - Reward diversity across examples (not all same score)
 - No crashes or errors in environment logic
+
+### Best Practices (from 550+ experiments)
+
+- **Default LR: 1e-5 for Prime RL.** Proven across dozens of runs.
+- **Temperature 1.0 for GRPO.** Lower temperatures cause model collapse.
+- **batch_size >= 128.** Below this, training loss is extremely noisy.
+- **Oversampling factor >= 2.0.** Buffers against ModelError bursts. 2.5 proven effective.
+- **max_async_level=1 for tighter sync.** Avoids off-policy lag.
+- **One change at a time per experiment.** So you know what caused the effect.
+- **Save checkpoint before changing the reward function.** Reward changes reset all progress.
+- **Read actual model completions per experiment.** Guards against reward hacking.
+- **Prefer non-thinking models for training.** Thinking models waste 80%+ of sequence length on think tokens.
+- **Start easy, scale difficulty gradually.** Starting too hard produces zero learning signal.
 
 ---
 
@@ -422,13 +432,13 @@ max_steps = 200
 batch_size = 128
 rollouts_per_example = 32
 
-learning_rate = 1e-5           # LoRA LR (see rules.md)
+learning_rate = 1e-5           # LoRA LR (see Best Practices)
 lora_alpha = 64                # LoRA scaling factor
 oversampling_factor = 2.5      # Extra rollouts for stability
-max_async_level = 1            # Tight sync (see rules.md)
+max_async_level = 1            # Tight sync (see Best Practices)
 
 [sampling]
-max_tokens = 512               # TASK-SPECIFIC (see rules.md)
+max_tokens = 512               # TASK-SPECIFIC
 
 [[env]]
 id = "my-env"                  # Installed environment name

@@ -38,7 +38,6 @@ Get your API key from [Tinker](https://tinker.thinkingmachines.ai). See [install
 | `eval_prompts.jsonl` | Held-out evaluation prompts | YES — but keep separate from training |
 | `notes.md` | Your lab notebook | YES — update after every experiment |
 | `results.tsv` | Experiment log | YES — append, do NOT commit |
-| `../../rules.md` | Hard rules | NO — read before every experiment |
 
 **What you CAN modify:**
 - `reward.py` — the reward function (highest impact lever)
@@ -47,7 +46,6 @@ Get your API key from [Tinker](https://tinker.thinkingmachines.ai). See [install
 
 **What you CANNOT modify:**
 - `program.md` — read-only. The human edits this, not you.
-- `../../rules.md` — read-only. Hard constraints from 70+ experiments.
 - The Tinker SDK internals. You call the API, you don't modify it.
 - Do not install new packages. Only use tinker, torch, and transformers.
 
@@ -57,13 +55,12 @@ Get your API key from [Tinker](https://tinker.thinkingmachines.ai). See [install
    git checkout -b experiment/<short-task-description>
    ```
    All commits, reverts, and mutations happen on this branch. Main stays clean as the starter template.
-2. Read `rules.md` — these are hard constraints, not suggestions
-3. Read this entire program.md
-4. Read the task description in Section 1
-5. Customize `reward.py` for the task
-6. Generate or source `prompts.jsonl` and `eval_prompts.jsonl` for the task
-7. Set hyperparameters in `train.py` (especially `MODEL`, `MAX_TOKENS`, `BATCH_SIZE`)
-8. Do research if needed — search for papers, read Tinker docs, check tinker-cookbook for relevant recipes
+2. Read this entire program.md
+3. Read the task description in Section 1
+4. Customize `reward.py` for the task
+5. Generate or source `prompts.jsonl` and `eval_prompts.jsonl` for the task
+6. Set hyperparameters in `train.py` (especially `MODEL`, `MAX_TOKENS`, `BATCH_SIZE`)
+7. Do research if needed — search for papers, read Tinker docs, check tinker-cookbook for relevant recipes
 
 ---
 
@@ -97,6 +94,18 @@ LOOP FOREVER:
 - Fix attempt 2: try a different approach
 - If it still crashes after 2 attempts: `git reset --hard HEAD~1` and try something completely different
 - Log all crashes in results.tsv with status "crash"
+
+### Best Practices (from 550+ experiments)
+
+- **NEVER use cosine LR scheduling for RL.** Cosine decay collapses to near-zero. Use **constant LR** only.
+- **Temperature 1.0 for GRPO.** Lower temperatures cause model collapse in ~10 steps.
+- **batch_size >= 128.** Below this, training loss is extremely noisy.
+- **max_tokens must be task-specific.** Default is catastrophically wasteful. Set to minimum viable + buffer.
+- **One change at a time per experiment.** So you know what caused the effect.
+- **Save checkpoint before changing the reward function.** Reward changes reset all progress.
+- **Read 3 actual model completions per experiment.** Guards against reward hacking.
+- **Reward stability > reward perfection.** A mediocre stable reward beats a "perfect" reward you keep tweaking.
+- **Start easy, scale difficulty gradually.** Starting too hard produces zero learning signal.
 
 ### Curriculum Triggers
 After each experiment, check eval_all_one_rate and eval_all_zero_rate:
@@ -152,10 +161,10 @@ The mutable constants at the top of `train.py`:
 | `MODEL` | `Qwen/Qwen3-8B` | Base model. See Section 5 for available models. |
 | `LORA_RANK` | `32` | LoRA rank. 32 is the cookbook default. Higher = more capacity but more compute. |
 | `LEARNING_RATE` | `4e-5` | **Constant LR. NEVER use cosine.** Scale with sqrt(batch_size). |
-| `BATCH_SIZE` | `128` | Prompts per batch. **Must be >= 128** (see rules.md). |
+| `BATCH_SIZE` | `128` | Prompts per batch. **Must be >= 128.** |
 | `GROUP_SIZE` | `16` | Rollouts per prompt. More = better advantage estimates but more sampling time. 4-16 typical. |
 | `MAX_TOKENS` | `64` | **MUST be task-specific.** Arithmetic: 32-64. Math: 256-512. Code: 1024-2048. |
-| `TEMPERATURE` | `1.0` | **Always 1.0 for GRPO.** (see rules.md) |
+| `TEMPERATURE` | `1.0` | **Always 1.0 for GRPO.** |
 | `N_BATCHES` | `50` | Total training batches. More = longer training. |
 | `LOSS_FN` | `importance_sampling` | Default GRPO loss. Alternatives: `ppo`, `cispo`, `dro`. |
 | `SAVE_EVERY` | `10` | Checkpoint every N batches. 0 = disabled. |

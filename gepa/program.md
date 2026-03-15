@@ -19,7 +19,6 @@ Autonomous prompt optimization using [GEPA](https://github.com/gepa-ai/gepa) (Ge
 
 1. **Create an experiment branch**: `git checkout -b experiment/<short-description>`
 2. **Read the files**:
-   - `../rules.md` — hard constraints
    - `optimize.py` — the script you modify (models, data, seed prompt, budget)
 3. **Set API key**: `export OPENAI_API_KEY=...` (or `ANTHROPIC_API_KEY`)
 4. **Install GEPA**: `pip install gepa`
@@ -53,6 +52,12 @@ a1b2c3d	0.850000	keep	better seed prompt for math
 b2c3d4e	0.720000	discard	switched to gpt-4.1-nano (too weak)
 ```
 
+### Best Practices (from 550+ experiments)
+
+- **One change at a time per experiment.** So you know what caused the effect.
+- **Data quality >> model choice >> GEPA config.** Better evaluation data improves results more than switching models.
+- **Start with a small budget (30), increase once stable.** Avoids wasting API calls on broken configs.
+
 ## 4. What You Can Modify
 
 **optimize.py** — everything is fair game:
@@ -65,7 +70,6 @@ b2c3d4e	0.720000	discard	switched to gpt-4.1-nano (too weak)
 
 **What you CANNOT modify:**
 - `program.md` — read-only
-- `../rules.md` — read-only
 - GEPA library internals
 
 ## 5. GEPA Configuration Guide

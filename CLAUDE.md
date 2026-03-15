@@ -10,7 +10,7 @@ Autonomous training harness inspired by Karpathy's autoresearch. Tree of self-co
 - `gepa/` — Prompt optimization with GEPA (evolutionary Pareto search + LLM reflection)
 - `lab` — Experiment tracking CLI (5 commands, SQLite, zero deps)
 - `data/` — Experiment database (experiments.db) — gitignored
-- `rules.md` — Universal hard rules from 70+ experiments (22 rules)
+- Each `program.md` contains best practices from 550+ experiments
 
 ## How it works
 User edits `program.md` Section 1 with their task description. Agent reads it, builds the setup, then loops forever: hypothesize with mechanism → modify one thing → run → evaluate → confirm/refute mechanism → keep/discard. The `lab` CLI provides structured experiment memory across sessions.

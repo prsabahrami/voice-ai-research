@@ -38,7 +38,6 @@ To reset after an experiment: `git checkout main` (or run `./clean.sh` to also r
 posttrainer/
 ├── README.md              ← you are here
 ├── lab                    ← experiment tracking CLI (SQLite, 5 commands, zero deps)
-├── rules.md               ← hard rules from 70+ real experiments
 ├── clean.sh               ← reset generated files
 ├── data/                  ← experiment database (gitignored)
 │   └── experiments.db
@@ -118,17 +117,6 @@ For **pre-training** (`pretrain/`), the model is defined in `train.py` and train
 | Prompt/rubric optimization | GEPA | `gepa/` |
 | Agent architecture search | GEPA | `gepa/` |
 
-## Hard Rules
-
-All training is governed by `rules.md` — 22 hard rules derived from 70+ real experiments. The most critical:
-
-1. **NEVER use cosine LR scheduling for RL** — it collapses to zero. Use constant.
-2. **Temperature 1.0 for GRPO** — lower temperatures cause model collapse.
-3. **batch_size >= 128** — below this, training is too noisy.
-4. **One change per experiment** — so you know what caused the effect.
-5. **Save checkpoint before changing the reward function** — reward changes reset progress.
-6. **Read 3 sample completions per experiment** — guards against reward hacking.
-
 ## How It Works
 
 This project follows the [autoresearch](https://github.com/karpathy/autoresearch) pattern:
@@ -139,7 +127,7 @@ This project follows the [autoresearch](https://github.com/karpathy/autoresearch
 4. **`results.tsv` is the scoreboard** — one number to optimize (val_bpb, eval_reward_mean, or eval_loss)
 5. **`lab` CLI is the research memory** — structured hypotheses, mechanism tracking, failure avoidance. Queryable across sessions.
 
-The key insight from [the blog post](https://hamzamostafa.com/blog/agents-training-their-own-models): agents are good at *execution* within constraints but poor at *judgment*. So we make the human decisions strategic and the agent decisions tactical. The constraints (rules.md, program.md) are what make it work.
+The key insight from [the blog post](https://hamzamostafa.com/blog/agents-training-their-own-models): agents are good at *execution* within constraints but poor at *judgment*. So we make the human decisions strategic and the agent decisions tactical. The constraints (`program.md` + best practices) are what make it work.
 
 ## References
 

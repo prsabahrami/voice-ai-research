@@ -36,11 +36,11 @@ from reward import compute_reward
 # ============================================================================
 MODEL = "Qwen/Qwen3-8B"                    # Base model to fine-tune
 LORA_RANK = 32                              # LoRA rank (32 = cookbook default)
-LEARNING_RATE = 4e-5                        # Constant LR (NEVER use cosine, see rules.md)
-BATCH_SIZE = 128                            # Prompts per training batch (>= 128, see rules.md)
+LEARNING_RATE = 4e-5                        # Constant LR (NEVER use cosine, see best practices)
+BATCH_SIZE = 128                            # Prompts per training batch (>= 128, see best practices)
 GROUP_SIZE = 16                             # Rollouts per prompt (GRPO group size)
-MAX_TOKENS = 64                             # Max response tokens (TASK-SPECIFIC, see rules.md)
-TEMPERATURE = 1.0                           # Sampling temperature (1.0 for GRPO, see rules.md)
+MAX_TOKENS = 64                             # Max response tokens (TASK-SPECIFIC, see best practices)
+TEMPERATURE = 1.0                           # Sampling temperature (1.0 for GRPO, see best practices)
 N_BATCHES = 50                              # Total training batches (0 = use all data)
 SAVE_EVERY = 10                             # Checkpoint every N batches (0 = disabled)
 LOSS_FN = "importance_sampling"             # Loss: importance_sampling, ppo, cispo, dro
@@ -319,7 +319,7 @@ def main():
                 )
                 datums_D.append(datum)
 
-        # Training step (pipelined for same clock cycle — see rules.md)
+        # Training step (pipelined for same clock cycle — see best practices)
         if datums_D:
             fwd_bwd_future = training_client.forward_backward(
                 datums_D, loss_fn=LOSS_FN
@@ -369,7 +369,7 @@ def main():
     print(f"eval_all_one_rate: {eval_results['eval_all_one_rate']:.6f}")
     print(f"eval_all_zero_rate: {eval_results['eval_all_zero_rate']:.6f}")
 
-    # Sample completions for quality check (agent MUST read these — see rules.md #10)
+    # Sample completions for quality check (agent MUST read these — see best practices #10)
     print("\n--- SAMPLE COMPLETIONS (read these to check for reward hacking) ---")
     for prompt, completion, reward in eval_results["sample_completions"]:
         print(f"PROMPT: {prompt}")

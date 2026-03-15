@@ -20,7 +20,6 @@ To set up a new experiment:
 
 1. **Create an experiment branch** (never work on main): `git checkout -b experiment/<short-description>`
 2. **Read the in-scope files**. The repo is small. Read these files for full context:
-   - `../rules.md` — hard constraints from 70+ experiments.
    - `train.py` — the file you modify. Model architecture, optimizer, training loop.
    - `prepare.py` — fixed constants, data prep, tokenizer, dataloader, evaluation. Do not modify.
 3. **Verify data exists**: `modal volume ls autoresearch-data` — should contain `data/` and `tokenizer/`.
@@ -129,5 +128,14 @@ LOOP FOREVER:
 **Timeout**: ~5 minutes per experiment. Kill anything over 10 minutes.
 
 **Crashes**: If trivial (typo, missing import), fix and re-run. If fundamentally broken, skip and move on.
+
+### Best Practices (from 550+ experiments)
+
+- **Compare experiments at the same token count, not steps or epochs.** Tokens seen is the only fair comparison unit.
+- **Use BPB (bits per byte) as the primary metric.** BPB is tokenizer-agnostic: `BPB = loss_nats / (ln(2) * bytes_per_token)`.
+- **Simplicity criterion.** Equal BPB + simpler code = KEEP. Small BPB gain + ugly complexity = DISCARD.
+- **No new dependencies.** Only use packages in pyproject.toml.
+- **VRAM is a soft constraint.** Some increase is acceptable for meaningful BPB gains.
+- **One change at a time per experiment.** So you know what caused the effect.
 
 **NEVER STOP**: Do NOT ask "should I continue?". The human expects you to work *indefinitely* until manually stopped. If you run out of ideas, think harder — read papers, re-read code, combine near-misses, try radical changes.

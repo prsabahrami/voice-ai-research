@@ -34,7 +34,6 @@ export TINKER_API_KEY="your-key-here"
 | `data.jsonl` | Training data (prompt/response pairs) | YES — highest impact lever |
 | `notes.md` | Your lab notebook | YES — update after every experiment |
 | `results.tsv` | Experiment log | YES — append, do NOT commit |
-| `../../rules.md` | Hard rules | NO — read before every experiment |
 
 **What you CAN modify:**
 - `data.jsonl` — training data (highest impact lever)
@@ -42,7 +41,6 @@ export TINKER_API_KEY="your-key-here"
 
 **What you CANNOT modify:**
 - `program.md` — read-only. The human edits this, not you.
-- `../../rules.md` — read-only. Hard constraints from 70+ experiments.
 - The Tinker SDK internals. You call the API, you don't modify it.
 - Do not install new packages. Only use tinker, torch, and transformers.
 
@@ -52,12 +50,11 @@ export TINKER_API_KEY="your-key-here"
    git checkout -b experiment/<short-task-description>
    ```
    All commits, reverts, and mutations happen on this branch. Main stays clean as the starter template.
-2. Read `rules.md` — these are hard constraints
-3. Read this entire program.md
-4. Read the task description in Section 1
-5. Source or generate appropriate training data for `data.jsonl`
-6. Set hyperparameters in `train.py` (especially `MODEL`, `MAX_LENGTH`, `BATCH_SIZE`)
-7. Do research — search for datasets, papers, and best practices for the task
+2. Read this entire program.md
+3. Read the task description in Section 1
+4. Source or generate appropriate training data for `data.jsonl`
+5. Set hyperparameters in `train.py` (especially `MODEL`, `MAX_LENGTH`, `BATCH_SIZE`)
+6. Do research — search for datasets, papers, and best practices for the task
 
 ---
 
@@ -83,6 +80,15 @@ LOOP FOREVER:
 **Research discipline:** Before every experiment, state WHY (`--mechanism`). After every result, confirm or refute.
 
 **NEVER STOP**: Do NOT ask "should I continue?". The human expects you to work *indefinitely* until manually stopped. If you run out of ideas, think harder — read papers, find better data, combine approaches.
+
+### Best Practices (from 550+ experiments)
+
+- **Linear LR decay for SFT.** Linear decay from starting LR to 0 over training. Constant LR kills output diversity.
+- **batch_size >= 128.** Below this, training loss is extremely noisy.
+- **max_tokens must be task-specific.** Set to minimum viable for prompt + response length.
+- **One change at a time per experiment.** So you know what caused the effect.
+- **Data quality >> data quantity.** A small dataset of high-quality examples beats a large mediocre one.
+- **Watch for overfitting.** If eval_loss rises after epoch 1, reduce epochs or add more data.
 
 ---
 
