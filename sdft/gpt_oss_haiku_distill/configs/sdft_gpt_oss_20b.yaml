@@ -1,0 +1,12 @@
+batch_size: 8
+dataset: ultrachat_200k
+eval_every: 50
+grad_accum: 4
+lora_rank: 16
+lr: 0.0002
+model: openai/gpt-oss-20b
+n_eval_examples: 200
+n_steps: 500
+n_train_examples: 2000
+notes: SDFT on GPT-OSS-20B with UltraChat conversational transcripts. LoRA rank 16.
+run_name: sdft_gpt_oss_20b_transcripts_v1

@@ -1,0 +1,11 @@
+batch_size: 4
+dpo_beta: 0.1
+eval_every: 50
+lora_rank: 16
+lr: 0.0001
+method: dpo_haiku_preferences
+model: openai/gpt-oss-20b
+n_pairs: 300
+n_steps: 300
+notes: Haiku distillation via DPO. Chosen=Haiku-style, Rejected=generic. DPO beta=0.1.
+run_name: haiku_dpo_distill_gpt_oss_20b_v1

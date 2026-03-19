@@ -1,0 +1,10 @@
+batch_size: 4
+dpo_beta: 0.1
+eval_every: 50
+lora_rank: 16
+lr: 0.0001
+model: openai/gpt-oss-20b
+n_preference_pairs: 200
+n_steps: 300
+notes: SDPO on GPT-OSS-20B. Chosen=Haiku-style, Rejected=flat-tone baseline. DPO beta=0.1.
+run_name: sdpo_gpt_oss_20b_haiku_prefs_v1

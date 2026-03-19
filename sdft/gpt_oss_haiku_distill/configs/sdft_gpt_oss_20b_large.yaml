@@ -1,0 +1,12 @@
+batch_size: 8
+dataset: ultrachat_200k
+eval_every: 100
+grad_accum: 8
+lora_rank: 32
+lr: 0.0001
+model: openai/gpt-oss-20b
+n_eval_examples: 500
+n_steps: 1000
+n_train_examples: 5000
+notes: 'Larger SDFT run: 5k examples, 1000 steps, rank 32.'
+run_name: sdft_gpt_oss_20b_transcripts_large_v1
