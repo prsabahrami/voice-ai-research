@@ -1,10 +1,11 @@
-# SFT Baseline Training Results
+# SFT Baseline Training Results - COMPLETE
 
 ## Experiment Details
 
-**Date**: 2026-03-19
-**Hardware**: NVIDIA H100 80GB HBM3 (Lambda Cloud)
-**Model**: `unsloth/orpheus-3b-0.1-ft` (Orpheus-3B, publicly accessible)
+**Date**: 2026-03-19  
+**Completion time**: 12:52 UTC  
+**Hardware**: NVIDIA H100 80GB HBM3 (Lambda Cloud, 192.222.55.210)  
+**Model**: `unsloth/orpheus-3b-0.1-ft` (Orpheus-3B, publicly accessible)  
 **Dataset**: LJSpeech-1.1 (13,100 utterances, ~24h, single speaker Linda Johnson)
 
 ## Training Configuration
@@ -19,46 +20,62 @@
 | Train examples | 11,790 |
 | Eval examples | 1,310 |
 | Epochs | 3 |
-| Batch size | 8 |
-| Gradient accumulation | 4 |
 | Effective batch size | 32 |
 | Learning rate | 2e-4 (cosine decay) |
 | Warmup | 100 steps |
 | Precision | bf16 |
 | Max seq length | 512 |
+| Total steps | 1,107 |
 
-## Training Loss Curve
+## Final Training Metrics
 
-| Step | Epoch | Train Loss | Eval Loss |
-|------|-------|-----------|-----------|
-| 10   | 0.027 | 3.5280    | -         |
-| 20   | 0.054 | 2.9769    | -         |
-| 30   | 0.081 | 2.2405    | -         |
-| 40   | 0.109 | 1.7671    | -         |
-| 50   | 0.136 | 1.5692    | -         |
-| 60   | 0.163 | 1.5547    | -         |
-| 80   | 0.217 | 1.4963    | -         |
-| 100  | 0.271 | 1.5098    | **1.4753**|
-| 150  | 0.407 | 1.4735    | -         |
-| 200  | 0.543 | 1.4714    | **1.4272**|
-| 300  | 0.814 | 1.4154    | **1.3920**|
-| 400  | 1.084 | 1.2904    | **1.3825**|
+| Metric | Value |
+|--------|-------|
+| Training runtime | 2495.9s (41.6 min) |
+| Avg train loss | 1.319 |
+| Samples/second | 14.17 |
+| Mean token accuracy | 0.783 |
+| Total FLOPs | 4.12e16 |
 
-Loss drops sharply during warmup (steps 10-60), then stabilizes around 1.45-1.50, 
-then continues declining as training progresses through epoch 1.
+## Eval Loss Trajectory
+
+| Step | Epoch | Eval Loss | Notes |
+|------|-------|-----------|-------|
+| 100  | 0.27  | 1.4753    | End of warmup phase |
+| 200  | 0.54  | 1.4272    | Steady improvement |
+| 300  | 0.81  | 1.3920    | |
+| 400  | 1.08  | 1.3825    | Epoch 1 complete |
+| 500  | 1.36  | 1.3749    | |
+| 600  | 1.63  | 1.3613    | |
+| **700** | **1.90** | **1.3553** | **BEST - checkpoint selected for final_model/** |
+| 800  | 2.17  | 1.3866    | Overfitting begins (train loss 1.10 but eval up) |
+| 900  | 2.44  | 1.3846    | |
+| 1000 | 2.71  | 1.3839    | |
+| 1100 | 2.98  | 1.3833    | Near epoch 3 end |
+
+Best checkpoint: step 700 (epoch 1.90), eval_loss=1.3553
 
 ## Checkpoint Locations (Lambda H100)
 
 ```
 /home/ubuntu/voice_ai_sft_baseline/
-├── checkpoint-200/       # LoRA adapter at epoch 0.54
-├── checkpoint-300/       # LoRA adapter at epoch 0.81
-├── checkpoint-400/       # LoRA adapter at epoch 1.08 (best so far)
-├── final_model/          # Final trained LoRA adapter (after 3 epochs)
-├── sft_config.json       # Training configuration
-├── loss_curve.json       # Full training history
-└── eval_metrics.json     # Final evaluation metrics
+├── final_model/          <- Best model (checkpoint-700 weights, load_best_model_at_end=True)
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── chat_template.jinja
+│   ├── tokenizer.json
+│   └── tokenizer_config.json
+├── checkpoint-700/       <- Best checkpoint (eval_loss=1.3553)
+├── checkpoint-1100/      <- Latest checkpoint
+├── checkpoint-1107/      <- Final training checkpoint
+├── training_metrics.json <- Full training history JSON
+└── sft_config.json       <- Configuration used
+
 ```
+
+## Key Finding: Overfitting After Epoch 2
+
+Train loss dropped to 1.085 by epoch 3 but eval loss stabilized at ~1.383 after peak at step 700. This is expected for SFT on a small, single-speaker dataset. The final_model/ contains the best epoch-1.9 weights.
 
 ## Using the SFT Checkpoint
 
@@ -66,16 +83,22 @@ then continues declining as training progresses through epoch 1.
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 
-# Load base model + SFT LoRA adapter
-base_model = AutoModelForCausalLM.from_pretrained("unsloth/orpheus-3b-0.1-ft")
-model = PeftModel.from_pretrained(base_model, "/home/ubuntu/voice_ai_sft_baseline/final_model")
+# Load base model + best SFT LoRA adapter
+base = AutoModelForCausalLM.from_pretrained(
+    "unsloth/orpheus-3b-0.1-ft",
+    torch_dtype="bfloat16",
+    device_map="auto"
+)
+model = PeftModel.from_pretrained(
+    base, 
+    "/home/ubuntu/voice_ai_sft_baseline/final_model"
+)
+tokenizer = AutoTokenizer.from_pretrained(
+    "/home/ubuntu/voice_ai_sft_baseline/final_model"
+)
 ```
 
-## Relationship to SDFT and DPO
+## Downstream Use
 
-This SFT baseline checkpoint is the foundation for:
-- **SDFT** (Self-Distillation Fine-Tuning): uses SFT checkpoint as starting point for iterative self-improvement
-- **DPO** (Direct Preference Optimization): uses SFT checkpoint as reference model for preference learning
-
-The SFT checkpoint provides a properly fine-tuned baseline that has learned the TTS formatting/conditioning, 
-which SDFT and DPO then refine with richer training signals.
+- **DPO**: Use `final_model/` as reference model (best eval_loss=1.3553, checkpoint-700 weights)
+- **SDFT**: Use `final_model/` as starting point for iterative self-improvement rounds
