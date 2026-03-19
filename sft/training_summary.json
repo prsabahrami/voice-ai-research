@@ -1,0 +1,16 @@
+{
+  "model": "unsloth/orpheus-3b-0.1-ft",
+  "lora_rank": 32,
+  "dataset": "LJSpeech-1.1",
+  "num_examples": 13100,
+  "num_epochs": 3,
+  "training_time_seconds": 2496,
+  "final_step_loss": 1.0847,
+  "epoch_avg_loss": 1.319,
+  "eval_loss": 1.383,
+  "train_token_accuracy": 0.7835,
+  "eval_token_accuracy": 0.7462,
+  "final_model_path": "/home/ubuntu/voice_ai_sft_baseline/final_model/",
+  "base_model": "unsloth/orpheus-3b-0.1-ft",
+  "completed_at": "2026-03-19T12:51:47Z"
+}

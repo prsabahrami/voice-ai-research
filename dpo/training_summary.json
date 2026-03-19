@@ -1,0 +1,19 @@
+{
+  "base_model": "unsloth/orpheus-3b-0.1-ft",
+  "sft_checkpoint": "/home/ubuntu/voice_ai_sft_baseline/checkpoint-900",
+  "lora_rank": 8,
+  "dataset": "LJSpeech-1.1 text preference pairs",
+  "num_examples": 1500,
+  "num_epochs": 1,
+  "beta": 0.1,
+  "training_time_seconds": 206.2,
+  "final_step_loss": 0.2543,
+  "epoch_avg_loss": 0.3108,
+  "eval_loss": 0.2888,
+  "reward_accuracy": 0.9714,
+  "reward_margin": 1.819,
+  "rewards_chosen": 0.6127,
+  "rewards_rejected": -1.206,
+  "final_model_path": "/home/ubuntu/voice_ai_dpo/dpo_output/final_model/",
+  "completed_at": "2026-03-19T12:48:42Z"
+}
