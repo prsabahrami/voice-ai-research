@@ -22,8 +22,10 @@ prime/uv.lock
 # Pretrain generated files
 pretrain/uv.lock
 
-# Lab CLI database and logs
-data/
+# Lab CLI database and logs (allow README and scripts in data/)
+data/*.db
+data/*.log
+data/lab.db
 
 # Personal notes
 experiments.md
