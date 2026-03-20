@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "run_name": "sdft_gpt_oss_20b_transcripts_v1",
+  "lora_rank": 16,
+  "n_steps": 500,
+  "batch_size": 8,
+  "grad_accum": 4,
+  "lr": 0.0002,
+  "eval_every": 50,
+  "n_train_examples": 2000,
+  "n_eval_examples": 200,
+  "dataset": "ultrachat_200k",
+  "notes": "SDFT on GPT-OSS-20B with UltraChat conversational transcripts. LoRA rank 16."
+}

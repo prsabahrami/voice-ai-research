@@ -1,0 +1,555 @@
+nohup: ignoring input
+/workspace/sdpo_sie_sweep.py:171: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"SDPO Sweep starting at {datetime.datetime.utcnow().isoformat()}Z")
+PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+/workspace/sdpo_sie_sweep.py:27: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+SDPO Sweep starting at 2026-03-19T21:20:19.609633Z
+Model: openai/gpt-oss-20b, LoRA rank: 8
+Configs: 4 betas x 3 LRs x 3 n_pairs = 36 experiments
+
+============================================================
+Starting sdpo_sie_001: beta=0.1, lr=0.0001, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317333.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=97.19697570800781, metrics={'clock_cycle:unique': 317335.0, 'e_max_violation:mean': 6.732421875, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 97.19697570800781, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=96.77552032470703, metrics={'clock_cycle:unique': 317337.0, 'e_max_violation:mean': 6.727864742279053, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 96.77552032470703, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=67.67272186279297, metrics={'clock_cycle:unique': 317339.0, 'e_max_violation:mean': 6.728733062744141, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 67.67272186279297, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=69.21534729003906, metrics={'clock_cycle:unique': 317341.0, 'e_max_violation:mean': 6.723525047302246, 'e_max_violation:max': 6.9375, 'loss:sum': 69.21534729003906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8333333730697632, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_001] OK: {"final_loss": 69.21534729003906, "avg_loss": 92.84661254882812, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_002: beta=0.1, lr=0.0001, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974610.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=97.99563598632812, metrics={'clock_cycle:unique': 1974612.0, 'loss:sum': 97.99563598632812, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732421875, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=97.59757995605469, metrics={'clock_cycle:unique': 1974614.0, 'loss:sum': 97.59757995605469, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.726996898651123, 'e_frac_with_tokens:mean': 0.84375}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=66.73656463623047, metrics={'clock_cycle:unique': 1974616.0, 'loss:sum': 66.73656463623047, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728299140930176, 'e_frac_with_tokens:mean': 0.8515625}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=67.23046875, metrics={'clock_cycle:unique': 1974618.0, 'loss:sum': 67.23046875, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723525047302246, 'e_frac_with_tokens:mean': 0.828125}
+[sdpo_sie_002] OK: {"final_loss": 67.23046875, "avg_loss": 92.5865493774414, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_003: beta=0.1, lr=0.0001, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974629.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=99.96147155761719, metrics={'clock_cycle:unique': 1974631.0, 'loss:sum': 99.96147155761719, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732421875, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=98.56095886230469, metrics={'clock_cycle:unique': 1974633.0, 'loss:sum': 98.56095886230469, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.728299140930176, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=66.88057708740234, metrics={'clock_cycle:unique': 1974635.0, 'loss:sum': 66.88057708740234, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.727864742279053, 'e_frac_with_tokens:mean': 0.8528646230697632}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=67.78102111816406, metrics={'clock_cycle:unique': 1974637.0, 'loss:sum': 67.78102111816406, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7233076095581055, 'e_frac_with_tokens:mean': 0.828125}
+[sdpo_sie_003] OK: {"final_loss": 67.78102111816406, "avg_loss": 93.31130523681641, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_004: beta=0.1, lr=0.0002, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974640.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=83.82867431640625, metrics={'clock_cycle:unique': 1974642.0, 'loss:sum': 83.82867431640625, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732205390930176, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=82.27622985839844, metrics={'clock_cycle:unique': 1974644.0, 'loss:sum': 82.27622985839844, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730252265930176, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=56.13697814941406, metrics={'clock_cycle:unique': 1974646.0, 'loss:sum': 56.13697814941406, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7265625, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=49.76179504394531, metrics={'clock_cycle:unique': 1974648.0, 'loss:sum': 49.76179504394531, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.724392890930176, 'e_frac_with_tokens:mean': 0.84375}
+[sdpo_sie_004] OK: {"final_loss": 49.76179504394531, "avg_loss": 81.07523498535156, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_005: beta=0.1, lr=0.0002, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974651.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=82.76734924316406, metrics={'clock_cycle:unique': 1974653.0, 'loss:sum': 82.76734924316406, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7330732345581055, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=80.87586975097656, metrics={'clock_cycle:unique': 1974655.0, 'loss:sum': 80.87586975097656, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7311201095581055, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=53.82677459716797, metrics={'clock_cycle:unique': 1974657.0, 'loss:sum': 53.82677459716797, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7265625, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=48.59657669067383, metrics={'clock_cycle:unique': 1974659.0, 'loss:sum': 48.59657669067383, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.719618797302246, 'e_frac_with_tokens:mean': 0.8424479365348816}
+[sdpo_sie_005] OK: {"final_loss": 48.59657669067383, "avg_loss": 79.88781356811523, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_006: beta=0.1, lr=0.0002, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317358.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=84.94706726074219, metrics={'clock_cycle:unique': 317360.0, 'e_max_violation:mean': 6.732856273651123, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 84.94706726074219, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=81.78784942626953, metrics={'clock_cycle:unique': 317362.0, 'e_max_violation:mean': 6.729384422302246, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 81.78784942626953, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=55.438026428222656, metrics={'clock_cycle:unique': 317364.0, 'e_max_violation:mean': 6.725478172302246, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 55.438026428222656, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=48.921348571777344, metrics={'clock_cycle:unique': 317366.0, 'e_max_violation:mean': 6.720269680023193, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 48.921348571777344, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8411458730697632, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_006] OK: {"final_loss": 48.921348571777344, "avg_loss": 80.89335784912109, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_007: beta=0.1, lr=0.0005, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317372.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.11174392700195, metrics={'clock_cycle:unique': 317374.0, 'e_max_violation:mean': 6.733724117279053, 'e_max_violation:max': 6.9375, 'loss:sum': 60.11174392700195, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=60.72844696044922, metrics={'clock_cycle:unique': 317376.0, 'e_max_violation:mean': 6.731770992279053, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 60.72844696044922, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=24.437366485595703, metrics={'clock_cycle:unique': 317378.0, 'e_max_violation:mean': 6.728515625, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 24.437366485595703, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8606771230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=6.503076553344727, metrics={'clock_cycle:unique': 317380.0, 'e_max_violation:mean': 6.724392890930176, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 6.503076553344727, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_007] OK: {"final_loss": 6.503076553344727, "avg_loss": 57.03062629699707, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_008: beta=0.1, lr=0.0005, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974664.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.17350387573242, metrics={'clock_cycle:unique': 1974666.0, 'loss:sum': 60.17350387573242, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.733290672302246, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=57.47231674194336, metrics={'clock_cycle:unique': 1974668.0, 'loss:sum': 57.47231674194336, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732205390930176, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=24.566173553466797, metrics={'clock_cycle:unique': 1974670.0, 'loss:sum': 24.566173553466797, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7272138595581055, 'e_frac_with_tokens:mean': 0.8606771230697632}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=7.500644683837891, metrics={'clock_cycle:unique': 1974672.0, 'loss:sum': 7.500644683837891, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.725478172302246, 'e_frac_with_tokens:mean': 0.83984375}
+[sdpo_sie_008] OK: {"final_loss": 7.500644683837891, "avg_loss": 56.617027282714844, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_009: beta=0.1, lr=0.0005, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317391.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.30432891845703, metrics={'clock_cycle:unique': 317393.0, 'e_max_violation:mean': 6.7311201095581055, 'e_max_violation:max': 6.9375, 'loss:sum': 60.30432891845703, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=59.219444274902344, metrics={'clock_cycle:unique': 317395.0, 'e_max_violation:mean': 6.731988430023193, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 59.219444274902344, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=25.850357055664062, metrics={'clock_cycle:unique': 317397.0, 'e_max_violation:mean': 6.727864742279053, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 25.850357055664062, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8580729365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=7.101227760314941, metrics={'clock_cycle:unique': 317399.0, 'e_max_violation:mean': 6.722439765930176, 'e_max_violation:max': 6.921875, 'loss:sum': 7.101227760314941, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_009] OK: {"final_loss": 7.101227760314941, "avg_loss": 57.16957111358643, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_010: beta=0.2, lr=0.0001, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974675.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=96.47616577148438, metrics={'clock_cycle:unique': 1974677.0, 'loss:sum': 96.47616577148438, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732421875, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=98.76758575439453, metrics={'clock_cycle:unique': 1974679.0, 'loss:sum': 98.76758575439453, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7291669845581055, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=68.21638488769531, metrics={'clock_cycle:unique': 1974681.0, 'loss:sum': 68.21638488769531, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.730035305023193, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=68.99870300292969, metrics={'clock_cycle:unique': 1974683.0, 'loss:sum': 68.99870300292969, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723958492279053, 'e_frac_with_tokens:mean': 0.8346354365348816}
+[sdpo_sie_010] OK: {"final_loss": 68.99870300292969, "avg_loss": 93.16626739501953, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_011: beta=0.2, lr=0.0001, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974686.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=97.36006164550781, metrics={'clock_cycle:unique': 1974688.0, 'loss:sum': 97.36006164550781, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7330732345581055, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=97.787353515625, metrics={'clock_cycle:unique': 1974690.0, 'loss:sum': 97.787353515625, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.728515625, 'e_frac_with_tokens:mean': 0.84375}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=66.86006164550781, metrics={'clock_cycle:unique': 1974692.0, 'loss:sum': 66.86006164550781, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728299140930176, 'e_frac_with_tokens:mean': 0.8515625}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=67.64433288574219, metrics={'clock_cycle:unique': 1974694.0, 'loss:sum': 67.64433288574219, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722222805023193, 'e_frac_with_tokens:mean': 0.8307291865348816}
+[sdpo_sie_011] OK: {"final_loss": 67.64433288574219, "avg_loss": 92.60486145019532, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_012: beta=0.2, lr=0.0001, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317424.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=97.54216003417969, metrics={'clock_cycle:unique': 317426.0, 'e_max_violation:mean': 6.733290672302246, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 97.54216003417969, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=95.97341918945312, metrics={'clock_cycle:unique': 317428.0, 'e_max_violation:mean': 6.728733062744141, 'e_max_violation:max': 6.921875, 'loss:sum': 95.97341918945312, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8411458730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=67.34828186035156, metrics={'clock_cycle:unique': 317430.0, 'e_max_violation:mean': 6.728515625, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 67.34828186035156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=68.015869140625, metrics={'clock_cycle:unique': 317432.0, 'e_max_violation:mean': 6.723525047302246, 'e_max_violation:max': 6.9375, 'loss:sum': 68.015869140625, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83203125, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_012] OK: {"final_loss": 68.015869140625, "avg_loss": 92.45044555664063, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_013: beta=0.2, lr=0.0002, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974700.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=83.89578247070312, metrics={'clock_cycle:unique': 1974702.0, 'loss:sum': 83.89578247070312, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.73155403137207, 'e_frac_with_tokens:mean': 0.8333333730697632}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=80.74523162841797, metrics={'clock_cycle:unique': 1974704.0, 'loss:sum': 80.74523162841797, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730903148651123, 'e_frac_with_tokens:mean': 0.84375}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=54.83623504638672, metrics={'clock_cycle:unique': 1974706.0, 'loss:sum': 54.83623504638672, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72764778137207, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=48.36316680908203, metrics={'clock_cycle:unique': 1974708.0, 'loss:sum': 48.36316680908203, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.720920562744141, 'e_frac_with_tokens:mean': 0.83984375}
+[sdpo_sie_013] OK: {"final_loss": 48.36316680908203, "avg_loss": 80.24258270263672, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_014: beta=0.2, lr=0.0002, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=132.99183654785156, metrics={'clock_cycle:unique': 317458.0, 'e_max_violation:mean': 6.9604926109313965, 'e_max_violation:max': 6.9916157722473145, 'loss:sum': 132.99183654785156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9999364614486694}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=84.95619201660156, metrics={'clock_cycle:unique': 317461.0, 'e_max_violation:mean': 6.732205390930176, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 84.95619201660156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=81.53907775878906, metrics={'clock_cycle:unique': 317463.0, 'e_max_violation:mean': 6.9931182861328125, 'e_max_violation:max': 6.998004913330078, 'loss:sum': 81.53907775878906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9999889135360718}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=55.695369720458984, metrics={'clock_cycle:unique': 317465.0, 'e_max_violation:mean': 6.726129055023193, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 55.695369720458984, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=50.3673095703125, metrics={'clock_cycle:unique': 317468.0, 'e_max_violation:mean': 6.721137523651123, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 50.3673095703125, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_014] OK: {"final_loss": 50.3673095703125, "avg_loss": 81.10995712280274, "initial_loss": 132.99183654785156, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_015: beta=0.2, lr=0.0002, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974717.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=83.17655944824219, metrics={'clock_cycle:unique': 1974719.0, 'loss:sum': 83.17655944824219, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732856273651123, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=80.38246154785156, metrics={'clock_cycle:unique': 1974721.0, 'loss:sum': 80.38246154785156, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.73155403137207, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=55.302860260009766, metrics={'clock_cycle:unique': 1974723.0, 'loss:sum': 55.302860260009766, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.726346015930176, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=49.01641845703125, metrics={'clock_cycle:unique': 1974725.0, 'loss:sum': 49.01641845703125, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.720486640930176, 'e_frac_with_tokens:mean': 0.8346354365348816}
+[sdpo_sie_015] OK: {"final_loss": 49.01641845703125, "avg_loss": 80.2501594543457, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_016: beta=0.2, lr=0.0005, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=132.99183654785156, metrics={'clock_cycle:unique': 317494.0, 'e_max_violation:mean': 6.979234218597412, 'e_max_violation:max': 6.995593070983887, 'loss:sum': 132.99183654785156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9999666213989258}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.71025848388672, metrics={'clock_cycle:unique': 317495.0, 'e_max_violation:mean': 6.731770992279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 60.71025848388672, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=59.03935241699219, metrics={'clock_cycle:unique': 317498.0, 'e_max_violation:mean': 6.974629878997803, 'e_max_violation:max': 6.99267578125, 'loss:sum': 59.03935241699219, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9999593496322632}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=22.798322677612305, metrics={'clock_cycle:unique': 317499.0, 'e_max_violation:mean': 6.725043773651123, 'e_max_violation:max': 6.921875, 'loss:sum': 22.798322677612305, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8619791865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=6.777429580688477, metrics={'clock_cycle:unique': 317502.0, 'e_max_violation:mean': 6.975675582885742, 'e_max_violation:max': 6.994565486907959, 'loss:sum': 6.777429580688477, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9999811053276062}
+[sdpo_sie_016] OK: {"final_loss": 6.777429580688477, "avg_loss": 56.46343994140625, "initial_loss": 132.99183654785156, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_017: beta=0.2, lr=0.0005, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974731.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.26686096191406, metrics={'clock_cycle:unique': 1974733.0, 'loss:sum': 60.26686096191406, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732421875, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=58.07004165649414, metrics={'clock_cycle:unique': 1974735.0, 'loss:sum': 58.07004165649414, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.733290672302246, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=23.364540100097656, metrics={'clock_cycle:unique': 1974737.0, 'loss:sum': 23.364540100097656, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.726996898651123, 'e_frac_with_tokens:mean': 0.859375}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=7.077139854431152, metrics={'clock_cycle:unique': 1974739.0, 'loss:sum': 7.077139854431152, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722222805023193, 'e_frac_with_tokens:mean': 0.8463541865348816}
+[sdpo_sie_017] OK: {"final_loss": 7.077139854431152, "avg_loss": 56.430216026306155, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_018: beta=0.2, lr=0.0005, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317530.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.86729431152344, metrics={'clock_cycle:unique': 317533.0, 'e_max_violation:mean': 6.732639312744141, 'e_max_violation:max': 6.9375, 'loss:sum': 60.86729431152344, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=61.02191925048828, metrics={'clock_cycle:unique': 317534.0, 'e_max_violation:mean': 6.732639312744141, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 61.02191925048828, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=25.956928253173828, metrics={'clock_cycle:unique': 317536.0, 'e_max_violation:mean': 6.727431297302246, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 25.956928253173828, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=8.9055814743042, metrics={'clock_cycle:unique': 317538.0, 'e_max_violation:mean': 6.7233076095581055, 'e_max_violation:max': 6.921875, 'loss:sum': 8.9055814743042, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_018] OK: {"final_loss": 8.9055814743042, "avg_loss": 58.0248441696167, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_019: beta=0.3, lr=0.0001, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974745.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=98.197265625, metrics={'clock_cycle:unique': 1974747.0, 'loss:sum': 98.197265625, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732856273651123, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=96.18511962890625, metrics={'clock_cycle:unique': 1974749.0, 'loss:sum': 96.18511962890625, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.726779937744141, 'e_frac_with_tokens:mean': 0.8463541865348816}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=67.11550903320312, metrics={'clock_cycle:unique': 1974751.0, 'loss:sum': 67.11550903320312, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.729384422302246, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=68.20460510253906, metrics={'clock_cycle:unique': 1974754.0, 'loss:sum': 68.20460510253906, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723958492279053, 'e_frac_with_tokens:mean': 0.83203125}
+[sdpo_sie_019] OK: {"final_loss": 68.20460510253906, "avg_loss": 92.61499938964843, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_020: beta=0.3, lr=0.0001, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=132.99183654785156, metrics={'clock_cycle:unique': 317563.0, 'e_max_violation:mean': 6.974690914154053, 'e_max_violation:max': 6.99462890625, 'loss:sum': 132.99183654785156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9999593496322632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=97.91438293457031, metrics={'clock_cycle:unique': 317564.0, 'e_max_violation:mean': 6.732205390930176, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 97.91438293457031, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=97.00636291503906, metrics={'clock_cycle:unique': 317566.0, 'e_max_violation:mean': 6.728950023651123, 'e_max_violation:max': 6.921875, 'loss:sum': 97.00636291503906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=67.40333557128906, metrics={'clock_cycle:unique': 317568.0, 'e_max_violation:mean': 6.728515625, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 67.40333557128906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=68.15689086914062, metrics={'clock_cycle:unique': 317570.0, 'e_max_violation:mean': 6.722873687744141, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 68.15689086914062, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8307291865348816, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_020] OK: {"final_loss": 68.15689086914062, "avg_loss": 92.69456176757812, "initial_loss": 132.99183654785156, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_021: beta=0.3, lr=0.0001, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974757.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=97.130859375, metrics={'clock_cycle:unique': 1974759.0, 'loss:sum': 97.130859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732421875, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=97.85611724853516, metrics={'clock_cycle:unique': 1974761.0, 'loss:sum': 97.85611724853516, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7291669845581055, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=66.89620971679688, metrics={'clock_cycle:unique': 1974763.0, 'loss:sum': 66.89620971679688, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72960090637207, 'e_frac_with_tokens:mean': 0.8515625}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=68.0003433227539, metrics={'clock_cycle:unique': 1974765.0, 'loss:sum': 68.0003433227539, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7233076095581055, 'e_frac_with_tokens:mean': 0.828125}
+[sdpo_sie_021] OK: {"final_loss": 68.0003433227539, "avg_loss": 92.65120544433594, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_022: beta=0.3, lr=0.0002, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317597.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=83.73150634765625, metrics={'clock_cycle:unique': 317599.0, 'e_max_violation:mean': 6.732205390930176, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 83.73150634765625, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8307291865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=82.23057556152344, metrics={'clock_cycle:unique': 317601.0, 'e_max_violation:mean': 6.728515625, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 82.23057556152344, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=56.276275634765625, metrics={'clock_cycle:unique': 317604.0, 'e_max_violation:mean': 6.9726786613464355, 'e_max_violation:max': 6.992708683013916, 'loss:sum': 56.276275634765625, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9999783039093018}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=49.95702362060547, metrics={'clock_cycle:unique': 317605.0, 'e_max_violation:mean': 6.721571922302246, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 49.95702362060547, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_022] OK: {"final_loss": 49.95702362060547, "avg_loss": 81.1135757446289, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_023: beta=0.3, lr=0.0002, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317618.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=84.39356231689453, metrics={'clock_cycle:unique': 317620.0, 'e_max_violation:mean': 6.997529983520508, 'e_max_violation:max': 6.999518394470215, 'loss:sum': 84.39356231689453, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9999959468841553}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=82.29177856445312, metrics={'clock_cycle:unique': 317622.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 82.29177856445312, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=55.278663635253906, metrics={'clock_cycle:unique': 317624.0, 'e_max_violation:mean': 6.997625350952148, 'e_max_violation:max': 6.999367713928223, 'loss:sum': 55.278663635253906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9999980926513672}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=50.628509521484375, metrics={'clock_cycle:unique': 317625.0, 'e_max_violation:mean': 6.71983528137207, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 50.628509521484375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_023] OK: {"final_loss": 50.628509521484375, "avg_loss": 81.19300231933593, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_024: beta=0.3, lr=0.0002, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974785.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=83.62906646728516, metrics={'clock_cycle:unique': 1974787.0, 'loss:sum': 83.62906646728516, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732856273651123, 'e_frac_with_tokens:mean': 0.8333333730697632}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=80.24015808105469, metrics={'clock_cycle:unique': 1974789.0, 'loss:sum': 80.24015808105469, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730035305023193, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=55.654319763183594, metrics={'clock_cycle:unique': 1974791.0, 'loss:sum': 55.654319763183594, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.725911617279053, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=50.39596176147461, metrics={'clock_cycle:unique': 1974793.0, 'loss:sum': 50.39596176147461, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7213544845581055, 'e_frac_with_tokens:mean': 0.8411458730697632}
+[sdpo_sie_024] OK: {"final_loss": 50.39596176147461, "avg_loss": 80.65840072631836, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_025: beta=0.3, lr=0.0005, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=132.99183654785156, metrics={'clock_cycle:unique': 317651.0, 'e_max_violation:mean': 6.997104644775391, 'e_max_violation:max': 6.999385833740234, 'loss:sum': 132.99183654785156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9999954104423523}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.6385612487793, metrics={'clock_cycle:unique': 317652.0, 'e_max_violation:mean': 6.731988430023193, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 60.6385612487793, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=58.12077331542969, metrics={'clock_cycle:unique': 317654.0, 'e_max_violation:mean': 6.72960090637207, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 58.12077331542969, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=24.760517120361328, metrics={'clock_cycle:unique': 317656.0, 'e_max_violation:mean': 6.725478172302246, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 24.760517120361328, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8580729365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=8.96170425415039, metrics={'clock_cycle:unique': 317659.0, 'e_max_violation:mean': 6.996347427368164, 'e_max_violation:max': 6.999181747436523, 'loss:sum': 8.96170425415039, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9999971389770508}
+[sdpo_sie_025] OK: {"final_loss": 8.96170425415039, "avg_loss": 57.094678497314455, "initial_loss": 132.99183654785156, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_026: beta=0.3, lr=0.0005, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974802.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.421443939208984, metrics={'clock_cycle:unique': 1974804.0, 'loss:sum': 60.421443939208984, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.731770992279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=58.745277404785156, metrics={'clock_cycle:unique': 1974806.0, 'loss:sum': 58.745277404785156, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730686187744141, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=27.554283142089844, metrics={'clock_cycle:unique': 1974808.0, 'loss:sum': 27.554283142089844, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7272138595581055, 'e_frac_with_tokens:mean': 0.859375}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=7.9270148277282715, metrics={'clock_cycle:unique': 1974810.0, 'loss:sum': 7.9270148277282715, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722873687744141, 'e_frac_with_tokens:mean': 0.84375}
+[sdpo_sie_026] OK: {"final_loss": 7.9270148277282715, "avg_loss": 57.6041033744812, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_027: beta=0.3, lr=0.0005, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317689.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.20741271972656, metrics={'clock_cycle:unique': 317692.0, 'e_max_violation:mean': 6.733724117279053, 'e_max_violation:max': 6.9375, 'loss:sum': 60.20741271972656, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=58.41577911376953, metrics={'clock_cycle:unique': 317694.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.921875, 'loss:sum': 58.41577911376953, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=24.963157653808594, metrics={'clock_cycle:unique': 317697.0, 'e_max_violation:mean': 6.723958492279053, 'e_max_violation:max': 6.921875, 'loss:sum': 24.963157653808594, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.85546875, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=4.785314559936523, metrics={'clock_cycle:unique': 317699.0, 'e_max_violation:mean': 6.997466087341309, 'e_max_violation:max': 6.999337673187256, 'loss:sum': 4.785314559936523, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9999980330467224}
+[sdpo_sie_027] OK: {"final_loss": 4.785314559936523, "avg_loss": 56.348832321166995, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_028: beta=0.5, lr=0.0001, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974816.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=96.66363525390625, metrics={'clock_cycle:unique': 1974818.0, 'loss:sum': 96.66363525390625, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.733290672302246, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=95.63705444335938, metrics={'clock_cycle:unique': 1974820.0, 'loss:sum': 95.63705444335938, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.72764778137207, 'e_frac_with_tokens:mean': 0.84375}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=67.68136596679688, metrics={'clock_cycle:unique': 1974822.0, 'loss:sum': 67.68136596679688, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72764778137207, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=68.1833724975586, metrics={'clock_cycle:unique': 1974824.0, 'loss:sum': 68.1833724975586, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9479169845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723525047302246, 'e_frac_with_tokens:mean': 0.8333333730697632}
+[sdpo_sie_028] OK: {"final_loss": 68.1833724975586, "avg_loss": 92.30758514404297, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_029: beta=0.5, lr=0.0001, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=132.99183654785156, metrics={'clock_cycle:unique': 317724.0, 'e_max_violation:mean': 6.997523784637451, 'e_max_violation:max': 6.99947452545166, 'loss:sum': 132.99183654785156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9999960660934448}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=97.25759887695312, metrics={'clock_cycle:unique': 317727.0, 'e_max_violation:mean': 6.7330732345581055, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 97.25759887695312, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=96.94284057617188, metrics={'clock_cycle:unique': 317729.0, 'e_max_violation:mean': 6.995029449462891, 'e_max_violation:max': 6.998565196990967, 'loss:sum': 96.94284057617188, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9999920725822449}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=66.80413055419922, metrics={'clock_cycle:unique': 317731.0, 'e_max_violation:mean': 6.728733062744141, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 66.80413055419922, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=68.69490814208984, metrics={'clock_cycle:unique': 317733.0, 'e_max_violation:mean': 6.722222805023193, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 68.69490814208984, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_029] OK: {"final_loss": 68.69490814208984, "avg_loss": 92.53826293945312, "initial_loss": 132.99183654785156, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_030: beta=0.5, lr=0.0001, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974833.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=98.35765075683594, metrics={'clock_cycle:unique': 1974835.0, 'loss:sum': 98.35765075683594, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732856273651123, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=97.95185852050781, metrics={'clock_cycle:unique': 1974837.0, 'loss:sum': 97.95185852050781, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.726996898651123, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=67.50502014160156, metrics={'clock_cycle:unique': 1974839.0, 'loss:sum': 67.50502014160156, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728515625, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=68.82659912109375, metrics={'clock_cycle:unique': 1974841.0, 'loss:sum': 68.82659912109375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723525047302246, 'e_frac_with_tokens:mean': 0.8307291865348816}
+[sdpo_sie_030] OK: {"final_loss": 68.82659912109375, "avg_loss": 93.20272521972656, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_031: beta=0.5, lr=0.0002, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317760.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=83.51707458496094, metrics={'clock_cycle:unique': 317762.0, 'e_max_violation:mean': 6.732421875, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 83.51707458496094, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=80.56828308105469, metrics={'clock_cycle:unique': 317764.0, 'e_max_violation:mean': 6.991197109222412, 'e_max_violation:max': 6.997452735900879, 'loss:sum': 80.56828308105469, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8463541865348816, 'e_min_violation:mean': -0.9999858736991882}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=55.121795654296875, metrics={'clock_cycle:unique': 317766.0, 'e_max_violation:mean': 6.997013092041016, 'e_max_violation:max': 6.999261856079102, 'loss:sum': 55.121795654296875, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.999997615814209}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=49.628021240234375, metrics={'clock_cycle:unique': 317768.0, 'e_max_violation:mean': 6.7213544845581055, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 49.628021240234375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_031] OK: {"final_loss": 49.628021240234375, "avg_loss": 80.44153442382813, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_032: beta=0.5, lr=0.0002, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974850.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=82.95413208007812, metrics={'clock_cycle:unique': 1974852.0, 'loss:sum': 82.95413208007812, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730903148651123, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=81.73626708984375, metrics={'clock_cycle:unique': 1974854.0, 'loss:sum': 81.73626708984375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730903148651123, 'e_frac_with_tokens:mean': 0.83984375}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=56.91867446899414, metrics={'clock_cycle:unique': 1974856.0, 'loss:sum': 56.91867446899414, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72764778137207, 'e_frac_with_tokens:mean': 0.8515625}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=50.95287322998047, metrics={'clock_cycle:unique': 1974858.0, 'loss:sum': 50.95287322998047, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.721571922302246, 'e_frac_with_tokens:mean': 0.8463541865348816}
+[sdpo_sie_032] OK: {"final_loss": 50.95287322998047, "avg_loss": 81.18688888549805, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_033: beta=0.5, lr=0.0002, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=132.99183654785156, metrics={'clock_cycle:unique': 317800.0, 'e_max_violation:mean': 6.9975385665893555, 'e_max_violation:max': 6.999477863311768, 'loss:sum': 132.99183654785156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9999960660934448}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=85.23171997070312, metrics={'clock_cycle:unique': 317801.0, 'e_max_violation:mean': 6.732205390930176, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 85.23171997070312, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=82.92080688476562, metrics={'clock_cycle:unique': 317804.0, 'e_max_violation:mean': 6.72960090637207, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 82.92080688476562, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=55.279151916503906, metrics={'clock_cycle:unique': 317805.0, 'e_max_violation:mean': 6.725911617279053, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 55.279151916503906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=51.418983459472656, metrics={'clock_cycle:unique': 317808.0, 'e_max_violation:mean': 6.9933295249938965, 'e_max_violation:max': 6.998388290405273, 'loss:sum': 51.418983459472656, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9999948740005493}
+[sdpo_sie_033] OK: {"final_loss": 51.418983459472656, "avg_loss": 81.56849975585938, "initial_loss": 132.99183654785156, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_034: beta=0.5, lr=0.0005, n_pairs=10, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974865.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=59.87226486206055, metrics={'clock_cycle:unique': 1974867.0, 'loss:sum': 59.87226486206055, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.734158515930176, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=56.377540588378906, metrics={'clock_cycle:unique': 1974869.0, 'loss:sum': 56.377540588378906, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.73046875, 'e_frac_with_tokens:mean': 0.8450521230697632}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=24.738666534423828, metrics={'clock_cycle:unique': 1974871.0, 'loss:sum': 24.738666534423828, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7272138595581055, 'e_frac_with_tokens:mean': 0.8606771230697632}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=6.624415397644043, metrics={'clock_cycle:unique': 1974873.0, 'loss:sum': 6.624415397644043, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.721571922302246, 'e_frac_with_tokens:mean': 0.8463541865348816}
+[sdpo_sie_034] OK: {"final_loss": 6.624415397644043, "avg_loss": 56.19707698822022, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_035: beta=0.5, lr=0.0005, n_pairs=20, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 1974877.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.716224670410156, metrics={'clock_cycle:unique': 1974879.0, 'loss:sum': 60.716224670410156, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.733290672302246, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=58.677406311035156, metrics={'clock_cycle:unique': 1974881.0, 'loss:sum': 58.677406311035156, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732205390930176, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=26.62445831298828, metrics={'clock_cycle:unique': 1974883.0, 'loss:sum': 26.62445831298828, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.727431297302246, 'e_frac_with_tokens:mean': 0.8658854365348816}/workspace/sdpo_sie_sweep.py:208: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"\nSweep complete at {datetime.datetime.utcnow().isoformat()}Z")
+
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=9.931472778320312, metrics={'clock_cycle:unique': 1974886.0, 'loss:sum': 9.931472778320312, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7252607345581055, 'e_frac_with_tokens:mean': 0.84375}
+[sdpo_sie_035] OK: {"final_loss": 9.931472778320312, "avg_loss": 57.86441192626953, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_036: beta=0.5, lr=0.0005, n_pairs=30, steps=5
+============================================================
+  Step 1/5: seq_len=95, prompt_len=74
+  Step 1/5: loss=133.37249755859375, metrics={'clock_cycle:unique': 317848.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/5: seq_len=94, prompt_len=74
+  Step 2/5: loss=60.08892822265625, metrics={'clock_cycle:unique': 317850.0, 'e_max_violation:mean': 6.734158515930176, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 60.08892822265625, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8333333730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/5: seq_len=94, prompt_len=74
+  Step 3/5: loss=58.85499572753906, metrics={'clock_cycle:unique': 317852.0, 'e_max_violation:mean': 6.7311201095581055, 'e_max_violation:max': 6.90625, 'loss:sum': 58.85499572753906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/5: seq_len=94, prompt_len=74
+  Step 4/5: loss=24.76697540283203, metrics={'clock_cycle:unique': 317854.0, 'e_max_violation:mean': 6.724609375, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 24.76697540283203, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/5: seq_len=96, prompt_len=75
+  Step 5/5: loss=8.85177230834961, metrics={'clock_cycle:unique': 317857.0, 'e_max_violation:mean': 6.719618797302246, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 8.85177230834961, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9995660185813904}
+[sdpo_sie_036] OK: {"final_loss": 8.85177230834961, "avg_loss": 57.18703384399414, "initial_loss": 133.37249755859375, "steps_completed": 5, "steps_attempted": 5, "beta": 0.5}
+
+Sweep complete at 2026-03-19T21:36:15.688698Z
+Total experiments: 36
+Results logged: 36

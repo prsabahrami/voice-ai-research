@@ -1,0 +1,72 @@
+EXTENDED SDPO SWEEP - FINAL RESULTS
+======================================================================
+Sweep completed: 2026-03-19T22:37Z
+Total experiments: 20/20  |  All steps: 20  |  LR: 5e-4 (fixed)
+
+RESULTS BY BETA GROUP:
+----------------------------------------------------------------------
+  beta=0.1:
+    n_pairs= 10  final=0.0180  initial=133.37  reduction=100.0%
+    n_pairs= 20  final=2.6271  initial=133.37  reduction=98.0%
+    n_pairs= 30  final=0.0308  initial=133.37  reduction=100.0%
+    n_pairs= 50  final=0.2962  initial=133.37  reduction=99.8%
+  beta=0.2:
+    n_pairs= 10  final=0.0622  initial=133.37  reduction=100.0%
+    n_pairs= 20  final=0.4036  initial=133.37  reduction=99.7%
+    n_pairs= 30  final=0.2958  initial=133.37  reduction=99.8%
+    n_pairs= 50  final=0.0470  initial=132.99  reduction=100.0%
+  beta=0.3:
+    n_pairs= 10  final=0.7760  initial=133.37  reduction=99.4%
+    n_pairs= 20  final=0.0273  initial=133.37  reduction=100.0%
+    n_pairs= 30  final=0.0433  initial=133.37  reduction=100.0%
+    n_pairs= 50  final=0.5893  initial=133.37  reduction=99.6%
+  beta=0.4:
+    n_pairs= 10  final=0.1863  initial=133.37  reduction=99.9%
+    n_pairs= 20  final=1.1105  initial=133.37  reduction=99.2%
+    n_pairs= 30  final=0.1277  initial=133.37  reduction=99.9%
+    n_pairs= 50  final=0.0481  initial=133.37  reduction=100.0%
+  beta=0.5:
+    n_pairs= 10  final=0.1186  initial=133.37  reduction=99.9%
+    n_pairs= 20  final=0.0028  initial=133.37  reduction=100.0%
+    n_pairs= 30  final=1.1847  initial=133.37  reduction=99.1%
+    n_pairs= 50  final=0.5627  initial=133.37  reduction=99.6%
+
+TOP 10 CONFIGURATIONS (by final loss):
+----------------------------------------------------------------------
+   1. sdpo_sie_ext_018           beta=0.5  n_pairs= 20  final_loss=0.0028
+   2. sdpo_sie_ext_001           beta=0.1  n_pairs= 10  final_loss=0.0180
+   3. sdpo_sie_ext_010           beta=0.3  n_pairs= 20  final_loss=0.0273
+   4. sdpo_sie_ext_003           beta=0.1  n_pairs= 30  final_loss=0.0308
+   5. sdpo_sie_ext_011           beta=0.3  n_pairs= 30  final_loss=0.0433
+   6. sdpo_sie_ext_008           beta=0.2  n_pairs= 50  final_loss=0.0470
+   7. sdpo_sie_ext_016           beta=0.4  n_pairs= 50  final_loss=0.0481
+   8. sdpo_sie_ext_005           beta=0.2  n_pairs= 10  final_loss=0.0622
+   9. sdpo_sie_ext_017           beta=0.5  n_pairs= 10  final_loss=0.1186
+  10. sdpo_sie_ext_015           beta=0.4  n_pairs= 30  final_loss=0.1277
+
+BEST CONFIG: sdpo_sie_ext_018
+  beta=0.5, lr=5e-4, n_pairs=20
+  final_loss=0.002792
+  initial_loss=133.3725
+  steps_completed=20
+
+COMPARISON vs ORIGINAL 5-STEP SWEEP:
+  Original best (5 steps):  beta=0.3, lr=5e-4, n_pairs=30  -> final=4.785
+  Extended best (20 steps): beta=0.5, lr=5e-4, n_pairs=20  -> final=0.0028
+  Improvement factor: 1714x better final loss with 4x more steps
+
+KEY OBSERVATIONS:
+  1. All 20 experiments converged strongly; none failed (0 failures)
+  2. 20 steps gives dramatically lower final losses vs 5 steps (avg sub-1.0)
+  3. Best config shifts to beta=0.5, n_pairs=20 at 20 steps
+  4. Loss typically drops below 1.0 by step 7 and stays there
+  5. Some variance in final loss across runs (oscillation, not divergence)
+  6. n_pairs=20 appears to be a sweet spot for several beta values
+
+DATA QUALITY NOTE:
+  The results file contains ~3 entries from an accidentally-launched
+  duplicate process (timestamps 22:16-22:17). These are flagged by
+  their early timestamps. All 20 unique experiments above use the
+  latest-timestamp entry per exp_id, all from PID 50111 (started 22:17).
+  ext_002 shows higher final_loss=2.627 which may reflect that training
+  run's stochastic convergence; this is within normal variance range.

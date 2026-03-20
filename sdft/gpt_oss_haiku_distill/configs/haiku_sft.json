@@ -1,0 +1,13 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "run_name": "haiku_sft_distill_gpt_oss_20b_v1",
+  "lora_rank": 16,
+  "n_steps": 300,
+  "batch_size": 8,
+  "grad_accum": 4,
+  "lr": 0.0002,
+  "eval_every": 50,
+  "n_pairs": 500,
+  "method": "sft_on_haiku_outputs",
+  "notes": "Haiku distillation via SFT. GPT-OSS trained on Haiku-generated conversational responses."
+}

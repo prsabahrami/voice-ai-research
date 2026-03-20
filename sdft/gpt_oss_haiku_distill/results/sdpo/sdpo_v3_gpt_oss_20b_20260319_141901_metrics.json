@@ -1,0 +1,376 @@
+{
+  "run_name": "sdpo_v3_gpt_oss_20b_20260319_141901",
+  "model": "openai/gpt-oss-20b",
+  "method": "sdpo_signed_weights",
+  "beta": 0.1,
+  "n_pairs": 10,
+  "steps": [
+    {
+      "step": 1,
+      "dpo_loss": 2.4523764881586776,
+      "chosen_nll": 2.431766832902109,
+      "rejected_nll": -0.20609655256568285,
+      "t": 1773929977.8228438
+    },
+    {
+      "step": 2,
+      "dpo_loss": 2.1144555615684055,
+      "chosen_nll": 2.097832668820428,
+      "rejected_nll": -0.16622892747977489,
+      "t": 1773929979.7597396
+    },
+    {
+      "step": 3,
+      "dpo_loss": 1.8973564715317692,
+      "chosen_nll": 1.881537882841984,
+      "rejected_nll": -0.1581858868978532,
+      "t": 1773929981.6752572
+    },
+    {
+      "step": 4,
+      "dpo_loss": 1.4799300209714052,
+      "chosen_nll": 1.4667896581351416,
+      "rejected_nll": -0.1314036283626357,
+      "t": 1773929983.6823483
+    },
+    {
+      "step": 5,
+      "dpo_loss": 1.8645859037019445,
+      "chosen_nll": 1.848985390907895,
+      "rejected_nll": -0.15600512794049398,
+      "t": 1773929985.674945
+    },
+    {
+      "step": 6,
+      "dpo_loss": 1.717870777951989,
+      "chosen_nll": 1.7018021176234797,
+      "rejected_nll": -0.16068660328509438,
+      "t": 1773929987.6386888
+    },
+    {
+      "step": 7,
+      "dpo_loss": 1.2954041102534728,
+      "chosen_nll": 1.2831706954139008,
+      "rejected_nll": -0.12233414839571885,
+      "t": 1773929992.031076
+    },
+    {
+      "step": 8,
+      "dpo_loss": 1.692389772087033,
+      "chosen_nll": 1.6757748032751882,
+      "rejected_nll": -0.16614968811844624,
+      "t": 1773929993.9403749
+    },
+    {
+      "step": 9,
+      "dpo_loss": 1.2370921455603148,
+      "chosen_nll": 1.2245705898807044,
+      "rejected_nll": -0.1252155567961024,
+      "t": 1773929995.8604417
+    },
+    {
+      "step": 10,
+      "dpo_loss": 1.842750877369274,
+      "chosen_nll": 1.822459183777212,
+      "rejected_nll": -0.20291693592062052,
+      "t": 1773929997.8078213
+    },
+    {
+      "step": 11,
+      "dpo_loss": 1.1938463666397923,
+      "chosen_nll": 1.1820655988798214,
+      "rejected_nll": -0.11780767759970874,
+      "t": 1773929999.7384498
+    },
+    {
+      "step": 12,
+      "dpo_loss": 1.2823720710072783,
+      "chosen_nll": 1.2661172583991616,
+      "rejected_nll": -0.16254812608116698,
+      "t": 1773930001.673562
+    },
+    {
+      "step": 13,
+      "dpo_loss": 1.123955878355244,
+      "chosen_nll": 1.1123126920303488,
+      "rejected_nll": -0.11643186324895193,
+      "t": 1773930003.682481
+    },
+    {
+      "step": 14,
+      "dpo_loss": 1.1497990797096052,
+      "chosen_nll": 1.1361261674949024,
+      "rejected_nll": -0.13672912214702845,
+      "t": 1773930005.5960093
+    },
+    {
+      "step": 15,
+      "dpo_loss": 0.6872735694486811,
+      "chosen_nll": 0.6756775823386325,
+      "rejected_nll": -0.11595987110048636,
+      "t": 1773930007.5023525
+    },
+    {
+      "step": 16,
+      "dpo_loss": 1.5053958442200304,
+      "chosen_nll": 1.485783465499899,
+      "rejected_nll": -0.19612378720131357,
+      "t": 1773930009.45722
+    },
+    {
+      "step": 17,
+      "dpo_loss": 0.9863566706889422,
+      "chosen_nll": 0.9733370544075391,
+      "rejected_nll": -0.1301961628140303,
+      "t": 1773930011.3847613
+    },
+    {
+      "step": 18,
+      "dpo_loss": 1.1242479525915243,
+      "chosen_nll": 1.107013123097487,
+      "rejected_nll": -0.1723482949403734,
+      "t": 1773930013.1528153
+    },
+    {
+      "step": 19,
+      "dpo_loss": 0.9369290298837863,
+      "chosen_nll": 0.9166872635526303,
+      "rejected_nll": -0.2024176633115601,
+      "t": 1773930014.964213
+    },
+    {
+      "step": 20,
+      "dpo_loss": 0.6578414527609743,
+      "chosen_nll": 0.6455397782220097,
+      "rejected_nll": -0.12301674538964613,
+      "t": 1773930016.9686062
+    },
+    {
+      "step": 21,
+      "dpo_loss": 0.42366516816439154,
+      "chosen_nll": 0.41029477008136034,
+      "rejected_nll": -0.13370398083031215,
+      "t": 1773930018.902752
+    },
+    {
+      "step": 22,
+      "dpo_loss": 0.5178379818157344,
+      "chosen_nll": 0.5038509621990855,
+      "rejected_nll": -0.139870196166488,
+      "t": 1773930020.8199315
+    },
+    {
+      "step": 23,
+      "dpo_loss": 0.4754222224048316,
+      "chosen_nll": 0.4613972415965296,
+      "rejected_nll": -0.14024980808302012,
+      "t": 1773930022.750112
+    },
+    {
+      "step": 24,
+      "dpo_loss": 0.45590197668382726,
+      "chosen_nll": 0.44002211514012607,
+      "rejected_nll": -0.15879861543701188,
+      "t": 1773930024.771655
+    },
+    {
+      "step": 25,
+      "dpo_loss": 0.9420921765060303,
+      "chosen_nll": 0.9211475122540321,
+      "rejected_nll": -0.2094466425199814,
+      "t": 1773930026.7254374
+    },
+    {
+      "step": 26,
+      "dpo_loss": 0.43965192166313755,
+      "chosen_nll": 0.4140294760571204,
+      "rejected_nll": -0.25622445606017125,
+      "t": 1773930047.7289085
+    },
+    {
+      "step": 27,
+      "dpo_loss": 0.6225173088181657,
+      "chosen_nll": 0.6065625817990442,
+      "rejected_nll": -0.15954727019121429,
+      "t": 1773930049.6347668
+    },
+    {
+      "step": 28,
+      "dpo_loss": 0.2564039154522355,
+      "chosen_nll": 0.23570002068855475,
+      "rejected_nll": -0.2070389476368077,
+      "t": 1773930051.5797465
+    },
+    {
+      "step": 29,
+      "dpo_loss": 0.40204773603124005,
+      "chosen_nll": 0.37637517533802667,
+      "rejected_nll": -0.25672560693213364,
+      "t": 1773930054.6761522
+    },
+    {
+      "step": 30,
+      "dpo_loss": 0.24985813431776172,
+      "chosen_nll": 0.2197108372652331,
+      "rejected_nll": -0.3014729705252862,
+      "t": 1773930056.729954
+    },
+    {
+      "step": 31,
+      "dpo_loss": 0.17424170708207923,
+      "chosen_nll": 0.14023320192647654,
+      "rejected_nll": -0.3400850515560268,
+      "t": 1773930058.663712
+    },
+    {
+      "step": 32,
+      "dpo_loss": 0.19106715594473228,
+      "chosen_nll": 0.13780172609532998,
+      "rejected_nll": -0.5326542984940229,
+      "t": 1773930060.8048604
+    },
+    {
+      "step": 33,
+      "dpo_loss": 0.2112738651365346,
+      "chosen_nll": 0.1595530485658033,
+      "rejected_nll": -0.517208165707313,
+      "t": 1773930066.0287488
+    },
+    {
+      "step": 34,
+      "dpo_loss": 0.2855563430595941,
+      "chosen_nll": 0.20919540547285184,
+      "rejected_nll": -0.7636093758674224,
+      "t": 1773930067.8681397
+    },
+    {
+      "step": 35,
+      "dpo_loss": 0.7334542124365673,
+      "chosen_nll": 0.6705863141740407,
+      "rejected_nll": -0.6286789826252663,
+      "t": 1773930070.196129
+    },
+    {
+      "step": 36,
+      "dpo_loss": 0.19182990870077743,
+      "chosen_nll": 0.07023844921545022,
+      "rejected_nll": -1.2159145948532721,
+      "t": 1773930072.1241307
+    },
+    {
+      "step": 37,
+      "dpo_loss": 0.1580284606020897,
+      "chosen_nll": 0.049311706409103505,
+      "rejected_nll": -1.0871675419298619,
+      "t": 1773930074.0511734
+    },
+    {
+      "step": 38,
+      "dpo_loss": 0.13411501364174894,
+      "chosen_nll": 0.050697859183964425,
+      "rejected_nll": -0.8341715445778449,
+      "t": 1773930076.0255105
+    },
+    {
+      "step": 39,
+      "dpo_loss": 0.14972395429065374,
+      "chosen_nll": 0.0159246251378855,
+      "rejected_nll": -1.3379932915276822,
+      "t": 1773930077.917436
+    },
+    {
+      "step": 40,
+      "dpo_loss": 0.3670531519268523,
+      "chosen_nll": 0.22634354724260736,
+      "rejected_nll": -1.4070960468424494,
+      "t": 1773930079.947877
+    },
+    {
+      "step": 41,
+      "dpo_loss": 0.8418443391221768,
+      "chosen_nll": 0.751417615774346,
+      "rejected_nll": -0.904267233478308,
+      "t": 1773930081.8706777
+    },
+    {
+      "step": 42,
+      "dpo_loss": 0.36356124425228703,
+      "chosen_nll": 0.26122447444046926,
+      "rejected_nll": -1.0233676981181776,
+      "t": 1773930083.7794437
+    },
+    {
+      "step": 43,
+      "dpo_loss": 0.1995557294354249,
+      "chosen_nll": 0.08051140659181318,
+      "rejected_nll": -1.1904432284361173,
+      "t": 1773930085.6910183
+    },
+    {
+      "step": 44,
+      "dpo_loss": 0.28845733217486696,
+      "chosen_nll": 0.11520311101560206,
+      "rejected_nll": -1.732542211592649,
+      "t": 1773930087.6128025
+    },
+    {
+      "step": 45,
+      "dpo_loss": 0.23297246077284597,
+      "chosen_nll": 0.012450327065180867,
+      "rejected_nll": -2.205221337076651,
+      "t": 1773930089.5366414
+    },
+    {
+      "step": 46,
+      "dpo_loss": 0.574490960863622,
+      "chosen_nll": 0.48298801714953016,
+      "rejected_nll": -0.9150294371409174,
+      "t": 1773930091.483887
+    },
+    {
+      "step": 47,
+      "dpo_loss": 0.4137743486598159,
+      "chosen_nll": 0.3054935301388339,
+      "rejected_nll": -1.0828081852098197,
+      "t": 1773930093.2991781
+    },
+    {
+      "step": 48,
+      "dpo_loss": 0.3127560221193111,
+      "chosen_nll": 0.1037216127378777,
+      "rejected_nll": -2.0903440938143336,
+      "t": 1773930095.113214
+    },
+    {
+      "step": 49,
+      "dpo_loss": 0.22777180004063732,
+      "chosen_nll": 0.09652730684338248,
+      "rejected_nll": -1.3124449319725484,
+      "t": 1773930097.0885067
+    },
+    {
+      "step": 50,
+      "dpo_loss": 0.26402940451617,
+      "chosen_nll": 0.025466876236114194,
+      "rejected_nll": -2.385625282800558,
+      "t": 1773930098.9948366
+    }
+  ],
+  "eval_steps": [
+    {
+      "step": 25,
+      "prompt": "What's the intuition behind gradient descent?",
+      "model_output": "<|channel|>final<|message|># Gradient Descent Intuition\n\nGreat question! Here's how I think about it:\n\n## The Core Idea\nImagine you're hiking in fog on a mountainside and you want to reach the valley (lowest point). You can't see the whole landscape, so you:\n\n1. Check the slope around you\n2. Take a ",
+      "haiku_chosen": "# Gradient Descent Intuition\n\nImagine you're hiking in fog on a mountainside and want to reach the valley (lowest point). You can't see the whole landscape, so you:\n\n1. **Check the slope around you** \u2014 Where does the ground go down most steeply?\n2. **Take a step downhill** \u2014 Move in that direction\n3",
+      "flat_rejected": "# Gradient Descent Intuition\n\nImagine you're on a foggy hill and want to reach the bottom. You can't see far ahead, so you:\n\n1. **Look around locally** \u2014 check which direction slopes downward most steeply\n2. **Take a step** in that direction\n3. **Repeat** until you reach a low point\n\n## The Math Tra"
+    },
+    {
+      "step": 50,
+      "prompt": "Can you explain neural networks to a complete beginner?",
+      "model_output": "<|channel|>final<|message|># Neural Networks for Beginners\n\nGreat question! Let me break this down in a simple way.\n\n## The Basic Idea\n\nThink of a neural network as a system that learns patterns from examples, kind of like how you learned to recognize dogs without someone explicitly coding rules lik",
+      "haiku_chosen": "# Neural Networks for Beginners\n\nGreat question! Let me break this down in a simple way.\n\n## The Basic Idea\n\nThink of a neural network like a **simplified model of how your brain works**. Your brain has billions of neurons that connect and communicate with each other to help you learn and make decis",
+      "flat_rejected": "# Neural Networks Explained Simply\n\n## The Basic Idea\nA neural network is a computer system loosely inspired by how brains work. It learns patterns from examples rather than being explicitly programmed.\n\n## Key Components\n\n**Neurons (nodes)**: Simple processing units that receive information, do mat"
+    }
+  ],
+  "start_time": "2026-03-19T14:19:35.848780"
+}

@@ -1,0 +1,33 @@
+{
+  "total_experiments": 36,
+  "completed": 36,
+  "failed": 0,
+  "best_config": {
+    "exp_id": "sdpo_sie_027",
+    "beta": 0.3,
+    "learning_rate": 0.0005,
+    "n_pairs": 30,
+    "final_loss": 4.785
+  },
+  "sweep_config": {
+    "model": "openai/gpt-oss-20b",
+    "lora_rank": 8,
+    "steps_per_exp": 5,
+    "betas": [
+      0.1,
+      0.2,
+      0.3,
+      0.5
+    ],
+    "learning_rates": [
+      0.0001,
+      0.0002,
+      0.0005
+    ],
+    "n_pairs": [
+      10,
+      20,
+      30
+    ]
+  }
+}
