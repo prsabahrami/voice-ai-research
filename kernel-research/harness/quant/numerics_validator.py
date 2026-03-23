@@ -1,146 +1,186 @@
-#!/usr/bin/env python3
 """
-Numerics validator for quantized kernels.
-Compares quantized vs FP16 baseline, reports error metrics.
-Owned by miniQuant.
+numerics_validator.py
+=====================
+Correctness validation for quantized kernel outputs.
+
+Compares a baseline FP16/FP32 tensor against a quantized output tensor and
+reports comprehensive error statistics used to decide whether a kernel meets
+production acceptance criteria.
 
 Usage:
-    python numerics_validator.py --kernel int8_attention --batch_size 8
+    from numerics_validator import validate_quantized_output
+
+    metrics = validate_quantized_output(baseline_fp16, quantized_output)
+    if metrics["passed"]:
+        print("Kernel passes correctness check")
+    else:
+        print("FAIL:", metrics)
+
+Author: miniQuant kernel-research branch
 """
 
-import torch
-import torch.nn.functional as F
 import math
-import json
-import argparse
-import sys
-from pathlib import Path
+import warnings
+from typing import Dict, Union
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from baseline_kernels import baseline_attention, baseline_gemm, make_attention_args, make_gemm_args
-
-sys.path.insert(0, str(Path(__file__).parent))
-from quant_kernels import int8_attention, int8_gemm, fp8_gemm, mixed_precision_attention
+import torch
 
 
-MAX_ABS_ERR_THRESHOLD = 1e-4
+# ---------------------------------------------------------------------------
+# Thresholds
+# ---------------------------------------------------------------------------
+
+MAX_ABS_ERROR_THRESHOLD = 1e-4   # flag if max absolute error exceeds this
+RELATIVE_ERROR_THRESHOLD = 1e-2  # 1% relative error warning threshold
+KL_DIV_THRESHOLD = 1e-3          # KL divergence warning threshold
 
 
-def validate_kernel(fn_quant, fn_fp16, args, kernel_name: str):
+# ---------------------------------------------------------------------------
+# Core validator
+# ---------------------------------------------------------------------------
+
+def validate_quantized_output(
+    baseline: torch.Tensor,
+    quantized: torch.Tensor,
+    threshold_max_abs: float = MAX_ABS_ERROR_THRESHOLD,
+    threshold_rel: float = RELATIVE_ERROR_THRESHOLD,
+    threshold_kl: float = KL_DIV_THRESHOLD,
+    eps: float = 1e-8,
+) -> Dict:
+    """Compare quantized kernel output against a floating-point baseline.
+
+    Metrics computed:
+      - max_abs_error    : max |baseline - quantized|
+      - mean_abs_error   : mean |baseline - quantized|
+      - relative_error   : mean |baseline - quantized| / (mean |baseline| + eps)
+      - kl_divergence    : KL(softmax(baseline) || softmax(quantized)) over last dim
+      - cosine_similarity: mean cosine similarity between baseline and quantized rows
+      - snr_db           : signal-to-noise ratio in decibels
+
+    Flags:
+      - passed           : True iff max_abs_error <= threshold_max_abs
+      - warn_relative    : True iff relative_error > threshold_rel
+      - warn_kl          : True iff kl_divergence > threshold_kl
     """
-    Run both kernels and compare outputs.
-    Returns dict with error metrics and pass/fail.
-    """
-    with torch.no_grad():
-        out_quant = fn_quant(*args)
-        out_fp16 = fn_fp16(*args)
+    if baseline.shape != quantized.shape:
+        raise ValueError(
+            f"Shape mismatch: baseline {tuple(baseline.shape)} vs quantized {tuple(quantized.shape)}"
+        )
 
-    if isinstance(out_quant, (list, tuple)):
-        out_quant = out_quant[0]
-    if isinstance(out_fp16, (list, tuple)):
-        out_fp16 = out_fp16[0]
+    ref = baseline.detach().float().cpu()
+    out = quantized.detach().float().cpu()
 
-    out_quant_f = out_quant.float()
-    out_fp16_f = out_fp16.float()
+    diff = (ref - out).abs()
 
-    abs_diff = torch.abs(out_quant_f - out_fp16_f)
-    max_abs_err = float(abs_diff.max().item())
-    mean_abs_err = float(abs_diff.mean().item())
-    rel_err = float((abs_diff / (torch.abs(out_fp16_f) + 1e-8)).max().item())
+    max_abs_error = diff.max().item()
+    mean_abs_error = diff.mean().item()
+    median_abs_error = diff.median().item()
 
-    # KL divergence (on softmax distributions if reasonable)
-    try:
-        p = F.softmax(out_fp16_f.flatten(), dim=0)
-        q = F.softmax(out_quant_f.flatten(), dim=0)
-        kl_div = float(F.kl_div(q.log(), p, reduction="sum").item())
-    except Exception:
-        kl_div = float("nan")
+    ref_norm = ref.abs().mean().item()
+    relative_error = mean_abs_error / (ref_norm + eps)
 
-    result = {
-        "kernel": kernel_name,
-        "max_abs_err": max_abs_err,
-        "mean_abs_err": mean_abs_err,
-        "rel_err": rel_err,
-        "kl_div": kl_div,
-        "passed": max_abs_err < MAX_ABS_ERR_THRESHOLD,
-        "threshold": MAX_ABS_ERR_THRESHOLD,
+    signal_power = (ref ** 2).mean().item()
+    noise_power = (diff ** 2).mean().item()
+    if noise_power < 1e-30:
+        snr_db = float("inf")
+    else:
+        snr_db = 10.0 * math.log10(signal_power / noise_power + 1e-30)
+
+    flat_ref = ref.reshape(-1, ref.shape[-1]) if ref.dim() > 1 else ref.unsqueeze(0)
+    flat_out = out.reshape(-1, out.shape[-1]) if out.dim() > 1 else out.unsqueeze(0)
+    dot = (flat_ref * flat_out).sum(dim=-1)
+    norm_ref = flat_ref.norm(dim=-1).clamp(min=eps)
+    norm_out = flat_out.norm(dim=-1).clamp(min=eps)
+    cos_sim = (dot / (norm_ref * norm_out)).mean().item()
+
+    kl_div = _kl_divergence(ref, out, eps=eps)
+
+    passed = max_abs_error <= threshold_max_abs
+    warn_relative = relative_error > threshold_rel
+    warn_kl = (kl_div < float("inf")) and (kl_div > threshold_kl)
+
+    metrics = {
+        "max_abs_error":     max_abs_error,
+        "mean_abs_error":    mean_abs_error,
+        "median_abs_error":  median_abs_error,
+        "relative_error":    relative_error,
+        "snr_db":            snr_db,
+        "cosine_similarity": cos_sim,
+        "kl_divergence":     kl_div,
+        "tensor_shape":      list(baseline.shape),
+        "num_elements":      int(baseline.numel()),
+        "threshold_max_abs": threshold_max_abs,
+        "threshold_rel":     threshold_rel,
+        "threshold_kl":      threshold_kl,
+        "passed":            passed,
+        "warn_relative":     warn_relative,
+        "warn_kl":           warn_kl,
+        "summary": (
+            f"max_abs={max_abs_error:.4e}  mean_abs={mean_abs_error:.4e}  "
+            f"rel={relative_error:.4e}  snr={snr_db:.1f}dB  "
+            f"cos={cos_sim:.4f}  kl={kl_div:.4e}  "
+            f"{'PASS' if passed else 'FAIL'}"
+        ),
     }
-
-    return result
-
-
-def print_validation_result(result: dict):
-    status = "PASS" if result["passed"] else "FAIL"
-    print(f"\n[{status}] {result['kernel']}")
-    print(f"  Max abs err:  {result['max_abs_err']:.4e}  (threshold: {result['threshold']:.1e})")
-    print(f"  Mean abs err: {result['mean_abs_err']:.4e}")
-    print(f"  Rel err:      {result['rel_err']:.4e}")
-    print(f"  KL divergence: {result['kl_div']:.4e}")
+    return metrics
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Validate quantized kernel numerics")
-    parser.add_argument("--kernel", choices=["int8_attention", "int8_gemm", "fp8_gemm", "mixed_attention", "all"],
-                        default="all", help="Kernel to validate")
-    parser.add_argument("--batch_size", type=int, default=8)
-    parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
-    args = parser.parse_args()
+def _kl_divergence(
+    p_logits: torch.Tensor,
+    q_logits: torch.Tensor,
+    eps: float = 1e-8,
+) -> float:
+    if p_logits.shape[-1] < 2:
+        return float("inf")
 
-    device = args.device
-    bs = args.batch_size
-    results = []
+    D = p_logits.shape[-1]
+    p_flat = p_logits.reshape(-1, D)
+    q_flat = q_logits.reshape(-1, D)
 
-    if args.kernel in ("int8_attention", "all"):
-        q, k, v = make_attention_args(batch_size=bs, device=device)
-        r = validate_kernel(
-            fn_quant=lambda q, k, v: int8_attention(q, k, v),
-            fn_fp16=lambda q, k, v: baseline_attention(q, k, v),
-            args=(q, k, v),
-            kernel_name="int8_attention",
-        )
-        print_validation_result(r)
-        results.append(r)
+    p_prob = torch.softmax(p_flat.double(), dim=-1).clamp(min=eps)
+    q_prob = torch.softmax(q_flat.double(), dim=-1).clamp(min=eps)
 
-    if args.kernel in ("mixed_attention", "all"):
-        q, k, v = make_attention_args(batch_size=bs, device=device)
-        r = validate_kernel(
-            fn_quant=lambda q, k, v: mixed_precision_attention(q, k, v),
-            fn_fp16=lambda q, k, v: baseline_attention(q, k, v),
-            args=(q, k, v),
-            kernel_name="mixed_precision_attention",
-        )
-        print_validation_result(r)
-        results.append(r)
+    kl = (p_prob * (p_prob / q_prob).log()).sum(dim=-1)
+    return kl.mean().item()
 
-    if args.kernel in ("int8_gemm", "all"):
-        a, b = make_gemm_args(batch_size=bs, device=device)
-        r = validate_kernel(
-            fn_quant=lambda a, b: int8_gemm(a, b),
-            fn_fp16=lambda a, b: baseline_gemm(a, b),
-            args=(a, b),
-            kernel_name="int8_gemm",
-        )
-        print_validation_result(r)
-        results.append(r)
 
-    if args.kernel in ("fp8_gemm", "all"):
-        a, b = make_gemm_args(batch_size=bs, device=device, dtype=torch.float16)
+def validate_all(
+    baseline: torch.Tensor,
+    outputs: Dict,
+    **kwargs,
+) -> Dict:
+    """Validate multiple quantized outputs against a single baseline."""
+    results = {}
+    for name, out in outputs.items():
         try:
-            r = validate_kernel(
-                fn_quant=lambda a, b: fp8_gemm(a, b.t().contiguous()),
-                fn_fp16=lambda a, b: baseline_gemm(a, b),
-                args=(a, b),
-                kernel_name="fp8_gemm",
-            )
-            print_validation_result(r)
-            results.append(r)
+            results[name] = validate_quantized_output(baseline, out, **kwargs)
         except Exception as e:
-            print(f"fp8_gemm not available: {e}")
+            results[name] = {"error": str(e), "passed": False}
+    return results
 
-    passed = sum(1 for r in results if r["passed"])
-    print(f"\nSummary: {passed}/{len(results)} kernels passed numerics validation")
-    return 0 if passed == len(results) else 1
+
+def _self_test() -> None:
+    torch.manual_seed(0)
+    ref = torch.randn(4, 64)
+
+    m = validate_quantized_output(ref, ref.clone())
+    assert m["max_abs_error"] == 0.0
+    assert m["passed"]
+    print(f"  [PASS] perfect match: {m['summary']}")
+
+    noise = torch.randn_like(ref) * 0.01
+    m2 = validate_quantized_output(ref, ref + noise)
+    print(f"  [INFO] small noise:   {m2['summary']}")
+
+    large_noise = torch.randn_like(ref) * 1.0
+    m3 = validate_quantized_output(ref, ref + large_noise)
+    assert not m3["passed"]
+    print(f"  [PASS] large noise correctly flagged: {m3['summary']}")
+
+    results = validate_all(ref, {"int8": ref + noise, "fp8": ref + noise * 0.1})
+    for k, v in results.items():
+        print(f"  [BATCH] {k}: {v['summary']}")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    _self_test()
