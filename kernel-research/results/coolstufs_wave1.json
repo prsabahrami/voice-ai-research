@@ -1,0 +1,88 @@
+{
+  "experiment_set": "coolstufs_wave1",
+  "agent": "coolstufs",
+  "environment": {
+    "hardware": "20-core x86_64 CPU",
+    "memory": "448GB RAM",
+    "torch_version": "2.11.0+cpu",
+    "gpu": "none",
+    "os": "Linux"
+  },
+  "timestamp": "2026-03-23T22:41:46.330312+00:00",
+  "results": [
+    {
+      "hypothesis": "H-SDPA",
+      "description": "torch.nn.functional.scaled_dot_product_attention vs naive torch.matmul attention",
+      "baseline": "Q @ K.T / sqrt(d_k) -> softmax -> @ V using torch.matmul + torch.softmax",
+      "optimized": "F.scaled_dot_product_attention(Q, K, V)",
+      "speedup_by_seqlen": {
+        "256": 4.3,
+        "512": 5.5,
+        "1024": 6.5,
+        "2048": 7.47
+      },
+      "correctness_max_abs_err": 1e-05,
+      "notes": "Uses FlashAttention-2 CPU path. Zero-effort drop-in replacement. GPU analog should be 10-50x+ for long seqs.",
+      "status": "PASS"
+    },
+    {
+      "hypothesis": "H-GEMM-THREADS",
+      "description": "OMP_NUM_THREADS=16 for GEMM operations",
+      "baseline": "Default thread count",
+      "optimized": "OMP_NUM_THREADS=16",
+      "speedup": 5.78,
+      "notes": "T=8 shows anomalous regression. T=20 worse than T=16. Optimal is 16 on this 20-core machine.",
+      "status": "PASS"
+    },
+    {
+      "hypothesis": "H-BATCHED-GEMM",
+      "description": "Vectorized batched GEMM over (B,H,N,D) vs Python loop over heads",
+      "baseline": "Python loop: [head_gemm(q[h], k[h]) for h in range(H)]",
+      "optimized": "torch.bmm or torch.matmul on full (B,H,N,D) tensor",
+      "speedup_range": [
+        1.4,
+        1.7
+      ],
+      "speedup_avg": 1.55,
+      "notes": "Eliminates Python overhead for head-wise operations.",
+      "status": "PASS"
+    },
+    {
+      "hypothesis": "H-BATCH-TUNING",
+      "description": "Optimal batch size B*=8 for 50ms SLA",
+      "baseline": "B=1 (latency-optimized)",
+      "optimized": "B=8 (throughput/latency balanced)",
+      "throughput_gain": 2.0,
+      "notes": "B=8 gives 2x throughput vs B=1 while staying under 50ms SLA. B=32 exceeds latency budget.",
+      "status": "PASS"
+    },
+    {
+      "hypothesis": "H-MEMORY-LAYOUT",
+      "description": "Memory layout C vs F order for numpy/PyTorch",
+      "baseline": "Default layout",
+      "optimized": "Explicit contiguous/C-order layout",
+      "speedup": 1.09,
+      "notes": "Only 1.09x. OpenBLAS handles layout internally. Not significant below 1.10x threshold.",
+      "status": "FAIL"
+    },
+    {
+      "hypothesis": "H-INT8-CPU",
+      "description": "INT8 quantized GEMM on CPU",
+      "baseline": "FP32 GEMM",
+      "optimized": "INT8 GEMM via torch.int_mm",
+      "speedup": 0.002,
+      "notes": "CATASTROPHICALLY slower (0.002x = 500x overhead). CPU lacks Tensor Core hardware for INT8. Valid only on H100 GPU.",
+      "status": "FAIL"
+    }
+  ],
+  "conclusion": {
+    "gpu_priorities": [
+      "W4A8 SplitK GEMM (H3) - highest ceiling 2-2.7x",
+      "FP8 attention (H5/H1) - H100 FP8 Tensor Cores",
+      "CUDA Graphs (H4) - 15-30% decode latency",
+      "torch.compile baseline (H18) - easiest first result",
+      "Fused RMSNorm+RoPE+QKV (H2) - 2-4 fewer HBM round-trips"
+    ],
+    "baseline_recommendation": "Use torch.SDPA (FA2 path), NOT naive torch.matmul, as GPU attention baseline"
+  }
+}
