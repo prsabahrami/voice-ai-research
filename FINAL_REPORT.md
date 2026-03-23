@@ -78,7 +78,7 @@ Orpheus-3B architecture on LJSpeech.
 - SDPO initial sweep: 36 experiments, 5 steps, beta x n_pairs x lr grid
 - SDPO extended sweep: 20 experiments, 20 steps, lr=5e-4 fixed, beta x n_pairs
 - DPO preference dataset construction (9,500 records from SFT checkpoint-500)
-- RTF latency benchmarks and inference optimization analysis
+- RTF latency benchmarks and inference optimization analysis (completed; results in Section 8)
 
 **miniQuant (45+ experiments):**
 - SDFT sweep: 24 successful (21 failed due to early API debugging), lr x steps x n_examples
@@ -450,7 +450,79 @@ UNIVERSAL RULES (apply to all paths):
 
 ---
 
-## 8. Recommended Production Pipeline
+## 8. RTF Latency Benchmark (Lambda H100, 2026-03-21)
+
+**Environment:** Lambda H100 (single GPU), float16 precision, LoRA adapters on unsloth/orpheus-3b-0.1-ft base, max_new_tokens=600, 5 test sentences per checkpoint.
+
+**Benchmark run by:** ooo, 2026-03-21
+
+### 8.1 SFT Checkpoint Results
+
+Path: `/home/ubuntu/voice_ai_sft_baseline/final_model/`
+
+| Sentence | Input | RTF | TPS | Audio Duration |
+|----------|-------|-----|-----|----------------|
+| 1 | "Hello, how are you today?" | 11.96 | 27.6 | 0.60s |
+| 2 | "The quick brown fox..." | 11.04 | 29.8 | 0.79s |
+| 3 | "Welcome to the future of voice AI..." | 11.21 | 29.4 | 0.79s |
+| 4 | "This is a comprehensive test..." | 11.19 | 29.4 | 1.05s |
+| 5 | "The weather today is sunny..." | 11.19 | 29.4 | 1.00s |
+
+**SFT Averages: RTF = 11.32, TPS = 29.1, avg audio duration = 0.84s**
+
+Result: 5/5 sentences generated valid audio output. SFT is the only checkpoint producing functional speech in this benchmark run.
+
+### 8.2 DPO Checkpoint Results
+
+Path: `/home/ubuntu/voice_ai_dpo/dpo_output/final_model/`
+
+**RTF = NOT COMPUTABLE** (audio_duration = 0.0 for all 5 sentences)
+
+- TPS = 41.2 (outputs very short: 1-29 tokens per sentence)
+- WARNING: All 28 LoRA adapter keys were missing during checkpoint loading
+- Checkpoint likely ran as base model without DPO adaptation applied
+- Generated tokens do not produce valid audio output through the codec
+
+**Probable cause:** Checkpoint format mismatch. The LoRA adapter keys were not saved in the expected adapter_model.bin/adapter_config.json location. This is a checkpoint packaging issue, not a runtime failure.
+
+### 8.3 SDFT Checkpoint Results
+
+Path: `/home/ubuntu/voice_ai_sdft/checkpoints/round_1/final`
+
+**RTF = NOT COMPUTABLE** (audio_duration = 0.0 for all 5 sentences)
+
+- TPS = 28.2 (outputs hit 600 token cap on 2 of 5 sentences)
+- Generated tokens do not decode to audio through the Orpheus codec
+- Codec integration was not captured in this round_1 checkpoint
+
+**Probable cause:** SDFT training did not preserve the audio token format required by the codec decoder. The model generates plausible-looking token sequences that do not map to valid audio codebook entries.
+
+### 8.4 Cross-Checkpoint Summary
+
+| Checkpoint | Avg RTF | Avg TPS | Valid Audio | Status |
+|-----------|---------|---------|-------------|--------|
+| SFT | **11.32** | 29.1 | Yes (5/5) | Production-viable for testing |
+| DPO | N/A | 41.2 | No (0/5) | Checkpoint packaging issue |
+| SDFT | N/A | 28.2 | No (0/5) | Codec integration not captured |
+
+An RTF of 11.32 means inference takes approximately 11x longer than the audio duration on a single H100 in float16 with LoRA loaded. This configuration is not real-time capable. TPS comparison across models is the only reliable cross-checkpoint metric because DPO and SDFT do not produce measurable audio output.
+
+### 8.5 Path to Real-Time Inference
+
+To reach RTF <= 1.0 (real-time or better) from the SFT baseline of RTF = 11.32:
+
+| Optimization | Approx RTF Reduction Factor | Notes |
+|---|---|---|
+| INT4/INT8 quantization (bitsandbytes / GPTQ) | 2-3x | Reduces memory bandwidth pressure |
+| vLLM with PagedAttention | 2-4x | Continuous batching, KV cache efficiency |
+| Speculative decoding (small draft model) | 1.4-4x | Reduces autoregressive bottleneck |
+| Multi-request batching | ~2x | Amortizes fixed per-inference overhead |
+
+Combined projection applying all optimizations: RTF approximately 0.75-1.1 on H100 (borderline real-time). Achieving RTF < 0.5 reliably would require architectural changes such as a non-autoregressive or flow-matching-based vocoder.
+
+---
+
+## 9. Recommended Production Pipeline
 
 ```
 Stage 0: Pretrain (base model — already done: unsloth/orpheus-3b-0.1-ft)
@@ -485,7 +557,7 @@ Stage 4: Inference optimization
 
 ---
 
-## 9. Data Artifacts Index
+## 10. Data Artifacts Index
 
 ### 9.1 Experiment Results Files (on sdft-branch)
 
@@ -518,7 +590,7 @@ Stage 4: Inference optimization
 
 ---
 
-## 10. Inference Latency Reference
+## 11. Inference Latency Reference
 
 Training method does not determine inference latency — architecture does. However:
 
