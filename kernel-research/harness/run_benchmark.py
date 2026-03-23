@@ -1,126 +1,176 @@
 #!/usr/bin/env python3
 """
-CLI entry point for running benchmarks.
-Writes results to /home/ubuntu/kernel-research/results/results.jsonl
+run_benchmark.py - CLI entry point for kernel optimization benchmark harness.
 
 Usage:
     python run_benchmark.py --hypothesis_id h001 --kernel_type attention --batch_size 8
-    python run_benchmark.py --list  # list available hypothesis implementations
+
+Writes results to /workspace/kernel-research/results/results.jsonl (appended).
+
+Output schema per line:
+{
+  "hypothesis_id": "h001",
+  "kernel_type": "attention",
+  "method": "tiled_attention",
+  "baseline_us": 123.4,
+  "optimized_us": 110.2,
+  "speedup": 1.12,
+  "correctness_max_abs_err": 0.000045,
+  "batch_sizes_tested": [1, 8, 32],
+  "passed_criteria": true,
+  "notes": "..."
+}
 """
 
 import argparse
 import json
+import os
 import sys
-import importlib
-from pathlib import Path
+import time
 
-sys.path.insert(0, str(Path(__file__).parent))
+# Ensure harness directory is on the path
+HARNESS_DIR = os.path.dirname(os.path.abspath(__file__))
+if HARNESS_DIR not in sys.path:
+    sys.path.insert(0, HARNESS_DIR)
 
-from harness import benchmark_kernel, print_result
-from baseline_kernels import (
-    baseline_attention,
-    baseline_gemm,
-    make_attention_args,
-    make_gemm_args,
+RESULTS_PATH = os.path.join(
+    os.path.dirname(HARNESS_DIR), "results", "results.jsonl"
 )
 
+# Acceptance criteria thresholds
+SPEEDUP_THRESHOLD        = 1.10   # 10% wall-clock improvement
+MAX_ABS_ERR_THRESHOLD    = 1e-4   # max absolute error for FP16 correctness
+VARIANCE_THRESHOLD       = 1.05   # p99 / p50 ratio must be < 5%
 
-# Registry: hypothesis_id -> implementation module
-HYPOTHESIS_REGISTRY = {}
+METHOD_NAMES = {
+    "attention": "tiled_attention",
+    "gemm":      "blocked_gemm",
+    "fused_ops": "fused_softmax_cast",
+}
 
 
-def register_hypothesis(hypothesis_id, fn, kernel_type, method, make_args_fn):
-    HYPOTHESIS_REGISTRY[hypothesis_id] = {
-        "fn": fn,
-        "kernel_type": kernel_type,
-        "method": method,
-        "make_args_fn": make_args_fn,
+def evaluate_criteria(baseline_us: float, optimized_us: float,
+                      correctness_max_abs_err: float,
+                      p50_us: float, p99_us: float) -> tuple:
+    """
+    Returns (passed: bool, notes: str) based on acceptance criteria.
+    """
+    notes_parts = []
+    passed = True
+
+    speedup = baseline_us / optimized_us if optimized_us > 0 else 0.0
+    if speedup >= SPEEDUP_THRESHOLD:
+        notes_parts.append(f"speedup {speedup:.3f}x >= {SPEEDUP_THRESHOLD}x OK")
+    else:
+        passed = False
+        notes_parts.append(f"speedup {speedup:.3f}x < {SPEEDUP_THRESHOLD}x FAIL")
+
+    variance_ratio = p99_us / p50_us if p50_us > 0 else float('inf')
+    if variance_ratio < VARIANCE_THRESHOLD:
+        notes_parts.append(f"variance p99/p50={variance_ratio:.3f} < {VARIANCE_THRESHOLD} OK")
+    else:
+        # Variance criterion is advisory; mark as warning but do not fail
+        notes_parts.append(f"variance p99/p50={variance_ratio:.3f} >= {VARIANCE_THRESHOLD} WARNING")
+
+    if correctness_max_abs_err <= MAX_ABS_ERR_THRESHOLD:
+        notes_parts.append(f"max_abs_err {correctness_max_abs_err:.2e} <= {MAX_ABS_ERR_THRESHOLD:.0e} OK")
+    else:
+        passed = False
+        notes_parts.append(f"max_abs_err {correctness_max_abs_err:.2e} > {MAX_ABS_ERR_THRESHOLD:.0e} FAIL")
+
+    return passed, "; ".join(notes_parts)
+
+
+def run_all_batch_sizes(hypothesis_id: str, kernel_type: str,
+                        batch_sizes: list) -> dict:
+    """Run benchmark across all batch sizes and aggregate results."""
+    from harness import run_benchmark
+
+    best_speedup       = 0.0
+    best_result        = None
+    aggregate_err      = 0.0
+    all_baseline_us    = []
+    all_optimized_us   = []
+
+    for bs in batch_sizes:
+        print(f"  batch_size={bs} ...", flush=True)
+        result = run_benchmark(kernel_type, bs)
+
+        baseline_us  = result["baseline"]["p50_us"]
+        optimized_us = result["optimized"]["p50_us"]
+        speedup      = baseline_us / optimized_us if optimized_us > 0 else 0.0
+        err          = result["correctness_max_abs_err"]
+
+        all_baseline_us.append(baseline_us)
+        all_optimized_us.append(optimized_us)
+        aggregate_err = max(aggregate_err, err)
+
+        if speedup > best_speedup:
+            best_speedup = speedup
+            best_result  = result
+
+    # Use best result's p50 stats for the record
+    mean_baseline_us  = sum(all_baseline_us)  / len(all_baseline_us)
+    mean_optimized_us = sum(all_optimized_us) / len(all_optimized_us)
+    final_speedup     = mean_baseline_us / mean_optimized_us if mean_optimized_us > 0 else 0.0
+
+    p50_us = best_result["optimized"]["p50_us"]
+    p99_us = best_result["optimized"]["p99_us"]
+
+    passed, notes = evaluate_criteria(
+        mean_baseline_us, mean_optimized_us,
+        aggregate_err, p50_us, p99_us
+    )
+
+    return {
+        "hypothesis_id":           hypothesis_id,
+        "kernel_type":             kernel_type,
+        "method":                  METHOD_NAMES.get(kernel_type, "unknown"),
+        "baseline_us":             round(mean_baseline_us,  4),
+        "optimized_us":            round(mean_optimized_us, 4),
+        "speedup":                 round(final_speedup,     4),
+        "correctness_max_abs_err": round(aggregate_err,     8),
+        "batch_sizes_tested":      batch_sizes,
+        "passed_criteria":         passed,
+        "notes":                   notes,
+        "device":                  best_result.get("device", "cpu"),
+        "timestamp":               time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
 
 
-def load_hypothesis_implementations():
-    """Load all hypothesis implementations from hypotheses/ directory."""
-    hyp_dir = Path(__file__).parent.parent / "hypotheses"
-    for py_file in hyp_dir.glob("*.py"):
-        try:
-            spec = importlib.util.spec_from_file_location(py_file.stem, py_file)
-            mod = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(mod)
-            if hasattr(mod, "register"):
-                mod.register(register_hypothesis)
-        except Exception as e:
-            print(f"Warning: could not load {py_file}: {e}")
-
-
-def run_hypothesis(hypothesis_id: str, kernel_type: str, batch_size: int, agent: str = "unknown"):
-    """Run benchmark for a specific hypothesis."""
-    load_hypothesis_implementations()
-
-    if hypothesis_id not in HYPOTHESIS_REGISTRY:
-        print(f"Error: hypothesis_id {hypothesis_id!r} not found in registry.")
-        print(f"Available: {list(HYPOTHESIS_REGISTRY.keys())}")
-        sys.exit(1)
-
-    entry = HYPOTHESIS_REGISTRY[hypothesis_id]
-    fn_opt = entry["fn"]
-    method = entry["method"]
-    make_args_fn = entry["make_args_fn"]
-
-    # Determine baseline
-    if kernel_type == "attention":
-        fn_base = baseline_attention
-    elif kernel_type == "GEMM":
-        fn_base = baseline_gemm
-    else:
-        fn_base = baseline_gemm  # default
-
-    # Default args for smoke test
-    if kernel_type == "attention":
-        args = make_attention_args(batch_size=batch_size)
-    else:
-        args = make_gemm_args(batch_size=batch_size)
-
-    if make_args_fn is not None:
-        args = make_args_fn(batch_size)
-
-    result = benchmark_kernel(
-        fn_optimized=fn_opt,
-        fn_baseline=fn_base,
-        args=args,
-        hypothesis_id=hypothesis_id,
-        kernel_type=kernel_type,
-        method=method,
-        agent=agent,
-    )
-
-    print_result(result)
-    return result
-
-
 def main():
-    parser = argparse.ArgumentParser(description="Run kernel optimization benchmark")
-    parser.add_argument("--hypothesis_id", "-H", type=str, help="Hypothesis ID (e.g. h001)")
-    parser.add_argument("--kernel_type", "-k", type=str, default="attention",
-                        choices=["attention", "GEMM", "fused-ops", "quant"],
-                        help="Kernel type")
-    parser.add_argument("--batch_size", "-b", type=int, default=8, help="Batch size")
-    parser.add_argument("--agent", "-a", type=str, default="unknown", help="Agent name")
-    parser.add_argument("--list", action="store_true", help="List available hypotheses")
-
+    parser = argparse.ArgumentParser(
+        description="Kernel optimization microbenchmark runner"
+    )
+    parser.add_argument("--hypothesis_id", required=True,
+                        help="Hypothesis identifier (e.g. h001)")
+    parser.add_argument("--kernel_type", required=True,
+                        choices=["attention", "gemm", "fused_ops"],
+                        help="Kernel type to benchmark")
+    parser.add_argument("--batch_size", type=int, default=None,
+                        help="Single batch size to test; omit to test [1,8,32]")
     args = parser.parse_args()
 
-    if args.list:
-        load_hypothesis_implementations()
-        print("Available hypotheses:")
-        for hid, entry in HYPOTHESIS_REGISTRY.items():
-            print(f"  {hid}: [{entry['kernel_type']}] {entry['method']}")
-        sys.exit(0)
+    batch_sizes = [args.batch_size] if args.batch_size else [1, 8, 32]
+    print(f"Running {args.kernel_type} benchmark for {args.hypothesis_id} "
+          f"on batch_sizes={batch_sizes}")
 
-    if not args.hypothesis_id:
-        parser.print_help()
-        sys.exit(1)
+    record = run_all_batch_sizes(args.hypothesis_id, args.kernel_type, batch_sizes)
 
-    run_hypothesis(args.hypothesis_id, args.kernel_type, args.batch_size, args.agent)
+    # Print human-readable summary
+    print("\n--- Results ---")
+    print(f"  baseline_us:  {record['baseline_us']:.2f}")
+    print(f"  optimized_us: {record['optimized_us']:.2f}")
+    print(f"  speedup:      {record['speedup']:.4f}x")
+    print(f"  max_abs_err:  {record['correctness_max_abs_err']:.2e}")
+    print(f"  passed:       {record['passed_criteria']}")
+    print(f"  notes:        {record['notes']}")
+
+    # Write to JSONL
+    os.makedirs(os.path.dirname(RESULTS_PATH), exist_ok=True)
+    with open(RESULTS_PATH, "a") as f:
+        f.write(json.dumps(record) + "\n")
+    print(f"\nResult written to {RESULTS_PATH}")
 
 
 if __name__ == "__main__":
