@@ -1,94 +1,70 @@
-#!/usr/bin/env python3
 """
-Reference baseline implementations for benchmarking.
-These are the "ground truth" to beat for each kernel type.
+baseline_kernels.py - Reference implementations for benchmark harness.
+
+Provides naive/reference implementations for:
+  - Attention (Q @ K^T / sqrt(d), softmax, @ V)
+  - GEMM (torch.matmul)
+  - Unfused softmax + cast
+
+Both CPU and GPU paths are supported; device selection is automatic.
 """
 
+import math
 import torch
 import torch.nn.functional as F
-import math
 
 
-def baseline_attention(q, k, v, scale=None):
-    """Standard scaled dot-product attention (FP16, cuBLAS path)."""
-    if scale is None:
-        scale = 1.0 / math.sqrt(q.size(-1))
-    # q: [batch, heads, seq, head_dim]
+def _device(prefer_gpu: bool = True) -> torch.device:
+    if prefer_gpu and torch.cuda.is_available():
+        return torch.device("cuda")
+    return torch.device("cpu")
+
+
+def naive_attention(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor) -> torch.Tensor:
+    """Standard scaled dot-product attention. Inputs: (B, H, S, D) or (B, S, D)."""
+    scale = 1.0 / math.sqrt(q.size(-1))
     scores = torch.matmul(q, k.transpose(-2, -1)) * scale
     attn = F.softmax(scores, dim=-1)
     return torch.matmul(attn, v)
 
 
-def baseline_attention_pytorch(q, k, v, scale=None):
-    """PyTorch 2.x scaled_dot_product_attention (uses FlashAttention if available)."""
-    return F.scaled_dot_product_attention(q, k, v, scale=scale)
+def make_attention_inputs(batch_size: int, seq_len: int = 128, num_heads: int = 8,
+                          head_dim: int = 64, dtype=torch.float32,
+                          device: torch.device = None):
+    """Create random Q, K, V tensors for attention benchmarks."""
+    if device is None:
+        device = _device()
+    shape = (batch_size, num_heads, seq_len, head_dim)
+    q = torch.randn(*shape, dtype=dtype, device=device)
+    k = torch.randn(*shape, dtype=dtype, device=device)
+    v = torch.randn(*shape, dtype=dtype, device=device)
+    return q, k, v
 
 
-def baseline_gemm(a, b):
-    """Standard matrix multiply via cuBLAS."""
+def standard_gemm(a: torch.Tensor, b: torch.Tensor) -> torch.Tensor:
+    """Standard matrix multiplication via torch.matmul (maps to cuBLAS on GPU)."""
     return torch.matmul(a, b)
 
 
-def baseline_gemm_fp16(a, b):
-    """FP16 GEMM via cuBLAS."""
-    a = a.to(torch.float16)
-    b = b.to(torch.float16)
-    return torch.matmul(a, b).to(torch.float32)
+def make_gemm_inputs(batch_size: int, M: int = 256, K: int = 512, N: int = 256,
+                     dtype=torch.float32, device: torch.device = None):
+    """Create random A, B tensors for GEMM benchmarks."""
+    if device is None:
+        device = _device()
+    a = torch.randn(batch_size, M, K, dtype=dtype, device=device)
+    b = torch.randn(batch_size, K, N, dtype=dtype, device=device)
+    return a, b
 
 
-def baseline_layer_norm(x, weight, bias, eps=1e-5):
-    """Standard layer normalization."""
-    return F.layer_norm(x, x.shape[-1:], weight=weight, bias=bias, eps=eps)
+def unfused_softmax_cast(x: torch.Tensor, target_dtype=torch.float16) -> torch.Tensor:
+    """Baseline: softmax in fp32 then cast to target_dtype -- two separate operations."""
+    out_fp32 = F.softmax(x, dim=-1)
+    return out_fp32.to(target_dtype)
 
 
-def baseline_mlp_fused(x, w1, w2, w3=None):
-    """Standard 2-layer MLP (no fusion)."""
-    h = F.silu(x @ w1.T)
-    if w3 is not None:
-        h = h * (x @ w3.T)  # SwiGLU variant
-    return h @ w2.T
-
-
-def make_attention_args(batch_size, seq_len=512, n_heads=8, head_dim=64, device="cuda", dtype=torch.float16):
-    q = torch.randn(batch_size, n_heads, seq_len, head_dim, device=device, dtype=dtype)
-    k = torch.randn(batch_size, n_heads, seq_len, head_dim, device=device, dtype=dtype)
-    v = torch.randn(batch_size, n_heads, seq_len, head_dim, device=device, dtype=dtype)
-    return (q, k, v)
-
-
-def make_gemm_args(batch_size, m=512, n=512, k=512, device="cuda", dtype=torch.float16):
-    a = torch.randn(batch_size * m, k, device=device, dtype=dtype)
-    b = torch.randn(k, n, device=device, dtype=dtype)
-    return (a, b)
-
-
-def make_layer_norm_args(batch_size, hidden_size=4096, device="cuda", dtype=torch.float16):
-    x = torch.randn(batch_size, hidden_size, device=device, dtype=dtype)
-    weight = torch.ones(hidden_size, device=device, dtype=dtype)
-    bias = torch.zeros(hidden_size, device=device, dtype=dtype)
-    return (x, weight, bias)
-
-
-if __name__ == "__main__":
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Device: {device}")
-
-    if device == "cuda":
-        print(f"GPU: {torch.cuda.get_device_name(0)}")
-
-        # Quick smoke test
-        q, k, v = make_attention_args(batch_size=8, device=device)
-        out = baseline_attention(q, k, v)
-        print(f"Attention baseline: input {q.shape}, output {out.shape}")
-
-        a, b = make_gemm_args(batch_size=8, device=device)
-        out = baseline_gemm(a, b)
-        print(f"GEMM baseline: {a.shape} x {b.shape} = {out.shape}")
-
-        x, w, bias = make_layer_norm_args(batch_size=8, device=device)
-        out = baseline_layer_norm(x, w, bias)
-        print(f"LayerNorm baseline: {x.shape} -> {out.shape}")
-
-        print("All baselines OK")
-    else:
-        print("CUDA not available, baselines require GPU")
+def make_fused_ops_inputs(batch_size: int, seq_len: int = 256,
+                          dtype=torch.float32, device: torch.device = None):
+    """Create random logits tensor for softmax+cast benchmarks."""
+    if device is None:
+        device = _device()
+    return torch.randn(batch_size, seq_len, dtype=dtype, device=device)
