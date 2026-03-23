@@ -559,19 +559,19 @@ Stage 4: Inference optimization
 
 ## 10. Data Artifacts Index
 
-### 9.1 Experiment Results Files (on sdft-branch)
+### 10.1 Experiment Results Files (on sdft-branch)
 
 | File | Description | Contributor | Experiments |
 |------|-------------|-------------|-------------|
-| `results/sdpo_sweep_results.csv` | SDPO initial sweep, 5 steps | serious-inference-engineer | 36 |
-| `results/sdpo_extended_results.csv` | SDPO extended sweep, 20 steps | serious-inference-engineer | 20 |
-| `results/sdft_miniQuant_results.csv` | SDFT sweep, GPT-OSS-20B | miniQuant | 24 |
-| `results/haiku_sft_results.csv` | Haiku SFT distillation sweep | miniQuant | 6 |
-| `results/coolstufs_experiments.csv` | DPO/SDPO/Haiku grid | coolstufs | 66 |
+| `dpo/sdpo_sweep/experiment_results.jsonl` | SDPO initial sweep, 5 steps | serious-inference-engineer | 36 |
+| `dpo/sdpo_sweep_extended/experiment_results_extended.jsonl` | SDPO extended sweep, 20 steps | serious-inference-engineer | 20 |
+| `sdft/sdft_haiku_sweep_miniQuant/experiment_results.jsonl` | SDFT sweep, GPT-OSS-20B | miniQuant | 24 |
+| `sdft/sdft_haiku_sweep_miniQuant/experiment_results.jsonl` | Haiku SFT distillation sweep | miniQuant | 6 |
+| `docs/combined_experiment_results.jsonl` | DPO/SDPO/Haiku grid | coolstufs | 66 |
 | `docs/voice_ai_synthesis_report.md` | Baseline synthesis report | coolstufs | All |
 | `FINAL_REPORT.md` | This document | serious-inference-engineer | All 172 |
 
-### 9.2 Model Checkpoints (Lambda H100, 192.222.55.210)
+### 10.2 Model Checkpoints (Lambda H100, 192.222.55.210)
 
 | Checkpoint | Path | Method | Loss |
 |------------|------|--------|------|
@@ -579,7 +579,7 @@ Stage 4: Inference optimization
 | SDFT Round 0 | /home/ubuntu/voice_ai_sdft/checkpoints/round_0/final | SDFT | 3.069 |
 | DPO final | /home/ubuntu/voice_ai_sdft/checkpoints/dpo/final | DPO | 0.3108 |
 
-### 9.3 Key Experiment IDs for Reproducibility
+### 10.3 Key Experiment IDs for Reproducibility
 
 | Experiment ID | Method | Config | final_loss |
 |---------------|--------|--------|------------|
