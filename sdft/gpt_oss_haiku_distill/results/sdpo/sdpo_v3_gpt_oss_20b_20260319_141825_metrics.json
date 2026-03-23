@@ -1,0 +1,558 @@
+{
+  "run_name": "sdpo_v3_gpt_oss_20b_20260319_141825",
+  "model": "openai/gpt-oss-20b",
+  "method": "sdpo_signed_weights",
+  "beta": 0.1,
+  "n_pairs": 10,
+  "steps": [
+    {
+      "step": 1,
+      "dpo_loss": 2.304145734115673,
+      "chosen_nll": 2.285707964689893,
+      "rejected_nll": -0.1843776942577984,
+      "t": 1773929930.7473829
+    },
+    {
+      "step": 2,
+      "dpo_loss": 2.410844607441934,
+      "chosen_nll": 2.388465408575718,
+      "rejected_nll": -0.2237919886621581,
+      "t": 1773929932.498999
+    },
+    {
+      "step": 3,
+      "dpo_loss": 1.7606813029607293,
+      "chosen_nll": 1.7434422750244833,
+      "rejected_nll": -0.17239027936245926,
+      "t": 1773929934.42678
+    },
+    {
+      "step": 4,
+      "dpo_loss": 2.058522077858418,
+      "chosen_nll": 2.0426681469757173,
+      "rejected_nll": -0.15853930882700726,
+      "t": 1773929936.3534067
+    },
+    {
+      "step": 5,
+      "dpo_loss": 1.4144264358809198,
+      "chosen_nll": 1.4004071295377551,
+      "rejected_nll": -0.1401930634316466,
+      "t": 1773929938.4096808
+    },
+    {
+      "step": 6,
+      "dpo_loss": 1.5558231970936325,
+      "chosen_nll": 1.537935288010092,
+      "rejected_nll": -0.1788790908354045,
+      "t": 1773929940.3617542
+    },
+    {
+      "step": 7,
+      "dpo_loss": 1.3012790895242983,
+      "chosen_nll": 1.28626650955537,
+      "rejected_nll": -0.15012579968928352,
+      "t": 1773929942.3002224
+    },
+    {
+      "step": 8,
+      "dpo_loss": 1.6131069146667343,
+      "chosen_nll": 1.5973292624043185,
+      "rejected_nll": -0.15777652262415887,
+      "t": 1773929944.631478
+    },
+    {
+      "step": 9,
+      "dpo_loss": 1.1140552123488205,
+      "chosen_nll": 1.1014423336160202,
+      "rejected_nll": -0.12612878732800342,
+      "t": 1773929947.4617774
+    },
+    {
+      "step": 10,
+      "dpo_loss": 1.4698381428997844,
+      "chosen_nll": 1.4560545196991925,
+      "rejected_nll": -0.13783623200591869,
+      "t": 1773929949.4972281
+    },
+    {
+      "step": 11,
+      "dpo_loss": 1.2961491575008075,
+      "chosen_nll": 1.2824401745145995,
+      "rejected_nll": -0.1370898298620797,
+      "t": 1773929952.5678372
+    },
+    {
+      "step": 12,
+      "dpo_loss": 1.5605360964682398,
+      "chosen_nll": 1.5453952622604146,
+      "rejected_nll": -0.15140834207825168,
+      "t": 1773929954.5721207
+    },
+    {
+      "step": 13,
+      "dpo_loss": 0.9643981584162149,
+      "chosen_nll": 0.9497523588046174,
+      "rejected_nll": -0.14645799611597515,
+      "t": 1773929957.4315097
+    },
+    {
+      "step": 14,
+      "dpo_loss": 1.266216038241025,
+      "chosen_nll": 1.2506420795782844,
+      "rejected_nll": -0.15573958662740564,
+      "t": 1773929959.570766
+    },
+    {
+      "step": 15,
+      "dpo_loss": 1.038380583898839,
+      "chosen_nll": 1.0252606976341736,
+      "rejected_nll": -0.13119886264665234,
+      "t": 1773929962.351154
+    },
+    {
+      "step": 16,
+      "dpo_loss": 0.8697979306698469,
+      "chosen_nll": 0.8548966145766634,
+      "rejected_nll": -0.1490131609318351,
+      "t": 1773929964.3786647
+    },
+    {
+      "step": 17,
+      "dpo_loss": 0.5886246447367726,
+      "chosen_nll": 0.5757416824201221,
+      "rejected_nll": -0.12882962316650456,
+      "t": 1773929966.3774521
+    },
+    {
+      "step": 18,
+      "dpo_loss": 0.4608683132500079,
+      "chosen_nll": 0.44679149176439975,
+      "rejected_nll": -0.1407682148560811,
+      "t": 1773929969.7276275
+    },
+    {
+      "step": 19,
+      "dpo_loss": 0.7288617981550151,
+      "chosen_nll": 0.7151372699826377,
+      "rejected_nll": -0.13724528172377323,
+      "t": 1773929971.769723
+    },
+    {
+      "step": 20,
+      "dpo_loss": 0.5552032108600699,
+      "chosen_nll": 0.5413148607561615,
+      "rejected_nll": -0.13888350103908345,
+      "t": 1773929973.6979396
+    },
+    {
+      "step": 21,
+      "dpo_loss": 0.7238935337842255,
+      "chosen_nll": 0.7065128980231276,
+      "rejected_nll": -0.17380635761097896,
+      "t": 1773929975.6261306
+    },
+    {
+      "step": 22,
+      "dpo_loss": 0.4836092408284728,
+      "chosen_nll": 0.4636068677004404,
+      "rejected_nll": -0.20002373128032352,
+      "t": 1773929977.4258964
+    },
+    {
+      "step": 23,
+      "dpo_loss": 0.37702844196693563,
+      "chosen_nll": 0.36107461750098635,
+      "rejected_nll": -0.15953824465949257,
+      "t": 1773929979.4319532
+    },
+    {
+      "step": 24,
+      "dpo_loss": 0.7290980460067342,
+      "chosen_nll": 0.7150490659152824,
+      "rejected_nll": -0.14048980091451863,
+      "t": 1773929982.7790086
+    },
+    {
+      "step": 25,
+      "dpo_loss": 0.9870328535498999,
+      "chosen_nll": 0.9660547144921844,
+      "rejected_nll": -0.2097813905771546,
+      "t": 1773929984.566096
+    },
+    {
+      "step": 26,
+      "dpo_loss": 0.15700274453128066,
+      "chosen_nll": 0.1325660758224384,
+      "rejected_nll": -0.24436668708842252,
+      "t": 1773930006.2033215
+    },
+    {
+      "step": 27,
+      "dpo_loss": 0.9953887497679037,
+      "chosen_nll": 0.9768714312528408,
+      "rejected_nll": -0.18517318515062833,
+      "t": 1773930008.0242434
+    },
+    {
+      "step": 28,
+      "dpo_loss": 0.22754417254932827,
+      "chosen_nll": 0.19880758201751444,
+      "rejected_nll": -0.2873659053181382,
+      "t": 1773930009.946968
+    },
+    {
+      "step": 29,
+      "dpo_loss": 0.2076884631085095,
+      "chosen_nll": 0.17954966966180294,
+      "rejected_nll": -0.2813879344670655,
+      "t": 1773930011.7032142
+    },
+    {
+      "step": 30,
+      "dpo_loss": 0.23022767706359232,
+      "chosen_nll": 0.2009912342646695,
+      "rejected_nll": -0.29236442798922807,
+      "t": 1773930013.483993
+    },
+    {
+      "step": 31,
+      "dpo_loss": 0.3309218400060619,
+      "chosen_nll": 0.2963049281431429,
+      "rejected_nll": -0.34616911862918975,
+      "t": 1773930015.4800868
+    },
+    {
+      "step": 32,
+      "dpo_loss": 0.28757696533645244,
+      "chosen_nll": 0.24848550371363623,
+      "rejected_nll": -0.390914616228162,
+      "t": 1773930018.4049854
+    },
+    {
+      "step": 33,
+      "dpo_loss": 0.18489827508168327,
+      "chosen_nll": 0.12298291352113182,
+      "rejected_nll": -0.6191536156055145,
+      "t": 1773930021.4906366
+    },
+    {
+      "step": 34,
+      "dpo_loss": 0.19115043764888753,
+      "chosen_nll": 0.09417547084878096,
+      "rejected_nll": -0.9697496680010657,
+      "t": 1773930023.3964121
+    },
+    {
+      "step": 35,
+      "dpo_loss": 0.553345408017077,
+      "chosen_nll": 0.4865498830826325,
+      "rejected_nll": -0.6679552493444455,
+      "t": 1773930026.2744737
+    },
+    {
+      "step": 36,
+      "dpo_loss": 0.42954646058405666,
+      "chosen_nll": 0.3301987168473112,
+      "rejected_nll": -0.9934774373674544,
+      "t": 1773930028.8669286
+    },
+    {
+      "step": 37,
+      "dpo_loss": 0.3949498621656632,
+      "chosen_nll": 0.3113010179114907,
+      "rejected_nll": -0.836488442541725,
+      "t": 1773930031.940597
+    },
+    {
+      "step": 38,
+      "dpo_loss": 0.33322949752284947,
+      "chosen_nll": 0.1970290203767831,
+      "rejected_nll": -1.362004771460664,
+      "t": 1773930033.9135442
+    },
+    {
+      "step": 39,
+      "dpo_loss": 0.23153234831958797,
+      "chosen_nll": 0.14005760913161058,
+      "rejected_nll": -0.9147473918797739,
+      "t": 1773930035.814484
+    },
+    {
+      "step": 40,
+      "dpo_loss": 0.46327189745128905,
+      "chosen_nll": 0.31128835241061104,
+      "rejected_nll": -1.5198354504067804,
+      "t": 1773930037.8173757
+    },
+    {
+      "step": 41,
+      "dpo_loss": 0.15641656945818908,
+      "chosen_nll": 0.06235093391793924,
+      "rejected_nll": -0.9406563554024984,
+      "t": 1773930040.6770096
+    },
+    {
+      "step": 42,
+      "dpo_loss": 0.4398778056647828,
+      "chosen_nll": 0.34387962354153306,
+      "rejected_nll": -0.9599818212324974,
+      "t": 1773930042.6179388
+    },
+    {
+      "step": 43,
+      "dpo_loss": 0.19990448602901542,
+      "chosen_nll": 0.057475906991405985,
+      "rejected_nll": -1.4242857903760944,
+      "t": 1773930044.5811832
+    },
+    {
+      "step": 44,
+      "dpo_loss": 0.2001820526083954,
+      "chosen_nll": 0.07836497100736362,
+      "rejected_nll": -1.2181708160103177,
+      "t": 1773930046.5508158
+    },
+    {
+      "step": 45,
+      "dpo_loss": 0.16994372091961285,
+      "chosen_nll": 0.03086904490556354,
+      "rejected_nll": -1.390746760140493,
+      "t": 1773930048.5986166
+    },
+    {
+      "step": 46,
+      "dpo_loss": 0.15753310154231193,
+      "chosen_nll": 0.012879589343344067,
+      "rejected_nll": -1.4465351219896785,
+      "t": 1773930050.6182923
+    },
+    {
+      "step": 47,
+      "dpo_loss": 0.42945678439810897,
+      "chosen_nll": 0.2445680228359986,
+      "rejected_nll": -1.8488876156211036,
+      "t": 1773930052.5643435
+    },
+    {
+      "step": 48,
+      "dpo_loss": 0.4171939423654441,
+      "chosen_nll": 0.22805920021305956,
+      "rejected_nll": -1.8913474215238453,
+      "t": 1773930054.483777
+    },
+    {
+      "step": 49,
+      "dpo_loss": 0.522877829998893,
+      "chosen_nll": 0.3149596478078003,
+      "rejected_nll": -2.0791818219109266,
+      "t": 1773930056.2589564
+    },
+    {
+      "step": 50,
+      "dpo_loss": 0.6766434164040797,
+      "chosen_nll": 0.43119958330543373,
+      "rejected_nll": -2.454438330986459,
+      "t": 1773930058.05327
+    },
+    {
+      "step": 51,
+      "dpo_loss": 0.42842217671037985,
+      "chosen_nll": 0.2525675301418965,
+      "rejected_nll": -1.758546465684834,
+      "t": 1773930077.497529
+    },
+    {
+      "step": 52,
+      "dpo_loss": 0.9122837438908236,
+      "chosen_nll": 0.764342564106849,
+      "rejected_nll": -1.4794117978397452,
+      "t": 1773930079.4295235
+    },
+    {
+      "step": 53,
+      "dpo_loss": 0.23179594886821325,
+      "chosen_nll": 0.037734260666146456,
+      "rejected_nll": -1.9406168820206677,
+      "t": 1773930081.357926
+    },
+    {
+      "step": 54,
+      "dpo_loss": 0.2382989748676945,
+      "chosen_nll": 0.026455193317168193,
+      "rejected_nll": -2.118437815505263,
+      "t": 1773930083.3290021
+    },
+    {
+      "step": 55,
+      "dpo_loss": 0.5162971415843804,
+      "chosen_nll": 0.25564412233267086,
+      "rejected_nll": -2.606530192517096,
+      "t": 1773930085.2386637
+    },
+    {
+      "step": 56,
+      "dpo_loss": 0.4654963690402547,
+      "chosen_nll": 0.24406388212231797,
+      "rejected_nll": -2.2143248691793675,
+      "t": 1773930087.2088914
+    },
+    {
+      "step": 57,
+      "dpo_loss": 0.5131410764207125,
+      "chosen_nll": 0.25576074410327,
+      "rejected_nll": -2.573803323174425,
+      "t": 1773930090.0396883
+    },
+    {
+      "step": 58,
+      "dpo_loss": 0.5942537044516788,
+      "chosen_nll": 0.3384920438705431,
+      "rejected_nll": -2.557616605811357,
+      "t": 1773930092.848562
+    },
+    {
+      "step": 59,
+      "dpo_loss": 0.8028103701825694,
+      "chosen_nll": 0.5306883658951103,
+      "rejected_nll": -2.721220042874591,
+      "t": 1773930095.3963919
+    },
+    {
+      "step": 60,
+      "dpo_loss": 0.6670312019113802,
+      "chosen_nll": 0.3531791498286491,
+      "rejected_nll": -3.13852052082731,
+      "t": 1773930109.6726573
+    },
+    {
+      "step": 61,
+      "dpo_loss": 0.8510991351083675,
+      "chosen_nll": 0.5520675569344614,
+      "rejected_nll": -2.9903157817390613,
+      "t": 1773930112.7804756
+    },
+    {
+      "step": 62,
+      "dpo_loss": 0.331139960627611,
+      "chosen_nll": 0.0049656519436562865,
+      "rejected_nll": -3.2617430868395467,
+      "t": 1773930118.6872761
+    },
+    {
+      "step": 63,
+      "dpo_loss": 0.339563735124225,
+      "chosen_nll": 0.02017372571476838,
+      "rejected_nll": -3.1939000940945657,
+      "t": 1773930126.3796344
+    },
+    {
+      "step": 64,
+      "dpo_loss": 0.32575862005332046,
+      "chosen_nll": 0.01075721894480136,
+      "rejected_nll": -3.1500140110851906,
+      "t": 1773930129.190225
+    },
+    {
+      "step": 65,
+      "dpo_loss": 0.6433963334075199,
+      "chosen_nll": 0.3842099407879028,
+      "rejected_nll": -2.591863926196171,
+      "t": 1773930139.2718232
+    },
+    {
+      "step": 66,
+      "dpo_loss": 0.5679973754161847,
+      "chosen_nll": 0.1958121042873926,
+      "rejected_nll": -3.7218527112879203,
+      "t": 1773930142.3599873
+    },
+    {
+      "step": 67,
+      "dpo_loss": 0.47497637239047885,
+      "chosen_nll": 0.21196052957018927,
+      "rejected_nll": -2.630158428202896,
+      "t": 1773930152.381241
+    },
+    {
+      "step": 68,
+      "dpo_loss": 0.7402783012203826,
+      "chosen_nll": 0.36336872912244933,
+      "rejected_nll": -3.7690957209793323,
+      "t": 1773930154.3742452
+    },
+    {
+      "step": 69,
+      "dpo_loss": 0.7089790009870984,
+      "chosen_nll": 0.3858866678393432,
+      "rejected_nll": -3.2309233314775514,
+      "t": 1773930156.3713014
+    },
+    {
+      "step": 70,
+      "dpo_loss": 0.5065379137121112,
+      "chosen_nll": 0.15089408950466546,
+      "rejected_nll": -3.5564382420744574,
+      "t": 1773930160.1898313
+    },
+    {
+      "step": 71,
+      "dpo_loss": 0.49728285034738084,
+      "chosen_nll": 0.1157483131051181,
+      "rejected_nll": -3.8153453724226267,
+      "t": 1773930162.1818402
+    },
+    {
+      "step": 72,
+      "dpo_loss": 0.4161910214996583,
+      "chosen_nll": 0.08619928137084365,
+      "rejected_nll": -3.2999174012881465,
+      "t": 1773930164.1641057
+    },
+    {
+      "step": 73,
+      "dpo_loss": 0.5053162875533062,
+      "chosen_nll": 0.12530580357755455,
+      "rejected_nll": -3.8001048397575166,
+      "t": 1773930167.8962
+    },
+    {
+      "step": 74,
+      "dpo_loss": 0.4168807512832209,
+      "chosen_nll": 0.025539711697703832,
+      "rejected_nll": -3.9134103958551707,
+      "t": 1773930173.2224522
+    },
+    {
+      "step": 75,
+      "dpo_loss": 1.019511909595479,
+      "chosen_nll": 0.5837808830631644,
+      "rejected_nll": -4.357310265323145,
+      "t": 1773930178.0703895
+    }
+  ],
+  "eval_steps": [
+    {
+      "step": 25,
+      "prompt": "How should I approach learning a second programming language?",
+      "model_output": "<|channel|>final<|message|># Learning a Second Programming Language\n\nHere's a practical approach that builds on what you already know:\n\n## Leverage Your Existing Knowledge\nYou've already learned how to think like a programmer, so you're not starting from zero. This means:\n- You understand concepts l",
+      "haiku_chosen": "# Learning a Second Programming Language\n\nHere's a practical approach that builds on what you already know:\n\n## Leverage Your Existing Knowledge\n- You've already learned *how to think* like a programmer, so you're not starting from zero\n- Look for concepts you recognize (loops, functions, variables)",
+      "flat_rejected": "# Learning a Second Programming Language\n\n**Start with fundamentals**\n- Focus on core concepts (variables, loops, conditionals, functions) that transfer across languages\n- You'll recognize patterns from your first language\n\n**Choose strategically**\n- Pick a language that solves different problems or"
+    },
+    {
+      "step": 50,
+      "prompt": "What's your take on the importance of writing clearly?",
+      "model_output": "<|channel|>final<|message|>I think it's genuinely underrated how much clear writing matters.\n\nIt's not just about sounding polished\u2014it's practical. When you write clearly, you actually think more clearly. Fuzzy writing usually means fuzzy thinking underneath. So the act of clarifying your words forc",
+      "haiku_chosen": "I think it's genuinely underrated how much clear writing matters.\n\nIt's not just about sounding polished\u2014it's practical. When you write clearly, you actually *think* more clearly. Fuzzy writing usually means fuzzy thinking underneath. So the act of clarifying your words forces you to clarify your id",
+      "flat_rejected": "Clear writing matters because it:\n\n**Gets ideas across efficiently.** Ambiguous writing forces readers to guess your meaning, wasting time and inviting misunderstanding.\n\n**Builds credibility.** Muddled writing suggests muddled thinking\u2014even if the thinking is actually sound.\n\n**Respects the reader."
+    },
+    {
+      "step": 75,
+      "prompt": "How should I approach learning a second programming language?",
+      "model_output": "<|channel|>final<|message|># Learning a Second Programming Language\n\nHere's a practical approach that builds on what you already know:\n\n## Leverage Your Existing Knowledge\n- You've already learned *how to think* like a programmer, so you're not starting from zero\n- Look for concepts you recognize (l",
+      "haiku_chosen": "# Learning a Second Programming Language\n\nHere's a practical approach that builds on what you already know:\n\n## Leverage Your Existing Knowledge\n- You've already learned *how to think* like a programmer, so you're not starting from zero\n- Look for concepts you recognize (loops, functions, variables)",
+      "flat_rejected": "# Learning a Second Programming Language\n\n**Start with fundamentals**\n- Focus on core concepts (variables, loops, conditionals, functions) that transfer across languages\n- You'll recognize patterns from your first language\n\n**Choose strategically**\n- Pick a language that solves different problems or"
+    }
+  ],
+  "start_time": "2026-03-19T14:18:48.740115"
+}

@@ -1,0 +1,915 @@
+nohup: ignoring input
+/workspace/sdpo_sie_extended_sweep.py:171: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"SDPO Sweep starting at {datetime.datetime.utcnow().isoformat()}Z")
+PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+/workspace/sdpo_sie_extended_sweep.py:27: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+SDPO Sweep starting at 2026-03-19T22:17:03.386516Z
+Model: openai/gpt-oss-20b, LoRA rank: 8
+Configs: 5 betas x 1 LRs x 4 n_pairs = 20 experiments
+
+============================================================
+Starting sdpo_sie_ext_001: beta=0.1, lr=0.0005, n_pairs=10, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975209.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.63921356201172, metrics={'clock_cycle:unique': 1975211.0, 'loss:sum': 60.63921356201172, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730252265930176, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=57.99282455444336, metrics={'clock_cycle:unique': 1975213.0, 'loss:sum': 57.99282455444336, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=22.804243087768555, metrics={'clock_cycle:unique': 1975215.0, 'loss:sum': 22.804243087768555, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72569465637207, 'e_frac_with_tokens:mean': 0.8619791865348816}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=9.004597663879395, metrics={'clock_cycle:unique': 1975217.0, 'loss:sum': 9.004597663879395, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722873687744141, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=4.213445663452148, metrics={'clock_cycle:unique': 1975219.0, 'loss:sum': 4.213445663452148, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.730252265930176, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.922429084777832, metrics={'clock_cycle:unique': 1975221.0, 'loss:sum': 0.922429084777832, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.735677242279053, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.8301488757133484, metrics={'clock_cycle:unique': 1975223.0, 'loss:sum': 0.8301488757133484, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722005367279053, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=0.5563106536865234, metrics={'clock_cycle:unique': 1975225.0, 'loss:sum': 0.5563106536865234, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.749349117279053, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=4.612283706665039, metrics={'clock_cycle:unique': 1975227.0, 'loss:sum': 4.612283706665039, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.719618797302246, 'e_frac_with_tokens:mean': 0.8463541865348816}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.10503523796796799, metrics={'clock_cycle:unique': 1975229.0, 'loss:sum': 0.10503523796796799, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.718099117279053, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.0618320032954216, metrics={'clock_cycle:unique': 1975231.0, 'loss:sum': 0.0618320032954216, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.723958492279053, 'e_frac_with_tokens:mean': 0.8333333730697632}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.1282045543193817, metrics={'clock_cycle:unique': 1975233.0, 'loss:sum': 0.1282045543193817, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.880208492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7194013595581055, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.42193496227264404, metrics={'clock_cycle:unique': 1975235.0, 'loss:sum': 0.42193496227264404, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.71875, 'e_frac_with_tokens:mean': 0.8450521230697632}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.027739133685827255, metrics={'clock_cycle:unique': 1975237.0, 'loss:sum': 0.027739133685827255, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7115888595581055, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.009878022596240044, metrics={'clock_cycle:unique': 1975239.0, 'loss:sum': 0.009878022596240044, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.724175930023193, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.00627132598310709, metrics={'clock_cycle:unique': 1975241.0, 'loss:sum': 0.00627132598310709, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.726779937744141, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.5419009327888489, metrics={'clock_cycle:unique': 1975243.0, 'loss:sum': 0.5419009327888489, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.707900047302246, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.048230551183223724, metrics={'clock_cycle:unique': 1975245.0, 'loss:sum': 0.048230551183223724, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.734375, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.01795685663819313, metrics={'clock_cycle:unique': 1975247.0, 'loss:sum': 0.01795685663819313, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.711154937744141, 'e_frac_with_tokens:mean': 0.8385416865348816}
+[sdpo_sie_ext_001] OK: {"final_loss": 0.01795685663819313, "avg_loss": 14.815848899586125, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_ext_002: beta=0.1, lr=0.0005, n_pairs=20, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318461.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.658206939697266, metrics={'clock_cycle:unique': 318463.0, 'e_max_violation:mean': 6.731770992279053, 'e_max_violation:max': 6.9375, 'loss:sum': 60.658206939697266, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=59.04995346069336, metrics={'clock_cycle:unique': 318465.0, 'e_max_violation:mean': 6.731988430023193, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 59.04995346069336, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=27.354694366455078, metrics={'clock_cycle:unique': 318467.0, 'e_max_violation:mean': 6.72764778137207, 'e_max_violation:max': 6.90625, 'loss:sum': 27.354694366455078, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8619791865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=8.270417213439941, metrics={'clock_cycle:unique': 318469.0, 'e_max_violation:mean': 6.72569465637207, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 8.270417213439941, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8450521230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=6.437657356262207, metrics={'clock_cycle:unique': 318472.0, 'e_max_violation:mean': 6.734375, 'e_max_violation:max': 6.921875, 'loss:sum': 6.437657356262207, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.823398232460022, metrics={'clock_cycle:unique': 318474.0, 'e_max_violation:mean': 6.739150047302246, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.823398232460022, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=1.179076075553894, metrics={'clock_cycle:unique': 318476.0, 'e_max_violation:mean': 6.723958492279053, 'e_max_violation:max': 6.90625, 'loss:sum': 1.179076075553894, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=3.219413995742798, metrics={'clock_cycle:unique': 318478.0, 'e_max_violation:mean': 6.75108528137207, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 3.219413995742798, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=0.9676520228385925, metrics={'clock_cycle:unique': 318480.0, 'e_max_violation:mean': 6.726779937744141, 'e_max_violation:max': 6.890625, 'loss:sum': 0.9676520228385925, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.37010306119918823, metrics={'clock_cycle:unique': 318482.0, 'e_max_violation:mean': 6.720920562744141, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 0.37010306119918823, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.046842221170663834, metrics={'clock_cycle:unique': 318484.0, 'e_max_violation:mean': 6.726346015930176, 'e_max_violation:max': 6.895833492279053, 'loss:sum': 0.046842221170663834, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.22266758978366852, metrics={'clock_cycle:unique': 318486.0, 'e_max_violation:mean': 6.726779937744141, 'e_max_violation:max': 6.880208492279053, 'loss:sum': 0.22266758978366852, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8463541865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=1.3260542154312134, metrics={'clock_cycle:unique': 318488.0, 'e_max_violation:mean': 6.727864742279053, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 1.3260542154312134, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8450521230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.05692948400974274, metrics={'clock_cycle:unique': 318490.0, 'e_max_violation:mean': 6.723525047302246, 'e_max_violation:max': 6.895833492279053, 'loss:sum': 0.05692948400974274, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.011446134187281132, metrics={'clock_cycle:unique': 318492.0, 'e_max_violation:mean': 6.73546028137207, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.011446134187281132, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83203125, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.026380253955721855, metrics={'clock_cycle:unique': 318494.0, 'e_max_violation:mean': 6.740017890930176, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 0.026380253955721855, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.050508998334407806, metrics={'clock_cycle:unique': 318496.0, 'e_max_violation:mean': 6.72374153137207, 'e_max_violation:max': 6.921875, 'loss:sum': 0.050508998334407806, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.2075260579586029, metrics={'clock_cycle:unique': 318499.0, 'e_max_violation:mean': 6.992920875549316, 'e_max_violation:max': 6.9973835945129395, 'loss:sum': 0.2075260579586029, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83203125, 'e_min_violation:mean': -0.9999879598617554}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=2.627100706100464, metrics={'clock_cycle:unique': 318500.0, 'e_max_violation:mean': 6.718099117279053, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 2.627100706100464, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8294271230697632, 'e_min_violation:mean': -0.9995660185813904}
+[sdpo_sie_ext_002] OK: {"final_loss": 2.627100706100464, "avg_loss": 15.313926297193394, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_ext_003: beta=0.1, lr=0.0005, n_pairs=30, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318510.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=59.92176818847656, metrics={'clock_cycle:unique': 318512.0, 'e_max_violation:mean': 6.7311201095581055, 'e_max_violation:max': 6.9375, 'loss:sum': 59.92176818847656, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=57.42374801635742, metrics={'clock_cycle:unique': 318514.0, 'e_max_violation:mean': 6.73046875, 'e_max_violation:max': 6.90625, 'loss:sum': 57.42374801635742, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=24.43566131591797, metrics={'clock_cycle:unique': 318516.0, 'e_max_violation:mean': 6.724392890930176, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 24.43566131591797, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=7.528055191040039, metrics={'clock_cycle:unique': 318518.0, 'e_max_violation:mean': 6.722873687744141, 'e_max_violation:max': 6.921875, 'loss:sum': 7.528055191040039, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8450521230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=5.3388566970825195, metrics={'clock_cycle:unique': 318520.0, 'e_max_violation:mean': 6.732639312744141, 'e_max_violation:max': 6.921875, 'loss:sum': 5.3388566970825195, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.7542450428009033, metrics={'clock_cycle:unique': 318522.0, 'e_max_violation:mean': 6.734592437744141, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.7542450428009033, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.5645067691802979, metrics={'clock_cycle:unique': 318524.0, 'e_max_violation:mean': 6.723958492279053, 'e_max_violation:max': 6.90625, 'loss:sum': 0.5645067691802979, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=2.338235855102539, metrics={'clock_cycle:unique': 318526.0, 'e_max_violation:mean': 6.751736640930176, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 2.338235855102539, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=2.647014617919922, metrics={'clock_cycle:unique': 318528.0, 'e_max_violation:mean': 6.721137523651123, 'e_max_violation:max': 6.880208492279053, 'loss:sum': 2.647014617919922, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=2.3131442070007324, metrics={'clock_cycle:unique': 318530.0, 'e_max_violation:mean': 6.725478172302246, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 2.3131442070007324, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.5895140171051025, metrics={'clock_cycle:unique': 318532.0, 'e_max_violation:mean': 6.72960090637207, 'e_max_violation:max': 6.90625, 'loss:sum': 0.5895140171051025, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=1.4361159801483154, metrics={'clock_cycle:unique': 318535.0, 'e_max_violation:mean': 6.730903148651123, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 1.4361159801483154, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=4.806797027587891, metrics={'clock_cycle:unique': 318537.0, 'e_max_violation:mean': 6.714410305023193, 'e_max_violation:max': 6.90625, 'loss:sum': 4.806797027587891, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8684896230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.03291323781013489, metrics={'clock_cycle:unique': 318539.0, 'e_max_violation:mean': 6.709201812744141, 'e_max_violation:max': 6.921875, 'loss:sum': 0.03291323781013489, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=2.4519383907318115, metrics={'clock_cycle:unique': 318541.0, 'e_max_violation:mean': 6.720703125, 'e_max_violation:max': 6.90625, 'loss:sum': 2.4519383907318115, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8463541865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.034839943051338196, metrics={'clock_cycle:unique': 318544.0, 'e_max_violation:mean': 6.721137523651123, 'e_max_violation:max': 6.921875, 'loss:sum': 0.034839943051338196, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8528646230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.015737440437078476, metrics={'clock_cycle:unique': 318546.0, 'e_max_violation:mean': 6.70421028137207, 'e_max_violation:max': 6.90625, 'loss:sum': 0.015737440437078476, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8567708730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.013251746073365211, metrics={'clock_cycle:unique': 318548.0, 'e_max_violation:mean': 6.726129055023193, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 0.013251746073365211, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.030817991122603416, metrics={'clock_cycle:unique': 318550.0, 'e_max_violation:mean': 6.694661617279053, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 0.030817991122603416, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_ext_003] OK: {"final_loss": 0.030817991122603416, "avg_loss": 15.302482961677015, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_ext_004: beta=0.1, lr=0.0005, n_pairs=50, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318563.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.184410095214844, metrics={'clock_cycle:unique': 318565.0, 'e_max_violation:mean': 6.732639312744141, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 60.184410095214844, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=57.30084991455078, metrics={'clock_cycle:unique': 318567.0, 'e_max_violation:mean': 6.731988430023193, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 57.30084991455078, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=25.704986572265625, metrics={'clock_cycle:unique': 318569.0, 'e_max_violation:mean': 6.727864742279053, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 25.704986572265625, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=9.85428524017334, metrics={'clock_cycle:unique': 318571.0, 'e_max_violation:mean': 6.723525047302246, 'e_max_violation:max': 6.921875, 'loss:sum': 9.85428524017334, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=5.257296085357666, metrics={'clock_cycle:unique': 318573.0, 'e_max_violation:mean': 6.734375, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 5.257296085357666, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=1.0163288116455078, metrics={'clock_cycle:unique': 318575.0, 'e_max_violation:mean': 6.743056297302246, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 1.0163288116455078, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=1.3023173809051514, metrics={'clock_cycle:unique': 318577.0, 'e_max_violation:mean': 6.731770992279053, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 1.3023173809051514, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=0.35369399189949036, metrics={'clock_cycle:unique': 318579.0, 'e_max_violation:mean': 6.760200023651123, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.35369399189949036, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8229166865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=1.7482945919036865, metrics={'clock_cycle:unique': 318581.0, 'e_max_violation:mean': 6.725043773651123, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 1.7482945919036865, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8255208730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.2173871397972107, metrics={'clock_cycle:unique': 318583.0, 'e_max_violation:mean': 6.727864742279053, 'e_max_violation:max': 6.9375, 'loss:sum': 0.2173871397972107, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.82421875, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.015711575746536255, metrics={'clock_cycle:unique': 318585.0, 'e_max_violation:mean': 6.732639312744141, 'e_max_violation:max': 6.90625, 'loss:sum': 0.015711575746536255, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8255208730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=7.225034713745117, metrics={'clock_cycle:unique': 318587.0, 'e_max_violation:mean': 6.733290672302246, 'e_max_violation:max': 6.895833492279053, 'loss:sum': 7.225034713745117, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8177083730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=1.3233799934387207, metrics={'clock_cycle:unique': 318589.0, 'e_max_violation:mean': 6.73046875, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 1.3233799934387207, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8411458730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.06966052204370499, metrics={'clock_cycle:unique': 318591.0, 'e_max_violation:mean': 6.7252607345581055, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 0.06966052204370499, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8333333730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.2712627351284027, metrics={'clock_cycle:unique': 318594.0, 'e_max_violation:mean': 6.740234375, 'e_max_violation:max': 6.9375, 'loss:sum': 0.2712627351284027, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.07182009518146515, metrics={'clock_cycle:unique': 318597.0, 'e_max_violation:mean': 6.742621898651123, 'e_max_violation:max': 6.9635419845581055, 'loss:sum': 0.07182009518146515, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8606771230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.0856872946023941, metrics={'clock_cycle:unique': 318599.0, 'e_max_violation:mean': 6.727864742279053, 'e_max_violation:max': 6.9375, 'loss:sum': 0.0856872946023941, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.86328125, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.09559737145900726, metrics={'clock_cycle:unique': 318601.0, 'e_max_violation:mean': 6.744140625, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.09559737145900726, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.2961568832397461, metrics={'clock_cycle:unique': 318603.0, 'e_max_violation:mean': 6.714410305023193, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.2961568832397461, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8697916865348816, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_ext_004] OK: {"final_loss": 0.2961568832397461, "avg_loss": 15.288332928344607, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.1}
+
+============================================================
+Starting sdpo_sie_ext_005: beta=0.2, lr=0.0005, n_pairs=10, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975358.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=61.45738983154297, metrics={'clock_cycle:unique': 1975360.0, 'loss:sum': 61.45738983154297, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.733290672302246, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=58.67076110839844, metrics={'clock_cycle:unique': 1975362.0, 'loss:sum': 58.67076110839844, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=26.6744327545166, metrics={'clock_cycle:unique': 1975364.0, 'loss:sum': 26.6744327545166, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7265625, 'e_frac_with_tokens:mean': 0.8671875}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=7.51807975769043, metrics={'clock_cycle:unique': 1975366.0, 'loss:sum': 7.51807975769043, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.724175930023193, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=9.489261627197266, metrics={'clock_cycle:unique': 1975368.0, 'loss:sum': 9.489261627197266, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.731988430023193, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.9224223494529724, metrics={'clock_cycle:unique': 1975370.0, 'loss:sum': 0.9224223494529724, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.737196922302246, 'e_frac_with_tokens:mean': 0.86328125}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=1.0123801231384277, metrics={'clock_cycle:unique': 1975372.0, 'loss:sum': 1.0123801231384277, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.718967437744141, 'e_frac_with_tokens:mean': 0.859375}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=0.5049189925193787, metrics={'clock_cycle:unique': 1975374.0, 'loss:sum': 0.5049189925193787, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.743489742279053, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=1.5906957387924194, metrics={'clock_cycle:unique': 1975376.0, 'loss:sum': 1.5906957387924194, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.712674140930176, 'e_frac_with_tokens:mean': 0.8671875}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.041862890124320984, metrics={'clock_cycle:unique': 1975378.0, 'loss:sum': 0.041862890124320984, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.70703125, 'e_frac_with_tokens:mean': 0.85546875}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.02697939984500408, metrics={'clock_cycle:unique': 1975380.0, 'loss:sum': 0.02697939984500408, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.711371898651123, 'e_frac_with_tokens:mean': 0.8528646230697632}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=1.5282152891159058, metrics={'clock_cycle:unique': 1975382.0, 'loss:sum': 1.5282152891159058, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.706597805023193, 'e_frac_with_tokens:mean': 0.8658854365348816}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.5257638096809387, metrics={'clock_cycle:unique': 1975384.0, 'loss:sum': 0.5257638096809387, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.704427242279053, 'e_frac_with_tokens:mean': 0.875}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.018773922696709633, metrics={'clock_cycle:unique': 1975386.0, 'loss:sum': 0.018773922696709633, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.691840648651123, 'e_frac_with_tokens:mean': 0.8815104365348816}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.5639820694923401, metrics={'clock_cycle:unique': 1975388.0, 'loss:sum': 0.5639820694923401, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.704427242279053, 'e_frac_with_tokens:mean': 0.8841146230697632}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.10039892047643661, metrics={'clock_cycle:unique': 1975390.0, 'loss:sum': 0.10039892047643661, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.880208492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.70703125, 'e_frac_with_tokens:mean': 0.8919271230697632}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.007588341366499662, metrics={'clock_cycle:unique': 1975392.0, 'loss:sum': 0.007588341366499662, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.880208492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.69140625, 'e_frac_with_tokens:mean': 0.8893229365348816}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.7881758213043213, metrics={'clock_cycle:unique': 1975394.0, 'loss:sum': 0.7881758213043213, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.71875, 'e_frac_with_tokens:mean': 0.8697916865348816}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.06222826614975929, metrics={'clock_cycle:unique': 1975396.0, 'loss:sum': 0.06222826614975929, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.69249153137207, 'e_frac_with_tokens:mean': 0.87890625}
+[sdpo_sie_ext_005] OK: {"final_loss": 0.06222826614975929, "avg_loss": 15.243840428604745, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_ext_006: beta=0.2, lr=0.0005, n_pairs=20, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318625.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=59.657005310058594, metrics={'clock_cycle:unique': 318627.0, 'e_max_violation:mean': 6.732639312744141, 'e_max_violation:max': 6.9375, 'loss:sum': 59.657005310058594, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=58.71873092651367, metrics={'clock_cycle:unique': 318629.0, 'e_max_violation:mean': 6.729384422302246, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 58.71873092651367, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=23.572086334228516, metrics={'clock_cycle:unique': 318631.0, 'e_max_violation:mean': 6.725478172302246, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 23.572086334228516, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=5.1374359130859375, metrics={'clock_cycle:unique': 318633.0, 'e_max_violation:mean': 6.721137523651123, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 5.1374359130859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8450521230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=4.0648040771484375, metrics={'clock_cycle:unique': 318636.0, 'e_max_violation:mean': 6.7272138595581055, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 4.0648040771484375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=1.3163714408874512, metrics={'clock_cycle:unique': 318638.0, 'e_max_violation:mean': 6.734809398651123, 'e_max_violation:max': 6.90625, 'loss:sum': 1.3163714408874512, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8567708730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.27354755997657776, metrics={'clock_cycle:unique': 318640.0, 'e_max_violation:mean': 6.721571922302246, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.27354755997657776, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8528646230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=3.6338820457458496, metrics={'clock_cycle:unique': 318642.0, 'e_max_violation:mean': 6.747395992279053, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 3.6338820457458496, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=8.777938842773438, metrics={'clock_cycle:unique': 318644.0, 'e_max_violation:mean': 6.7213544845581055, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 8.777938842773438, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=7.930701732635498, metrics={'clock_cycle:unique': 318646.0, 'e_max_violation:mean': 6.719618797302246, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 7.930701732635498, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.06040043756365776, metrics={'clock_cycle:unique': 318648.0, 'e_max_violation:mean': 6.71983528137207, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 0.06040043756365776, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8450521230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=3.873774766921997, metrics={'clock_cycle:unique': 318650.0, 'e_max_violation:mean': 6.719184398651123, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 3.873774766921997, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=4.5926737785339355, metrics={'clock_cycle:unique': 318652.0, 'e_max_violation:mean': 6.706814765930176, 'e_max_violation:max': 6.921875, 'loss:sum': 4.5926737785339355, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8671875, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=1.7921156883239746, metrics={'clock_cycle:unique': 318654.0, 'e_max_violation:mean': 6.70811653137207, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 1.7921156883239746, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8567708730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=1.481904149055481, metrics={'clock_cycle:unique': 318657.0, 'e_max_violation:mean': 6.7154951095581055, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 1.481904149055481, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=4.313266754150391, metrics={'clock_cycle:unique': 318659.0, 'e_max_violation:mean': 6.717014312744141, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 4.313266754150391, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8658854365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.1211242526769638, metrics={'clock_cycle:unique': 318661.0, 'e_max_violation:mean': 6.702040672302246, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 0.1211242526769638, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8697916865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.3255891501903534, metrics={'clock_cycle:unique': 318663.0, 'e_max_violation:mean': 6.726996898651123, 'e_max_violation:max': 6.9375, 'loss:sum': 0.3255891501903534, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.4036110043525696, metrics={'clock_cycle:unique': 318665.0, 'e_max_violation:mean': 6.698134422302246, 'e_max_violation:max': 6.921875, 'loss:sum': 0.4036110043525696, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8645833730697632, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_ext_006] OK: {"final_loss": 0.4036110043525696, "avg_loss": 16.170973086170854, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_ext_007: beta=0.2, lr=0.0005, n_pairs=30, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975409.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.01313018798828, metrics={'clock_cycle:unique': 1975411.0, 'loss:sum': 60.01313018798828, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732639312744141, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=56.90008544921875, metrics={'clock_cycle:unique': 1975413.0, 'loss:sum': 56.90008544921875, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.728299140930176, 'e_frac_with_tokens:mean': 0.8463541865348816}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=25.426010131835938, metrics={'clock_cycle:unique': 1975415.0, 'loss:sum': 25.426010131835938, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7272138595581055, 'e_frac_with_tokens:mean': 0.8619791865348816}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=7.024387836456299, metrics={'clock_cycle:unique': 1975417.0, 'loss:sum': 7.024387836456299, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.720052242279053, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=6.835628986358643, metrics={'clock_cycle:unique': 1975419.0, 'loss:sum': 6.835628986358643, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.729384422302246, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.9324332475662231, metrics={'clock_cycle:unique': 1975421.0, 'loss:sum': 0.9324332475662231, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.73350715637207, 'e_frac_with_tokens:mean': 0.8580729365348816}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=1.016979455947876, metrics={'clock_cycle:unique': 1975423.0, 'loss:sum': 1.016979455947876, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722439765930176, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=0.6953262686729431, metrics={'clock_cycle:unique': 1975425.0, 'loss:sum': 0.6953262686729431, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.740451812744141, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=5.4884138107299805, metrics={'clock_cycle:unique': 1975427.0, 'loss:sum': 5.4884138107299805, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.715278148651123, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.05700560286641121, metrics={'clock_cycle:unique': 1975429.0, 'loss:sum': 0.05700560286641121, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.715278148651123, 'e_frac_with_tokens:mean': 0.8463541865348816}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.006421761121600866, metrics={'clock_cycle:unique': 1975431.0, 'loss:sum': 0.006421761121600866, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.720486640930176, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=1.2932978868484497, metrics={'clock_cycle:unique': 1975433.0, 'loss:sum': 1.2932978868484497, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.864583492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.72178840637207, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.06991712003946304, metrics={'clock_cycle:unique': 1975435.0, 'loss:sum': 0.06991712003946304, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7194013595581055, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.24844075739383698, metrics={'clock_cycle:unique': 1975437.0, 'loss:sum': 0.24844075739383698, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.711371898651123, 'e_frac_with_tokens:mean': 0.8333333730697632}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.016646631062030792, metrics={'clock_cycle:unique': 1975439.0, 'loss:sum': 0.016646631062030792, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722439765930176, 'e_frac_with_tokens:mean': 0.8190104365348816}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.023185886442661285, metrics={'clock_cycle:unique': 1975441.0, 'loss:sum': 0.023185886442661285, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72764778137207, 'e_frac_with_tokens:mean': 0.8450521230697632}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=1.130057454109192, metrics={'clock_cycle:unique': 1975443.0, 'loss:sum': 1.130057454109192, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.714410305023193, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.026650017127394676, metrics={'clock_cycle:unique': 1975445.0, 'loss:sum': 0.026650017127394676, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.737630367279053, 'e_frac_with_tokens:mean': 0.8307291865348816}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.2957918047904968, metrics={'clock_cycle:unique': 1975447.0, 'loss:sum': 0.2957918047904968, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.864583492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.711371898651123, 'e_frac_with_tokens:mean': 0.8450521230697632}
+[sdpo_sie_ext_007] OK: {"final_loss": 0.2957918047904968, "avg_loss": 15.043615392758511, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_ext_008: beta=0.2, lr=0.0005, n_pairs=50, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=132.99183654785156, metrics={'clock_cycle:unique': 1975462.0, 'loss:sum': 132.99183654785156, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.998340129852295, 'e_min_violation:mean': -0.9999874830245972, 'e_max_violation:mean': 6.992179870605469, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=61.45405578613281, metrics={'clock_cycle:unique': 1975464.0, 'loss:sum': 61.45405578613281, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.999728679656982, 'e_min_violation:mean': -0.9999980926513672, 'e_max_violation:mean': 6.99884557723999, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=59.438316345214844, metrics={'clock_cycle:unique': 1975465.0, 'loss:sum': 59.438316345214844, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732856273651123, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=26.73553466796875, metrics={'clock_cycle:unique': 1975467.0, 'loss:sum': 26.73553466796875, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728950023651123, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=9.36511516571045, metrics={'clock_cycle:unique': 1975469.0, 'loss:sum': 9.36511516571045, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.725911617279053, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=2.863312244415283, metrics={'clock_cycle:unique': 1975470.0, 'loss:sum': 2.863312244415283, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.73546028137207, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=1.159009337425232, metrics={'clock_cycle:unique': 1975473.0, 'loss:sum': 1.159009337425232, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.740234375, 'e_frac_with_tokens:mean': 0.8450521230697632}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=2.595543384552002, metrics={'clock_cycle:unique': 1975475.0, 'loss:sum': 2.595543384552002, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728950023651123, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=2.173182725906372, metrics={'clock_cycle:unique': 1975477.0, 'loss:sum': 2.173182725906372, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.751302242279053, 'e_frac_with_tokens:mean': 0.828125}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=0.6193283796310425, metrics={'clock_cycle:unique': 1975479.0, 'loss:sum': 0.6193283796310425, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.718967437744141, 'e_frac_with_tokens:mean': 0.8450521230697632}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.3306513726711273, metrics={'clock_cycle:unique': 1975481.0, 'loss:sum': 0.3306513726711273, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.720920562744141, 'e_frac_with_tokens:mean': 0.84375}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.05538801848888397, metrics={'clock_cycle:unique': 1975483.0, 'loss:sum': 0.05538801848888397, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.724392890930176, 'e_frac_with_tokens:mean': 0.8333333730697632}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=3.2279977798461914, metrics={'clock_cycle:unique': 1975485.0, 'loss:sum': 3.2279977798461914, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.880208492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.720920562744141, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.46528786420822144, metrics={'clock_cycle:unique': 1975487.0, 'loss:sum': 0.46528786420822144, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.720052242279053, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.07383400946855545, metrics={'clock_cycle:unique': 1975489.0, 'loss:sum': 0.07383400946855545, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.712890625, 'e_frac_with_tokens:mean': 0.84375}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.4914540946483612, metrics={'clock_cycle:unique': 1975491.0, 'loss:sum': 0.4914540946483612, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -1.0, 'e_max_violation:mean': 6.723958492279053, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=4.334414005279541, metrics={'clock_cycle:unique': 1975493.0, 'loss:sum': 4.334414005279541, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -1.0, 'e_max_violation:mean': 6.728299140930176, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.06206180155277252, metrics={'clock_cycle:unique': 1975495.0, 'loss:sum': 0.06206180155277252, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -1.0, 'e_max_violation:mean': 6.710286617279053, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.19857147336006165, metrics={'clock_cycle:unique': 1975497.0, 'loss:sum': 0.19857147336006165, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -1.0, 'e_max_violation:mean': 6.728299140930176, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.04699288681149483, metrics={'clock_cycle:unique': 1975499.0, 'loss:sum': 0.04699288681149483, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -1.0, 'e_max_violation:mean': 6.70030403137207, 'e_frac_with_tokens:mean': 0.8411458730697632}
+[sdpo_sie_ext_008] OK: {"final_loss": 0.04699288681149483, "avg_loss": 15.434094394557178, "initial_loss": 132.99183654785156, "steps_completed": 20, "steps_attempted": 20, "beta": 0.2}
+
+============================================================
+Starting sdpo_sie_ext_009: beta=0.3, lr=0.0005, n_pairs=10, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975505.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.08793640136719, metrics={'clock_cycle:unique': 1975507.0, 'loss:sum': 60.08793640136719, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.734375, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=58.447975158691406, metrics={'clock_cycle:unique': 1975509.0, 'loss:sum': 58.447975158691406, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730903148651123, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=25.162078857421875, metrics={'clock_cycle:unique': 1975511.0, 'loss:sum': 25.162078857421875, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.725043773651123, 'e_frac_with_tokens:mean': 0.859375}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=8.538796424865723, metrics={'clock_cycle:unique': 1975513.0, 'loss:sum': 8.538796424865723, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7213544845581055, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=4.5972900390625, metrics={'clock_cycle:unique': 1975515.0, 'loss:sum': 4.5972900390625, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.732639312744141, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=1.0082544088363647, metrics={'clock_cycle:unique': 1975517.0, 'loss:sum': 1.0082544088363647, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.741971015930176, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.5205413103103638, metrics={'clock_cycle:unique': 1975519.0, 'loss:sum': 0.5205413103103638, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.726996898651123, 'e_frac_with_tokens:mean': 0.8528646230697632}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=0.6282060146331787, metrics={'clock_cycle:unique': 1975521.0, 'loss:sum': 0.6282060146331787, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.750217437744141, 'e_frac_with_tokens:mean': 0.8450521230697632}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=3.5458266735076904, metrics={'clock_cycle:unique': 1975523.0, 'loss:sum': 3.5458266735076904, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72265625, 'e_frac_with_tokens:mean': 0.8463541865348816}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.2721979022026062, metrics={'clock_cycle:unique': 1975525.0, 'loss:sum': 0.2721979022026062, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.722222805023193, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.008891456760466099, metrics={'clock_cycle:unique': 1975527.0, 'loss:sum': 0.008891456760466099, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.728082180023193, 'e_frac_with_tokens:mean': 0.8307291865348816}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.03624492511153221, metrics={'clock_cycle:unique': 1975529.0, 'loss:sum': 0.03624492511153221, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.728950023651123, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.7811153531074524, metrics={'clock_cycle:unique': 1975531.0, 'loss:sum': 0.7811153531074524, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7252607345581055, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.28205153346061707, metrics={'clock_cycle:unique': 1975533.0, 'loss:sum': 0.28205153346061707, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.719184398651123, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.0060934219509363174, metrics={'clock_cycle:unique': 1975535.0, 'loss:sum': 0.0060934219509363174, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.734809398651123, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.10738356411457062, metrics={'clock_cycle:unique': 1975537.0, 'loss:sum': 0.10738356411457062, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7408857345581055, 'e_frac_with_tokens:mean': 0.83984375}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.3776187002658844, metrics={'clock_cycle:unique': 1975539.0, 'loss:sum': 0.3776187002658844, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.725911617279053, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.008473440073430538, metrics={'clock_cycle:unique': 1975541.0, 'loss:sum': 0.008473440073430538, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.752387523651123, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.7760475873947144, metrics={'clock_cycle:unique': 1975543.0, 'loss:sum': 0.7760475873947144, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723090648651123, 'e_frac_with_tokens:mean': 0.8463541865348816}
+[sdpo_sie_ext_009] OK: {"final_loss": 0.7760475873947144, "avg_loss": 14.928276036586613, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_ext_010: beta=0.3, lr=0.0005, n_pairs=20, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318715.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.66181564331055, metrics={'clock_cycle:unique': 318717.0, 'e_max_violation:mean': 6.732205390930176, 'e_max_violation:max': 6.9375, 'loss:sum': 60.66181564331055, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8411458730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=59.450050354003906, metrics={'clock_cycle:unique': 318719.0, 'e_max_violation:mean': 6.730252265930176, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 59.450050354003906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=24.88165855407715, metrics={'clock_cycle:unique': 318721.0, 'e_max_violation:mean': 6.726346015930176, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 24.88165855407715, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=7.597054481506348, metrics={'clock_cycle:unique': 318724.0, 'e_max_violation:mean': 6.721571922302246, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 7.597054481506348, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=5.253126621246338, metrics={'clock_cycle:unique': 318726.0, 'e_max_violation:mean': 6.730035305023193, 'e_max_violation:max': 6.921875, 'loss:sum': 5.253126621246338, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.955473005771637, metrics={'clock_cycle:unique': 318728.0, 'e_max_violation:mean': 6.738064765930176, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.955473005771637, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=1.0758103132247925, metrics={'clock_cycle:unique': 318730.0, 'e_max_violation:mean': 6.725478172302246, 'e_max_violation:max': 6.90625, 'loss:sum': 1.0758103132247925, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8606771230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=1.302943468093872, metrics={'clock_cycle:unique': 318732.0, 'e_max_violation:mean': 6.750868797302246, 'e_max_violation:max': 6.895833492279053, 'loss:sum': 1.302943468093872, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=3.1613128185272217, metrics={'clock_cycle:unique': 318734.0, 'e_max_violation:mean': 6.726129055023193, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 3.1613128185272217, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.737169086933136, metrics={'clock_cycle:unique': 318736.0, 'e_max_violation:mean': 6.730686187744141, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.737169086933136, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.07656290382146835, metrics={'clock_cycle:unique': 318738.0, 'e_max_violation:mean': 6.7330732345581055, 'e_max_violation:max': 6.890625, 'loss:sum': 0.07656290382146835, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=6.867100238800049, metrics={'clock_cycle:unique': 318740.0, 'e_max_violation:mean': 6.731988430023193, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 6.867100238800049, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.1749197095632553, metrics={'clock_cycle:unique': 318742.0, 'e_max_violation:mean': 6.7233076095581055, 'e_max_violation:max': 6.9375, 'loss:sum': 0.1749197095632553, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8567708730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.06257975846529007, metrics={'clock_cycle:unique': 318744.0, 'e_max_violation:mean': 6.7109375, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 0.06257975846529007, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8671875, 'e_min_violation:mean': -0.9995660185813904}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.10504572838544846, metrics={'clock_cycle:unique': 318746.0, 'e_max_violation:mean': 6.718533515930176, 'e_max_violation:max': 6.9375, 'loss:sum': 0.10504572838544846, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8684896230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.3278580904006958, metrics={'clock_cycle:unique': 318748.0, 'e_max_violation:mean': 6.7154951095581055, 'e_max_violation:max': 6.921875, 'loss:sum': 0.3278580904006958, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8880208730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.05909358337521553, metrics={'clock_cycle:unique': 318750.0, 'e_max_violation:mean': 6.6959638595581055, 'e_max_violation:max': 6.921875, 'loss:sum': 0.05909358337521553, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8815104365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.09622684866189957, metrics={'clock_cycle:unique': 318752.0, 'e_max_violation:mean': 6.71875, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 0.09622684866189957, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8736979365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.02733965590596199, metrics={'clock_cycle:unique': 318754.0, 'e_max_violation:mean': 6.687066555023193, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 0.02733965590596199, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8880208730697632, 'e_min_violation:mean': -0.9995660185813904}
+[sdpo_sie_ext_010] OK: {"final_loss": 0.02733965590596199, "avg_loss": 15.3122819211334, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_ext_011: beta=0.3, lr=0.0005, n_pairs=30, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975551.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.278934478759766, metrics={'clock_cycle:unique': 1975553.0, 'loss:sum': 60.278934478759766, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.733941555023193, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=57.882503509521484, metrics={'clock_cycle:unique': 1975555.0, 'loss:sum': 57.882503509521484, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7350263595581055, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=26.517425537109375, metrics={'clock_cycle:unique': 1975557.0, 'loss:sum': 26.517425537109375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728082180023193, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=7.734090805053711, metrics={'clock_cycle:unique': 1975559.0, 'loss:sum': 7.734090805053711, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.725911617279053, 'e_frac_with_tokens:mean': 0.83984375}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=4.170011520385742, metrics={'clock_cycle:unique': 1975561.0, 'loss:sum': 4.170011520385742, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.73350715637207, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.6183247566223145, metrics={'clock_cycle:unique': 1975563.0, 'loss:sum': 0.6183247566223145, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.74131965637207, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.618176281452179, metrics={'clock_cycle:unique': 1975565.0, 'loss:sum': 0.618176281452179, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728082180023193, 'e_frac_with_tokens:mean': 0.83203125}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=0.0990511104464531, metrics={'clock_cycle:unique': 1975567.0, 'loss:sum': 0.0990511104464531, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.753689765930176, 'e_frac_with_tokens:mean': 0.8294271230697632}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=1.1818610429763794, metrics={'clock_cycle:unique': 1975569.0, 'loss:sum': 1.1818610429763794, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722873687744141, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.0031316534150391817, metrics={'clock_cycle:unique': 1975571.0, 'loss:sum': 0.0031316534150391817, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.723090648651123, 'e_frac_with_tokens:mean': 0.8255208730697632}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.06892259418964386, metrics={'clock_cycle:unique': 1975573.0, 'loss:sum': 0.06892259418964386, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7291669845581055, 'e_frac_with_tokens:mean': 0.8216146230697632}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.032781388610601425, metrics={'clock_cycle:unique': 1975575.0, 'loss:sum': 0.032781388610601425, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.725478172302246, 'e_frac_with_tokens:mean': 0.83203125}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=9.178650856018066, metrics={'clock_cycle:unique': 1975577.0, 'loss:sum': 9.178650856018066, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.726129055023193, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.0030141733586788177, metrics={'clock_cycle:unique': 1975579.0, 'loss:sum': 0.0030141733586788177, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.720052242279053, 'e_frac_with_tokens:mean': 0.8307291865348816}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=3.5607495307922363, metrics={'clock_cycle:unique': 1975581.0, 'loss:sum': 3.5607495307922363, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.740017890930176, 'e_frac_with_tokens:mean': 0.8229166865348816}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.05628369748592377, metrics={'clock_cycle:unique': 1975583.0, 'loss:sum': 0.05628369748592377, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.740017890930176, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.02081436850130558, metrics={'clock_cycle:unique': 1975585.0, 'loss:sum': 0.02081436850130558, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.726129055023193, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.05127663165330887, metrics={'clock_cycle:unique': 1975587.0, 'loss:sum': 0.05127663165330887, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.757596015930176, 'e_frac_with_tokens:mean': 0.81640625}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.043344587087631226, metrics={'clock_cycle:unique': 1975589.0, 'loss:sum': 0.043344587087631226, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7252607345581055, 'e_frac_with_tokens:mean': 0.8346354365348816}
+[sdpo_sie_ext_011] OK: {"final_loss": 0.043344587087631226, "avg_loss": 15.27459230410168, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_ext_012: beta=0.3, lr=0.0005, n_pairs=50, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318761.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.417198181152344, metrics={'clock_cycle:unique': 318763.0, 'e_max_violation:mean': 6.732639312744141, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 60.417198181152344, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=57.4111442565918, metrics={'clock_cycle:unique': 318765.0, 'e_max_violation:mean': 6.730686187744141, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 57.4111442565918, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=24.664920806884766, metrics={'clock_cycle:unique': 318767.0, 'e_max_violation:mean': 6.726779937744141, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 24.664920806884766, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=7.77810525894165, metrics={'clock_cycle:unique': 318769.0, 'e_max_violation:mean': 6.721571922302246, 'e_max_violation:max': 6.921875, 'loss:sum': 7.77810525894165, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=7.322977542877197, metrics={'clock_cycle:unique': 318771.0, 'e_max_violation:mean': 6.731770992279053, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 7.322977542877197, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8463541865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=1.2201318740844727, metrics={'clock_cycle:unique': 318774.0, 'e_max_violation:mean': 6.984903335571289, 'e_max_violation:max': 6.994693279266357, 'loss:sum': 1.2201318740844727, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.999987781047821}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.9337623119354248, metrics={'clock_cycle:unique': 318775.0, 'e_max_violation:mean': 6.720052242279053, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 0.9337623119354248, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8528646230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=0.33550453186035156, metrics={'clock_cycle:unique': 318777.0, 'e_max_violation:mean': 6.7467451095581055, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 0.33550453186035156, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=1.201231837272644, metrics={'clock_cycle:unique': 318779.0, 'e_max_violation:mean': 6.719184398651123, 'e_max_violation:max': 6.890625, 'loss:sum': 1.201231837272644, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.85546875, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.12539798021316528, metrics={'clock_cycle:unique': 318781.0, 'e_max_violation:mean': 6.71592903137207, 'e_max_violation:max': 6.90625, 'loss:sum': 0.12539798021316528, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.026886653155088425, metrics={'clock_cycle:unique': 318783.0, 'e_max_violation:mean': 6.720269680023193, 'e_max_violation:max': 6.895833492279053, 'loss:sum': 0.026886653155088425, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=2.5077264308929443, metrics={'clock_cycle:unique': 318785.0, 'e_max_violation:mean': 6.7154951095581055, 'e_max_violation:max': 6.890625, 'loss:sum': 2.5077264308929443, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.10773947089910507, metrics={'clock_cycle:unique': 318787.0, 'e_max_violation:mean': 6.7154951095581055, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 0.10773947089910507, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8697916865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.20963981747627258, metrics={'clock_cycle:unique': 318789.0, 'e_max_violation:mean': 6.702474117279053, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 0.20963981747627258, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8658854365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=4.50919246673584, metrics={'clock_cycle:unique': 318791.0, 'e_max_violation:mean': 6.714627265930176, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 4.50919246673584, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8658854365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.050034090876579285, metrics={'clock_cycle:unique': 318793.0, 'e_max_violation:mean': 6.7213544845581055, 'e_max_violation:max': 6.890625, 'loss:sum': 0.050034090876579285, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.875, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=3.187485694885254, metrics={'clock_cycle:unique': 318795.0, 'e_max_violation:mean': 6.713325023651123, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 3.187485694885254, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8606771230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.13461662828922272, metrics={'clock_cycle:unique': 318797.0, 'e_max_violation:mean': 6.740451812744141, 'e_max_violation:max': 6.890625, 'loss:sum': 0.13461662828922272, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.5892966389656067, metrics={'clock_cycle:unique': 318799.0, 'e_max_violation:mean': 6.7135419845581055, 'e_max_violation:max': 6.880208492279053, 'loss:sum': 0.5892966389656067, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_ext_012] OK: {"final_loss": 0.5892966389656067, "avg_loss": 15.305274501629174, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.3}
+
+============================================================
+Starting sdpo_sie_ext_013: beta=0.4, lr=0.0005, n_pairs=10, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975598.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=59.64393615722656, metrics={'clock_cycle:unique': 1975600.0, 'loss:sum': 59.64393615722656, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.73350715637207, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=56.82789611816406, metrics={'clock_cycle:unique': 1975602.0, 'loss:sum': 56.82789611816406, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.73155403137207, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=23.800113677978516, metrics={'clock_cycle:unique': 1975604.0, 'loss:sum': 23.800113677978516, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.725478172302246, 'e_frac_with_tokens:mean': 0.8606771230697632}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=6.089274883270264, metrics={'clock_cycle:unique': 1975606.0, 'loss:sum': 6.089274883270264, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723958492279053, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=3.498990535736084, metrics={'clock_cycle:unique': 1975608.0, 'loss:sum': 3.498990535736084, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72960090637207, 'e_frac_with_tokens:mean': 0.8528646230697632}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.8911991119384766, metrics={'clock_cycle:unique': 1975610.0, 'loss:sum': 0.8911991119384766, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.734592437744141, 'e_frac_with_tokens:mean': 0.8658854365348816}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.2960812449455261, metrics={'clock_cycle:unique': 1975612.0, 'loss:sum': 0.2960812449455261, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.720269680023193, 'e_frac_with_tokens:mean': 0.8671875}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=0.4046301543712616, metrics={'clock_cycle:unique': 1975614.0, 'loss:sum': 0.4046301543712616, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7447919845581055, 'e_frac_with_tokens:mean': 0.8606771230697632}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=1.2069977521896362, metrics={'clock_cycle:unique': 1975616.0, 'loss:sum': 1.2069977521896362, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.715278148651123, 'e_frac_with_tokens:mean': 0.8606771230697632}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.3439114987850189, metrics={'clock_cycle:unique': 1975618.0, 'loss:sum': 0.3439114987850189, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.712890625, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.024000268429517746, metrics={'clock_cycle:unique': 1975620.0, 'loss:sum': 0.024000268429517746, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.718967437744141, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=1.809669017791748, metrics={'clock_cycle:unique': 1975622.0, 'loss:sum': 1.809669017791748, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.880208492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.716796875, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=9.141324996948242, metrics={'clock_cycle:unique': 1975624.0, 'loss:sum': 9.141324996948242, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7037763595581055, 'e_frac_with_tokens:mean': 0.8736979365348816}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.007577355485409498, metrics={'clock_cycle:unique': 1975626.0, 'loss:sum': 0.007577355485409498, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.695096015930176, 'e_frac_with_tokens:mean': 0.8736979365348816}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.01976395584642887, metrics={'clock_cycle:unique': 1975628.0, 'loss:sum': 0.01976395584642887, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.700738430023193, 'e_frac_with_tokens:mean': 0.86328125}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.010505794547498226, metrics={'clock_cycle:unique': 1975630.0, 'loss:sum': 0.010505794547498226, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.702040672302246, 'e_frac_with_tokens:mean': 0.8841146230697632}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.03745336830615997, metrics={'clock_cycle:unique': 1975632.0, 'loss:sum': 0.03745336830615997, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.679471015930176, 'e_frac_with_tokens:mean': 0.8736979365348816}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=3.18403697013855, metrics={'clock_cycle:unique': 1975634.0, 'loss:sum': 3.18403697013855, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.700087547302246, 'e_frac_with_tokens:mean': 0.86328125}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.18633119761943817, metrics={'clock_cycle:unique': 1975636.0, 'loss:sum': 0.18633119761943817, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.674262523651123, 'e_frac_with_tokens:mean': 0.8671875}
+[sdpo_sie_ext_013] OK: {"final_loss": 0.18633119761943817, "avg_loss": 15.039809580915607, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.4}
+
+============================================================
+Starting sdpo_sie_ext_014: beta=0.4, lr=0.0005, n_pairs=20, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318809.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.452232360839844, metrics={'clock_cycle:unique': 318811.0, 'e_max_violation:mean': 6.732856273651123, 'e_max_violation:max': 6.9375, 'loss:sum': 60.452232360839844, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=58.29854965209961, metrics={'clock_cycle:unique': 318813.0, 'e_max_violation:mean': 6.7330732345581055, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 58.29854965209961, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=24.03872299194336, metrics={'clock_cycle:unique': 318815.0, 'e_max_violation:mean': 6.728950023651123, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 24.03872299194336, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8567708730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=8.436262130737305, metrics={'clock_cycle:unique': 318817.0, 'e_max_violation:mean': 6.723090648651123, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 8.436262130737305, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=6.412289619445801, metrics={'clock_cycle:unique': 318820.0, 'e_max_violation:mean': 6.992758750915527, 'e_max_violation:max': 6.9981794357299805, 'loss:sum': 6.412289619445801, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8411458730697632, 'e_min_violation:mean': -0.999994158744812}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=1.6482669115066528, metrics={'clock_cycle:unique': 318821.0, 'e_max_violation:mean': 6.734158515930176, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 1.6482669115066528, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.809339702129364, metrics={'clock_cycle:unique': 318824.0, 'e_max_violation:mean': 6.723525047302246, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.809339702129364, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=1.550847053527832, metrics={'clock_cycle:unique': 318826.0, 'e_max_violation:mean': 6.751953125, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 1.550847053527832, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=1.6709678173065186, metrics={'clock_cycle:unique': 318828.0, 'e_max_violation:mean': 6.716580390930176, 'e_max_violation:max': 6.890625, 'loss:sum': 1.6709678173065186, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83984375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.3277977705001831, metrics={'clock_cycle:unique': 318830.0, 'e_max_violation:mean': 6.716580390930176, 'e_max_violation:max': 6.90625, 'loss:sum': 0.3277977705001831, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8307291865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.06504128873348236, metrics={'clock_cycle:unique': 318832.0, 'e_max_violation:mean': 6.722439765930176, 'e_max_violation:max': 6.895833492279053, 'loss:sum': 0.06504128873348236, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.82421875, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.21619513630867004, metrics={'clock_cycle:unique': 318834.0, 'e_max_violation:mean': 6.71788215637207, 'e_max_violation:max': 6.880208492279053, 'loss:sum': 0.21619513630867004, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.03706081211566925, metrics={'clock_cycle:unique': 318836.0, 'e_max_violation:mean': 6.714627265930176, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 0.03706081211566925, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8567708730697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=1.086005687713623, metrics={'clock_cycle:unique': 318838.0, 'e_max_violation:mean': 6.70703125, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 1.086005687713623, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.010168174281716347, metrics={'clock_cycle:unique': 318840.0, 'e_max_violation:mean': 6.72265625, 'e_max_violation:max': 6.90625, 'loss:sum': 0.010168174281716347, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=1.9493374824523926, metrics={'clock_cycle:unique': 318842.0, 'e_max_violation:mean': 6.728733062744141, 'e_max_violation:max': 6.895833492279053, 'loss:sum': 1.9493374824523926, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.02530224621295929, metrics={'clock_cycle:unique': 318844.0, 'e_max_violation:mean': 6.716796875, 'e_max_violation:max': 6.890625, 'loss:sum': 0.02530224621295929, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=3.5139875411987305, metrics={'clock_cycle:unique': 318846.0, 'e_max_violation:mean': 6.737196922302246, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 3.5139875411987305, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.81640625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=1.1104545593261719, metrics={'clock_cycle:unique': 318848.0, 'e_max_violation:mean': 6.708333492279053, 'e_max_violation:max': 6.864583492279053, 'loss:sum': 1.1104545593261719, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8268229365348816, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_ext_014] OK: {"final_loss": 1.1104545593261719, "avg_loss": 15.251566324848682, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.4}
+
+============================================================
+Starting sdpo_sie_ext_015: beta=0.4, lr=0.0005, n_pairs=30, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975648.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.924224853515625, metrics={'clock_cycle:unique': 1975650.0, 'loss:sum': 60.924224853515625, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.731337547302246, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=59.449867248535156, metrics={'clock_cycle:unique': 1975652.0, 'loss:sum': 59.449867248535156, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.732421875, 'e_frac_with_tokens:mean': 0.8463541865348816}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=28.18570327758789, metrics={'clock_cycle:unique': 1975654.0, 'loss:sum': 28.18570327758789, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728515625, 'e_frac_with_tokens:mean': 0.8606771230697632}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=11.754728317260742, metrics={'clock_cycle:unique': 1975656.0, 'loss:sum': 11.754728317260742, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.725043773651123, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=4.901884078979492, metrics={'clock_cycle:unique': 1975658.0, 'loss:sum': 4.901884078979492, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.73546028137207, 'e_frac_with_tokens:mean': 0.8450521230697632}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.7209373712539673, metrics={'clock_cycle:unique': 1975660.0, 'loss:sum': 0.7209373712539673, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.742404937744141, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.27079978585243225, metrics={'clock_cycle:unique': 1975662.0, 'loss:sum': 0.27079978585243225, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728733062744141, 'e_frac_with_tokens:mean': 0.8528646230697632}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=2.2229843139648438, metrics={'clock_cycle:unique': 1975664.0, 'loss:sum': 2.2229843139648438, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.753255367279053, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=6.052417755126953, metrics={'clock_cycle:unique': 1975666.0, 'loss:sum': 6.052417755126953, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.716580390930176, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.8890363574028015, metrics={'clock_cycle:unique': 1975668.0, 'loss:sum': 0.8890363574028015, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.719184398651123, 'e_frac_with_tokens:mean': 0.8424479365348816}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.12084964662790298, metrics={'clock_cycle:unique': 1975670.0, 'loss:sum': 0.12084964662790298, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.720486640930176, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.35775110125541687, metrics={'clock_cycle:unique': 1975672.0, 'loss:sum': 0.35775110125541687, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.716363430023193, 'e_frac_with_tokens:mean': 0.8502604365348816}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=1.8444874286651611, metrics={'clock_cycle:unique': 1975674.0, 'loss:sum': 1.8444874286651611, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7174482345581055, 'e_frac_with_tokens:mean': 0.8528646230697632}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.14679893851280212, metrics={'clock_cycle:unique': 1975677.0, 'loss:sum': 0.14679893851280212, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.890625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.711154937744141, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.053359054028987885, metrics={'clock_cycle:unique': 1975679.0, 'loss:sum': 0.053359054028987885, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7291669845581055, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.04904089868068695, metrics={'clock_cycle:unique': 1975681.0, 'loss:sum': 0.04904089868068695, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.733941555023193, 'e_frac_with_tokens:mean': 0.8515625}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.08171854168176651, metrics={'clock_cycle:unique': 1975683.0, 'loss:sum': 0.08171854168176651, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.71983528137207, 'e_frac_with_tokens:mean': 0.8463541865348816}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=1.1950989961624146, metrics={'clock_cycle:unique': 1975685.0, 'loss:sum': 1.1950989961624146, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.73828125, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.12771913409233093, metrics={'clock_cycle:unique': 1975687.0, 'loss:sum': 0.12771913409233093, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.715278148651123, 'e_frac_with_tokens:mean': 0.8502604365348816}
+[sdpo_sie_ext_015] OK: {"final_loss": 0.12771913409233093, "avg_loss": 15.636095232889057, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.4}
+
+============================================================
+Starting sdpo_sie_ext_016: beta=0.4, lr=0.0005, n_pairs=50, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318873.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=59.917606353759766, metrics={'clock_cycle:unique': 318875.0, 'e_max_violation:mean': 6.7330732345581055, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 59.917606353759766, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=58.60411834716797, metrics={'clock_cycle:unique': 318877.0, 'e_max_violation:mean': 6.728515625, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 58.60411834716797, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=26.028209686279297, metrics={'clock_cycle:unique': 318879.0, 'e_max_violation:mean': 6.72764778137207, 'e_max_violation:max': 6.921875, 'loss:sum': 26.028209686279297, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8619791865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=9.134052276611328, metrics={'clock_cycle:unique': 318881.0, 'e_max_violation:mean': 6.723090648651123, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 9.134052276611328, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8528646230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=6.6133012771606445, metrics={'clock_cycle:unique': 318883.0, 'e_max_violation:mean': 6.7311201095581055, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 6.6133012771606445, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.8790253400802612, metrics={'clock_cycle:unique': 318885.0, 'e_max_violation:mean': 6.737630367279053, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 0.8790253400802612, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=1.419859528541565, metrics={'clock_cycle:unique': 318887.0, 'e_max_violation:mean': 6.72374153137207, 'e_max_violation:max': 6.90625, 'loss:sum': 1.419859528541565, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=3.1120946407318115, metrics={'clock_cycle:unique': 318889.0, 'e_max_violation:mean': 6.752821922302246, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 3.1120946407318115, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=0.6622744798660278, metrics={'clock_cycle:unique': 318891.0, 'e_max_violation:mean': 6.726129055023193, 'e_max_violation:max': 6.890625, 'loss:sum': 0.6622744798660278, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8450521230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.4265293478965759, metrics={'clock_cycle:unique': 318894.0, 'e_max_violation:mean': 6.990828514099121, 'e_max_violation:max': 6.997569561004639, 'loss:sum': 0.4265293478965759, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9999855756759644}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.7020072340965271, metrics={'clock_cycle:unique': 318895.0, 'e_max_violation:mean': 6.733724117279053, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 0.7020072340965271, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8385416865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.39209243655204773, metrics={'clock_cycle:unique': 318897.0, 'e_max_violation:mean': 6.730035305023193, 'e_max_violation:max': 6.890625, 'loss:sum': 0.39209243655204773, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=3.154749870300293, metrics={'clock_cycle:unique': 318900.0, 'e_max_violation:mean': 6.728733062744141, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 3.154749870300293, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.859375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.01000806875526905, metrics={'clock_cycle:unique': 318903.0, 'e_max_violation:mean': 6.728515625, 'e_max_violation:max': 6.921875, 'loss:sum': 0.01000806875526905, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.011816611513495445, metrics={'clock_cycle:unique': 318905.0, 'e_max_violation:mean': 6.741754055023193, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 0.011816611513495445, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=7.270076751708984, metrics={'clock_cycle:unique': 318907.0, 'e_max_violation:mean': 6.745877265930176, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 7.270076751708984, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=2.3698301315307617, metrics={'clock_cycle:unique': 318909.0, 'e_max_violation:mean': 6.734592437744141, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 2.3698301315307617, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8528646230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.030644377693533897, metrics={'clock_cycle:unique': 318911.0, 'e_max_violation:mean': 6.75499153137207, 'e_max_violation:max': 6.9010419845581055, 'loss:sum': 0.030644377693533897, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.048061858862638474, metrics={'clock_cycle:unique': 318913.0, 'e_max_violation:mean': 6.728733062744141, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 0.048061858862638474, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_ext_016] OK: {"final_loss": 0.048061858862638474, "avg_loss": 15.707942808885127, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.4}
+
+============================================================
+Starting sdpo_sie_ext_017: beta=0.5, lr=0.0005, n_pairs=10, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975694.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.387020111083984, metrics={'clock_cycle:unique': 1975696.0, 'loss:sum': 60.387020111083984, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7330732345581055, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=58.043060302734375, metrics={'clock_cycle:unique': 1975698.0, 'loss:sum': 58.043060302734375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.730252265930176, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=26.96181869506836, metrics={'clock_cycle:unique': 1975700.0, 'loss:sum': 26.96181869506836, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.724826812744141, 'e_frac_with_tokens:mean': 0.8580729365348816}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=9.791247367858887, metrics={'clock_cycle:unique': 1975702.0, 'loss:sum': 9.791247367858887, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723090648651123, 'e_frac_with_tokens:mean': 0.84375}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=4.001221179962158, metrics={'clock_cycle:unique': 1975704.0, 'loss:sum': 4.001221179962158, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.730252265930176, 'e_frac_with_tokens:mean': 0.8385416865348816}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.4824647009372711, metrics={'clock_cycle:unique': 1975706.0, 'loss:sum': 0.4824647009372711, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.73546028137207, 'e_frac_with_tokens:mean': 0.85546875}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.5186808705329895, metrics={'clock_cycle:unique': 1975708.0, 'loss:sum': 0.5186808705329895, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722005367279053, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=2.96988844871521, metrics={'clock_cycle:unique': 1975710.0, 'loss:sum': 2.96988844871521, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.748481273651123, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=3.1867730617523193, metrics={'clock_cycle:unique': 1975712.0, 'loss:sum': 3.1867730617523193, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.721571922302246, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=1.1834993362426758, metrics={'clock_cycle:unique': 1975714.0, 'loss:sum': 1.1834993362426758, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.724392890930176, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.044367559254169464, metrics={'clock_cycle:unique': 1975716.0, 'loss:sum': 0.044367559254169464, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.731988430023193, 'e_frac_with_tokens:mean': 0.8307291865348816}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.1835850477218628, metrics={'clock_cycle:unique': 1975718.0, 'loss:sum': 0.1835850477218628, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8333333730697632}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=1.198726773262024, metrics={'clock_cycle:unique': 1975720.0, 'loss:sum': 1.198726773262024, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.90625, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.730686187744141, 'e_frac_with_tokens:mean': 0.83984375}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.049940817058086395, metrics={'clock_cycle:unique': 1975722.0, 'loss:sum': 0.049940817058086395, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.8854169845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.726346015930176, 'e_frac_with_tokens:mean': 0.8229166865348816}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.018776830285787582, metrics={'clock_cycle:unique': 1975724.0, 'loss:sum': 0.018776830285787582, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.745009422302246, 'e_frac_with_tokens:mean': 0.8177083730697632}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=1.059620976448059, metrics={'clock_cycle:unique': 1975726.0, 'loss:sum': 1.059620976448059, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.74609375, 'e_frac_with_tokens:mean': 0.8307291865348816}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.07890265434980392, metrics={'clock_cycle:unique': 1975728.0, 'loss:sum': 0.07890265434980392, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7265625, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.013817637227475643, metrics={'clock_cycle:unique': 1975730.0, 'loss:sum': 0.013817637227475643, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9322919845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.753472805023193, 'e_frac_with_tokens:mean': 0.82421875}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.11855021119117737, metrics={'clock_cycle:unique': 1975732.0, 'loss:sum': 0.11855021119117737, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.72764778137207, 'e_frac_with_tokens:mean': 0.83203125}
+[sdpo_sie_ext_017] OK: {"final_loss": 0.11855021119117737, "avg_loss": 15.183223007014021, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_ext_018: beta=0.5, lr=0.0005, n_pairs=20, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318932.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.45034408569336, metrics={'clock_cycle:unique': 318934.0, 'e_max_violation:mean': 6.732421875, 'e_max_violation:max': 6.9375, 'loss:sum': 60.45034408569336, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8333333730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=60.32939147949219, metrics={'clock_cycle:unique': 318936.0, 'e_max_violation:mean': 6.731988430023193, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 60.32939147949219, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8359375, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=26.76484489440918, metrics={'clock_cycle:unique': 318938.0, 'e_max_violation:mean': 6.7233076095581055, 'e_max_violation:max': 6.90625, 'loss:sum': 26.76484489440918, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.86328125, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=7.334217071533203, metrics={'clock_cycle:unique': 318940.0, 'e_max_violation:mean': 6.722005367279053, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 7.334217071533203, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=6.454925060272217, metrics={'clock_cycle:unique': 318942.0, 'e_max_violation:mean': 6.726996898651123, 'e_max_violation:max': 6.921875, 'loss:sum': 6.454925060272217, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.9803239107131958, metrics={'clock_cycle:unique': 318944.0, 'e_max_violation:mean': 6.730252265930176, 'e_max_violation:max': 6.927083492279053, 'loss:sum': 0.9803239107131958, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8671875, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=1.6363393068313599, metrics={'clock_cycle:unique': 318946.0, 'e_max_violation:mean': 6.716145992279053, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 1.6363393068313599, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8502604365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=1.4623088836669922, metrics={'clock_cycle:unique': 318948.0, 'e_max_violation:mean': 6.74717903137207, 'e_max_violation:max': 6.9375, 'loss:sum': 1.4623088836669922, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8606771230697632, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=1.9482897520065308, metrics={'clock_cycle:unique': 318950.0, 'e_max_violation:mean': 6.717665672302246, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 1.9482897520065308, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=0.14127789437770844, metrics={'clock_cycle:unique': 318952.0, 'e_max_violation:mean': 6.716796875, 'e_max_violation:max': 6.90625, 'loss:sum': 0.14127789437770844, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.85546875, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.023242708295583725, metrics={'clock_cycle:unique': 318954.0, 'e_max_violation:mean': 6.726129055023193, 'e_max_violation:max': 6.880208492279053, 'loss:sum': 0.023242708295583725, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.3173993229866028, metrics={'clock_cycle:unique': 318956.0, 'e_max_violation:mean': 6.72569465637207, 'e_max_violation:max': 6.875, 'loss:sum': 0.3173993229866028, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84765625, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=0.036105792969465256, metrics={'clock_cycle:unique': 318958.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 0.036105792969465256, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8619791865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.029324626550078392, metrics={'clock_cycle:unique': 318960.0, 'e_max_violation:mean': 6.723525047302246, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 0.029324626550078392, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.003267050487920642, metrics={'clock_cycle:unique': 318962.0, 'e_max_violation:mean': 6.738064765930176, 'e_max_violation:max': 6.90625, 'loss:sum': 0.003267050487920642, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.05025109276175499, metrics={'clock_cycle:unique': 318964.0, 'e_max_violation:mean': 6.743489742279053, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 0.05025109276175499, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8541666865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.14353619515895844, metrics={'clock_cycle:unique': 318967.0, 'e_max_violation:mean': 6.9936842918396, 'e_max_violation:max': 6.997725486755371, 'loss:sum': 0.14353619515895844, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8606771230697632, 'e_min_violation:mean': -0.9999949932098389}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.35247477889060974, metrics={'clock_cycle:unique': 318969.0, 'e_max_violation:mean': 6.75694465637207, 'e_max_violation:max': 6.90625, 'loss:sum': 0.35247477889060974, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.0027924145106226206, metrics={'clock_cycle:unique': 318971.0, 'e_max_violation:mean': 6.72178840637207, 'e_max_violation:max': 6.8854169845581055, 'loss:sum': 0.0027924145106226206, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_ext_018] OK: {"final_loss": 0.0027924145106226206, "avg_loss": 15.091657694010063, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_ext_019: beta=0.5, lr=0.0005, n_pairs=30, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 1975735.0, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.729817867279053, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.84523010253906, metrics={'clock_cycle:unique': 1975737.0, 'loss:sum': 60.84523010253906, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.734375, 'e_frac_with_tokens:mean': 0.8333333730697632}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=59.94556427001953, metrics={'clock_cycle:unique': 1975739.0, 'loss:sum': 59.94556427001953, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9010419845581055, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.728082180023193, 'e_frac_with_tokens:mean': 0.83984375}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=26.953022003173828, metrics={'clock_cycle:unique': 1975741.0, 'loss:sum': 26.953022003173828, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.911458492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.726129055023193, 'e_frac_with_tokens:mean': 0.8541666865348816}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=8.46972370147705, metrics={'clock_cycle:unique': 1975743.0, 'loss:sum': 8.46972370147705, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.722005367279053, 'e_frac_with_tokens:mean': 0.8411458730697632}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=4.843120574951172, metrics={'clock_cycle:unique': 1975745.0, 'loss:sum': 4.843120574951172, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.728299140930176, 'e_frac_with_tokens:mean': 0.83984375}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.7409117817878723, metrics={'clock_cycle:unique': 1975747.0, 'loss:sum': 0.7409117817878723, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9166669845581055, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.737196922302246, 'e_frac_with_tokens:mean': 0.84765625}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.5753172636032104, metrics={'clock_cycle:unique': 1975749.0, 'loss:sum': 0.5753172636032104, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.724609375, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=1.701497197151184, metrics={'clock_cycle:unique': 1975751.0, 'loss:sum': 1.701497197151184, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.75303840637207, 'e_frac_with_tokens:mean': 0.828125}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=4.647800922393799, metrics={'clock_cycle:unique': 1975753.0, 'loss:sum': 4.647800922393799, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.724392890930176, 'e_frac_with_tokens:mean': 0.8359375}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=3.089430570602417, metrics={'clock_cycle:unique': 1975755.0, 'loss:sum': 3.089430570602417, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.720703125, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.2449524849653244, metrics={'clock_cycle:unique': 1975757.0, 'loss:sum': 0.2449524849653244, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.7272138595581055, 'e_frac_with_tokens:mean': 0.83203125}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.06316205114126205, metrics={'clock_cycle:unique': 1975759.0, 'loss:sum': 0.06316205114126205, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.895833492279053, 'e_min_violation:mean': -0.9995660185813904, 'e_max_violation:mean': 6.721571922302246, 'e_frac_with_tokens:mean': 0.8346354365348816}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=5.3121209144592285, metrics={'clock_cycle:unique': 1975761.0, 'loss:sum': 5.3121209144592285, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.723090648651123, 'e_frac_with_tokens:mean': 0.85546875}
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.033780913800001144, metrics={'clock_cycle:unique': 1975763.0, 'loss:sum': 0.033780913800001144, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.921875, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.717231273651123, 'e_frac_with_tokens:mean': 0.8333333730697632}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.03171039745211601, metrics={'clock_cycle:unique': 1975765.0, 'loss:sum': 0.03171039745211601, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.73046875, 'e_frac_with_tokens:mean': 0.8268229365348816}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.07837183773517609, metrics={'clock_cycle:unique': 1975767.0, 'loss:sum': 0.07837183773517609, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.736762523651123, 'e_frac_with_tokens:mean': 0.8463541865348816}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.07267985492944717, metrics={'clock_cycle:unique': 1975769.0, 'loss:sum': 0.07267985492944717, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.942708492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.7252607345581055, 'e_frac_with_tokens:mean': 0.8489583730697632}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.056083112955093384, metrics={'clock_cycle:unique': 1975771.0, 'loss:sum': 0.056083112955093384, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.9375, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.750217437744141, 'e_frac_with_tokens:mean': 0.8372396230697632}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=1.1847352981567383, metrics={'clock_cycle:unique': 1975773.0, 'loss:sum': 1.1847352981567383, 'e_frac_oversubscribed:mean': 0.125, 'e_max_violation:max': 6.927083492279053, 'e_min_violation:mean': -0.9997830390930176, 'e_max_violation:mean': 6.727431297302246, 'e_frac_with_tokens:mean': 0.8463541865348816}
+[sdpo_sie_ext_019] OK: {"final_loss": 1.1847352981567383, "avg_loss": 15.613085640594363, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.5}
+
+============================================================
+Starting sdpo_sie_ext_020: beta=0.5, lr=0.0005, n_pairs=50, steps=20
+============================================================
+  Step 1/20: seq_len=95, prompt_len=74
+  Step 1/20: loss=133.37249755859375, metrics={'clock_cycle:unique': 318983.0, 'e_max_violation:mean': 6.729817867279053, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 133.37249755859375, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 2/20: seq_len=94, prompt_len=74
+  Step 2/20: loss=60.25273895263672, metrics={'clock_cycle:unique': 318985.0, 'e_max_violation:mean': 6.730903148651123, 'e_max_violation:max': 6.9375, 'loss:sum': 60.25273895263672, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 3/20: seq_len=94, prompt_len=74
+  Step 3/20: loss=60.18132781982422, metrics={'clock_cycle:unique': 318987.0, 'e_max_violation:mean': 6.729384422302246, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 60.18132781982422, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8372396230697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 4/20: seq_len=94, prompt_len=74
+  Step 4/20: loss=24.847023010253906, metrics={'clock_cycle:unique': 318989.0, 'e_max_violation:mean': 6.725043773651123, 'e_max_violation:max': 6.921875, 'loss:sum': 24.847023010253906, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8658854365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 5/20: seq_len=96, prompt_len=75
+  Step 5/20: loss=8.243185997009277, metrics={'clock_cycle:unique': 318991.0, 'e_max_violation:mean': 6.720486640930176, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 8.243185997009277, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.85546875, 'e_min_violation:mean': -0.9997830390930176}
+  Step 6/20: seq_len=92, prompt_len=73
+  Step 6/20: loss=4.376785755157471, metrics={'clock_cycle:unique': 318994.0, 'e_max_violation:mean': 6.729384422302246, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 4.376785755157471, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 7/20: seq_len=91, prompt_len=72
+  Step 7/20: loss=0.94903963804245, metrics={'clock_cycle:unique': 318996.0, 'e_max_violation:mean': 6.734375, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 0.94903963804245, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 8/20: seq_len=94, prompt_len=74
+  Step 8/20: loss=0.303272545337677, metrics={'clock_cycle:unique': 318998.0, 'e_max_violation:mean': 6.72374153137207, 'e_max_violation:max': 6.90625, 'loss:sum': 0.303272545337677, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8515625, 'e_min_violation:mean': -0.9997830390930176}
+  Step 9/20: seq_len=88, prompt_len=71
+  Step 9/20: loss=1.7288577556610107, metrics={'clock_cycle:unique': 319000.0, 'e_max_violation:mean': 6.75, 'e_max_violation:max': 6.911458492279053, 'loss:sum': 1.7288577556610107, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 10/20: seq_len=94, prompt_len=74
+  Step 10/20: loss=6.127813339233398, metrics={'clock_cycle:unique': 319003.0, 'e_max_violation:mean': 6.7109375, 'e_max_violation:max': 6.880208492279053, 'loss:sum': 6.127813339233398, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.84375, 'e_min_violation:mean': -0.9997830390930176}
+  Step 11/20: seq_len=95, prompt_len=74
+  Step 11/20: loss=1.5578968524932861, metrics={'clock_cycle:unique': 319005.0, 'e_max_violation:mean': 6.710721015930176, 'e_max_violation:max': 6.9166669845581055, 'loss:sum': 1.5578968524932861, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8424479365348816, 'e_min_violation:mean': -0.9995660185813904}
+  Step 12/20: seq_len=94, prompt_len=74
+  Step 12/20: loss=0.12989094853401184, metrics={'clock_cycle:unique': 319008.0, 'e_max_violation:mean': 6.71788215637207, 'e_max_violation:max': 6.90625, 'loss:sum': 0.12989094853401184, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8411458730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 13/20: seq_len=94, prompt_len=74
+  Step 13/20: loss=0.16659124195575714, metrics={'clock_cycle:unique': 319010.0, 'e_max_violation:mean': 6.717665672302246, 'e_max_violation:max': 6.90625, 'loss:sum': 0.16659124195575714, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8489583730697632, 'e_min_violation:mean': -0.9995660185813904}
+  Step 14/20: seq_len=94, prompt_len=74
+  Step 14/20: loss=3.539318323135376, metrics={'clock_cycle:unique': 319012.0, 'e_max_violation:mean': 6.715712547302246, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 3.539318323135376, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8528646230697632, 'e_min_violation:mean': -0.9997830390930176}/workspace/sdpo_sie_extended_sweep.py:208: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"\nSweep complete at {datetime.datetime.utcnow().isoformat()}Z")
+
+  Step 15/20: seq_len=96, prompt_len=75
+  Step 15/20: loss=0.017765549942851067, metrics={'clock_cycle:unique': 319014.0, 'e_max_violation:mean': 6.7076826095581055, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 0.017765549942851067, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8346354365348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 16/20: seq_len=92, prompt_len=73
+  Step 16/20: loss=0.04782109707593918, metrics={'clock_cycle:unique': 319016.0, 'e_max_violation:mean': 6.728299140930176, 'e_max_violation:max': 6.942708492279053, 'loss:sum': 0.04782109707593918, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.83203125, 'e_min_violation:mean': -0.9997830390930176}
+  Step 17/20: seq_len=91, prompt_len=72
+  Step 17/20: loss=0.11239043623209, metrics={'clock_cycle:unique': 319018.0, 'e_max_violation:mean': 6.737847805023193, 'e_max_violation:max': 6.9635419845581055, 'loss:sum': 0.11239043623209, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8307291865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 18/20: seq_len=94, prompt_len=74
+  Step 18/20: loss=0.16741853952407837, metrics={'clock_cycle:unique': 319020.0, 'e_max_violation:mean': 6.720703125, 'e_max_violation:max': 6.9479169845581055, 'loss:sum': 0.16741853952407837, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.828125, 'e_min_violation:mean': -0.9997830390930176}
+  Step 19/20: seq_len=88, prompt_len=71
+  Step 19/20: loss=0.19360272586345673, metrics={'clock_cycle:unique': 319022.0, 'e_max_violation:mean': 6.741103172302246, 'e_max_violation:max': 6.9375, 'loss:sum': 0.19360272586345673, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8307291865348816, 'e_min_violation:mean': -0.9997830390930176}
+  Step 20/20: seq_len=94, prompt_len=74
+  Step 20/20: loss=0.5627291798591614, metrics={'clock_cycle:unique': 319024.0, 'e_max_violation:mean': 6.721571922302246, 'e_max_violation:max': 6.9322919845581055, 'loss:sum': 0.5627291798591614, 'e_frac_oversubscribed:mean': 0.125, 'e_frac_with_tokens:mean': 0.8450521230697632, 'e_min_violation:mean': -0.9997830390930176}
+[sdpo_sie_ext_020] OK: {"final_loss": 0.5627291798591614, "avg_loss": 15.343898363318294, "initial_loss": 133.37249755859375, "steps_completed": 20, "steps_attempted": 20, "beta": 0.5}
+
+Sweep complete at 2026-03-19T22:36:09.756456Z
+Total experiments: 20
+Results logged: 25

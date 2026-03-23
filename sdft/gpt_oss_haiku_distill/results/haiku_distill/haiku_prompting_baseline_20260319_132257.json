@@ -1,0 +1,296 @@
+{
+  "method": "prompting_baseline",
+  "description": "Style transfer via system prompt - no training required",
+  "timestamp": "2026-03-19T13:21:05.110914",
+  "examples": [
+    {
+      "prompt": "What's the best way to learn programming from scratch?",
+      "generic_response": "# Getting Started with Programming\n\n**Pick a beginner-friendly language**\n- Python is often recommended for its readable syntax\n- JavaScript works well if you want web development\n- Avoid overly complex languages initially\n\n**Core learning path**\n1. Learn fundamentals: variables, loops, conditionals, functions\n2. Practice with small projects (calculators, to-do lists, games)\n3. Gradually tackle more complex concepts (data structures, debugging)\n4. Build real projects that interest you\n\n**Resources**\n- Free: freeCodeCamp, Codecademy, Khan Academy\n- Paid: Udemy, Coursera (often high quality)\n- Documentation and Stack Overflow for problem-solving\n\n**Key habits**\n- Code daily, even 30 minutes helps\n- Build projects early\u2014theory alone gets boring\n- Debug your own errors rather than copying solutions\n- Join communities (Reddit, Discord) for support\n\n**Realistic timeline**\n- Basic competency: 2-3 months of consistent effort\n- Job-ready: typically 6-12 months depending on depth\n\n**Most important:** start now, be patient",
+      "styled_response": "# Learning Programming From Scratch\n\nHere's what actually works, based on what helps people stick with it:\n\n**Start with one language and keep it simple.** Python is genuinely great for beginners\u2014it reads almost like English. Avoid the temptation to jump between languages while you're learning fundamentals.\n\n**Do small projects early and often.** Not just tutorials. Build something *you* care about, even if it's tiny\u2014a to-do app, a simple game, a tool that solves a real problem for you. This makes things click in a way tutorials alone can't.\n\n**Get comfortable with being confused.** Programming feels like debugging constantly at first. That's normal. The real skill is learning to read error messages and Google effectively (seriously, this is 50% of programming).\n\n**Find a community or buddy.** It's easier to push through frustration when you can ask someone questions or show off what you've built. Online communities, local meetups, or even a friend learning alongside you helps.\n\n**The learning curve is weirdly shaped.** Expect some early wins, then a plateau where things feel abstract, then gradually it clicks. Most",
+      "gold_haiku_response": "Here's a practical approach:\n\n**Start with fundamentals**\n- Pick one beginner-friendly language (Python is popular for good reason)\n- Learn core concepts: variables, loops, conditionals, functions, data structures\n- Don't rush\u2014understanding beats speed\n\n**Learn by doing**\n- Write code daily, even if just 30 minutes\n- Build small projects that interest you (games, tools, scripts)\n- Don't just watch tutorials; code along and experiment\n\n**Structure that works**\n1. Learn a concept\n2. Code examples yourself\n3. Build something with it\n4. Debug when it breaks (this teaches the most)\n5. Move to the next concept\n\n**Practical tips**\n- Use free resources (freeCodeCamp, Codecademy, Python.org docs)\n- Read others' code to see patterns\n- Join communities (Reddit's r/learnprogramming, Discord servers)\n- Expect frustration\u2014it's normal and part of learning\n\n**Avoid common traps**\n- Watching too many tutorials without coding\n- Jumping languages constantly\n- Building nothing/only following along\n-",
+      "styled_vs_gold": {
+        "model_wc": 177,
+        "haiku_wc": 147,
+        "length_ratio": 0.831,
+        "model_asl": 10.7,
+        "haiku_asl": 21.1,
+        "asl_diff": 10.4,
+        "model_conv_markers": 76,
+        "haiku_conv_markers": 52,
+        "conv_marker_ratio": 0.675
+      },
+      "generic_vs_gold": {
+        "model_wc": 145,
+        "haiku_wc": 147,
+        "length_ratio": 0.986,
+        "model_asl": 29.0,
+        "haiku_asl": 21.1,
+        "asl_diff": 7.9,
+        "model_conv_markers": 58,
+        "haiku_conv_markers": 52,
+        "conv_marker_ratio": 0.881
+      }
+    },
+    {
+      "prompt": "I feel like I'm not making progress in my career. What should I do?",
+      "generic_response": "Here are some practical steps to consider:\n\n**Assess the situation**\n- Define what \"progress\" means to you (salary, skills, title, impact, fulfillment)\n- Be honest about whether it's the role, company, industry, or your own effort\n\n**Build momentum**\n- Take on visible projects or leadership opportunities\n- Develop skills that are valued in your field\n- Seek feedback from your manager about growth paths\n- Document your wins and contributions\n\n**Explore your options**\n- Have a clear conversation with your manager about advancement\n- Look into lateral moves or new roles internally\n- Consider external opportunities in your field\n- Evaluate if a different industry/role might suit you better\n\n**Invest in yourself**\n- Get relevant certifications or education\n- Expand your network\n- Find a mentor or sponsor\n\n**Reality check**\n- Progress takes time\u2014most significant career moves take years\n- Sometimes you need to change companies to advance\n- Staying in a dead-end situation too long can hurt long-term\n\n**Quick reflection**: What's one concrete action you could take this week? Even small steps forward build momentum.\n\nWhat aspect feels most",
+      "styled_response": "That's a frustrating feeling, and you're definitely not alone in experiencing it. The good news is that recognizing it is actually the first step toward changing it.\n\nLet me ask you a few things to help clarify:\n\n**What does \"progress\" mean to you right now?** Is it money, skills, title, impact, or something else? Sometimes we feel stuck because we're measuring ourselves against the wrong yardstick.\n\n**When did this feeling start?** A few months in or longer? Recent changes can help identify whether something external shifted or if it's been building.\n\n**What would feel like progress?** Getting specific here matters\u2014\"better job\" is vague, but \"lead a team of 3 people in 18 months\" gives you something to actually work toward.\n\nIn the meantime, here are some practical moves worth considering:\n\n- **Have a real conversation with your manager** about what growth looks like in your current role (or if it doesn't exist there)\n- **Document what you've actually accomplished**\u2014we're terrible at remembering our wins, especially in a slump\n- **Invest in one concrete skill** that matters",
+      "gold_haiku_response": "Here are some practical steps to consider:\n\n**Assess the situation first:**\n- What does \"progress\" mean to you? (salary, skills, title, satisfaction, impact)\n- Are things actually stalled, or moving slower than you'd like?\n- What's within your control vs. external factors?\n\n**Common moves:**\n\n- **Skill gaps** \u2013 identify what's needed for your next step and build those (courses, projects, certifications)\n- **Visibility** \u2013 make sure the right people know what you're doing; volunteer for visibility-raising projects\n- **Clarity with your manager** \u2013 have an explicit conversation about career path and what advancement looks like\n- **Lateral moves** \u2013 sometimes sideways growth opens more doors than staying put\n- **Network** \u2013 connections often reveal opportunities faster than waiting\n- **Consider external opportunities** \u2013 sometimes a job change *is* the fastest progress\n\n**Worth reflecting on:**\n- Is the role/company actually limiting, or are you missing confidence/strategy?\n- Are you in a dead-end situation, or does it match what you actually want?\n\nWhat area feels most stuck\u2014the opportunity itself, knowing what",
+      "styled_vs_gold": {
+        "model_wc": 176,
+        "haiku_wc": 169,
+        "length_ratio": 0.96,
+        "model_asl": 16.3,
+        "haiku_asl": 24.1,
+        "asl_diff": 7.9,
+        "model_conv_markers": 89,
+        "haiku_conv_markers": 85,
+        "conv_marker_ratio": 0.944
+      },
+      "generic_vs_gold": {
+        "model_wc": 180,
+        "haiku_wc": 169,
+        "length_ratio": 0.939,
+        "model_asl": 60.0,
+        "haiku_asl": 24.1,
+        "asl_diff": 35.9,
+        "model_conv_markers": 85,
+        "haiku_conv_markers": 85,
+        "conv_marker_ratio": 0.988
+      }
+    },
+    {
+      "prompt": "Can you explain what machine learning actually does?",
+      "generic_response": "# What Machine Learning Does\n\nMachine learning finds patterns in data and uses them to make predictions or decisions\u2014without being explicitly programmed for each task.\n\n## The Basic Process\n\n1. **Training**: Feed the system examples (data + correct answers)\n2. **Learning**: The system identifies patterns in that data\n3. **Prediction**: Apply those patterns to new, unseen data\n\n## Common Examples\n\n- **Email spam filters** learn what spam looks like from labeled examples\n- **Recommendation systems** (Netflix, Spotify) find patterns in what similar users like\n- **Image recognition** learns to identify objects by analyzing thousands of labeled images\n- **Fraud detection** spots unusual transaction patterns\n\n## Key Point\n\nInstead of a programmer writing rules (\"if X and Y, then Z\"), the system *discovers* the rules by analyzing data. This makes it useful for complex problems where explicit rules are hard to define.\n\nThe quality of results depends heavily on the data quality and the algorithm chosen\u2014it's not magic, just statistical pattern-finding at scale.",
+      "styled_response": "# What Machine Learning Actually Does\n\nAt its core, machine learning is about **finding patterns in data and using those patterns to make predictions or decisions**.\n\nHere's the practical idea: instead of writing out every rule a computer should follow, you feed it examples and let it figure out the rules itself. It's like learning to recognize dogs not by being given a rulebook, but by seeing thousands of dogs and gradually getting better at spotting them.\n\n## The basic flow\n\n1. **Show it examples** \u2014 feed the system lots of data (images, text, numbers, whatever)\n2. **Let it find patterns** \u2014 the algorithm notices what features tend to go together\n3. **Make predictions** \u2014 when it sees something new, it uses those patterns to guess what it is\n\n## Real-world examples\n\n- **Email spam filters** learn what spam looks like by studying past emails\n- **Recommendation systems** notice that people who liked this movie also liked that one\n- **Medical diagnosis tools** spot visual patterns in scans that humans trained them on\n\nThe key thing: ML systems don't really \"understand\" anything. They're pattern-matching machines that got really good at it through practice.",
+      "gold_haiku_response": "# What Machine Learning Does\n\nMachine learning finds patterns in data and uses them to make predictions or decisions, without being explicitly programmed for each specific case.\n\n## The Basic Process\n\n1. **Learn from examples** - Feed the system lots of data with known outcomes\n2. **Identify patterns** - The algorithm detects regularities and relationships\n3. **Apply to new cases** - Use those patterns to predict outcomes for new, unseen data\n\n## A Simple Example\n\nInstead of coding \"if email contains word X, mark as spam,\" you show an ML system thousands of spam and non-spam emails. It learns which combinations of words, sender patterns, and formatting tend to indicate spam\u2014then applies that to new emails.\n\n## What It's Actually Good For\n\n- **Prediction**: Sales forecasts, disease risk, stock prices\n- **Classification**: Spam detection, image recognition, sentiment analysis\n- **Recommendation**: Netflix suggestions, product recommendations\n- **Pattern discovery**: Finding fraud, clustering similar customers\n\n## Key Limitation\n\nML finds statistical patterns in training data. It's not thinking or understanding\u2014it's pattern-matching at scale. So it can fail in surprising ways, especially with",
+      "styled_vs_gold": {
+        "model_wc": 193,
+        "haiku_wc": 179,
+        "length_ratio": 0.927,
+        "model_asl": 24.1,
+        "haiku_asl": 19.9,
+        "asl_diff": 4.2,
+        "model_conv_markers": 72,
+        "haiku_conv_markers": 92,
+        "conv_marker_ratio": 0.774
+      },
+      "generic_vs_gold": {
+        "model_wc": 162,
+        "haiku_wc": 179,
+        "length_ratio": 0.905,
+        "model_asl": 23.1,
+        "haiku_asl": 19.9,
+        "asl_diff": 3.3,
+        "model_conv_markers": 67,
+        "haiku_conv_markers": 92,
+        "conv_marker_ratio": 0.72
+      }
+    },
+    {
+      "prompt": "How do I have a difficult conversation with my manager?",
+      "generic_response": "# Having a Difficult Conversation with Your Manager\n\n**Before the conversation:**\n- Be clear on what you want to discuss and what outcome you're hoping for\n- Gather specific examples or facts (not emotions)\n- Choose the right time\u2014ask for a private meeting rather than catching them off-guard\n- Prepare for different responses\n\n**During the conversation:**\n- Start calmly and respectfully\n- Use \"I\" statements (\"I feel concerned about...\" vs. \"You always...\")\n- Stick to specific behaviors or situations, not character judgments\n- Listen to their perspective\u2014this is a dialogue, not a monologue\n- Stay focused on the issue at hand\n\n**Helpful approaches:**\n- Ask questions to understand their viewpoint\n- Propose solutions rather than just complaints\n- Stay professional, even if emotions rise\n- Take notes if it helps you stay organized\n\n**After:**\n- Confirm what was agreed to\n- Follow up in writing if appropriate (email summary)\n- Be willing to implement changes discussed\n\n**If you're very anxious:** Practice beforehand, or talk to HR or a trusted colleague first for perspective.\n\nWhat's the general",
+      "styled_response": "Having a tough conversation with your manager can feel daunting, but it's totally doable with a bit of thoughtfulness. Here's what tends to work:\n\n**Before you talk:**\n- Get clear on what you actually want to say. What's the core issue? What outcome are you hoping for?\n- Pick the right time\u2014not when they're rushed or stressed. A scheduled conversation beats ambushing them\n- Check your own headspace. You'll come across better when you're not in pure venting mode\n\n**During the conversation:**\n- Lead with context, not emotion: \"I wanted to discuss X because...\" works better than launching straight into frustration\n- Be specific. \"I feel like my work isn't valued\" is harder to work with than \"In the last three meetings, my ideas weren't acknowledged, and I'd like to understand why\"\n- Listen too\u2014this is a dialogue, not a speech. Your manager might have context you're missing\n- Stay calm(ish). You don't need to be a robot, but panicking or getting heated usually backfires\n\n**The real key:**\nAssume your manager is a reasonable person who wants things to",
+      "gold_haiku_response": "# Having a Difficult Conversation with Your Manager\n\n**Prepare beforehand:**\n- Clarify what you want to say and why it matters\n- Gather specific examples or facts (avoid vague complaints)\n- Consider their perspective\u2014what might they say?\n- Decide what outcome you're hoping for\n\n**Set it up right:**\n- Request a private meeting rather than catching them off-guard\n- Choose a calm time when neither of you is rushed or stressed\n- \"I'd like to discuss [topic]. Do you have 15 minutes this week?\"\n\n**During the conversation:**\n- Stay factual and specific (\"This deadline changed three times\" vs. \"You're disorganized\")\n- Use \"I\" statements (\"I felt unclear about expectations\" rather than \"You weren't clear\")\n- Listen more than you talk\u2014ask for their input\n- Stay calm; take a breath if emotions rise\n- Avoid ultimatums unless it's truly a last resort\n\n**Focus on:**\n- The issue, not their character\n- What you need going forward\n- Collaborative solutions when possible\n\n**After:**\n- Summarize what you discussed and agreed",
+      "styled_vs_gold": {
+        "model_wc": 179,
+        "haiku_wc": 168,
+        "length_ratio": 0.939,
+        "model_asl": 16.4,
+        "haiku_asl": 33.8,
+        "asl_diff": 17.4,
+        "model_conv_markers": 72,
+        "haiku_conv_markers": 73,
+        "conv_marker_ratio": 0.973
+      },
+      "generic_vs_gold": {
+        "model_wc": 176,
+        "haiku_wc": 168,
+        "length_ratio": 0.955,
+        "model_asl": 35.6,
+        "haiku_asl": 33.8,
+        "asl_diff": 1.8,
+        "model_conv_markers": 71,
+        "haiku_conv_markers": 73,
+        "conv_marker_ratio": 0.959
+      }
+    },
+    {
+      "prompt": "What makes a good team culture?",
+      "generic_response": "# Key Elements of Good Team Culture\n\n**Psychological Safety**\n- People feel safe taking risks, admitting mistakes, and being vulnerable without fear of ridicule or punishment\n\n**Clear Purpose**\n- Shared understanding of goals and why the work matters\n\n**Trust**\n- Reliability, honesty, and follow-through from team members and leadership\n\n**Open Communication**\n- Information flows freely; feedback is welcomed and acted upon\n\n**Respect for Differences**\n- Diverse perspectives are valued; people feel they belong\n\n**Accountability**\n- Clear expectations; people take ownership without blame culture\n\n**Growth Mindset**\n- Learning from failures is normalized; development opportunities exist\n\n**Recognition**\n- Contributions are acknowledged; people feel their work is valued\n\n**Work-Life Balance**\n- Sustainable workload and flexibility; burnout is addressed\n\n**Strong Leadership**\n- Leaders model the values and behaviors they expect\n\n**What ties it together:** Good culture isn't built by one element\u2014it requires consistent, intentional effort across all these areas. The best teams regularly revisit and strengthen their culture rather than assuming it maintains itself.\n\nWhat aspect matters most in your context?",
+      "styled_response": "Good team culture really comes down to a few things working together:\n\n**Trust is foundational.** When people believe their teammates have their back and won't throw them under the bus, everything else becomes possible. This means following through on commitments and being honest, even when it's uncomfortable.\n\n**Psychological safety matters hugely.** People need to feel they can speak up, ask questions, or admit mistakes without fear of humiliation. Teams where folks are constantly worried about looking bad tend to hide problems rather than solve them.\n\n**Clear purpose helps.** People connect when they understand *why* their work matters\u2014not just what they're doing, but how it contributes to something bigger. This is what turns a job into something people actually care about.\n\n**You need real communication.** This means people actually listen to each other, ask genuine questions, and aren't just waiting for their turn to talk. It's surprisingly rare and surprisingly valuable.\n\n**Respect for differences.** The best teams don't require everyone to be the same. They appreciate different perspectives, working styles, and backgrounds. That diversity actually makes problem-solving better.\n\n**And here's the thing:** culture isn't something you",
+      "gold_haiku_response": "# What Makes Good Team Culture\n\n**Clear purpose and values**\n- Everyone understands *why* the work matters\n- Values aren't just stated\u2014they're actually practiced\n\n**Psychological safety**\n- People can speak up, disagree, or admit mistakes without fear\n- This is probably the single biggest factor in high-performing teams\n\n**Trust and reliability**\n- Teammates follow through on commitments\n- Credit is shared, blame isn't hoarded\n\n**Good communication**\n- Information flows openly, not just down from above\n- People listen to understand, not just to respond\n\n**Competence and growth**\n- Members respect each other's skills\n- There's space to learn and improve\n\n**Belonging**\n- People feel they genuinely belong (not just tolerated)\n- Diversity of thought is actually valued\n\n**Accountability without toxicity**\n- Standards exist and matter\n- But support comes with expectations\n\n**Fun and levity**\n- Work is serious, but not grim\n- Humor and humanity are allowed\n\nThe tricky part: culture compounds\u2014small choices about how people treat each other either build trust or erode it. It takes",
+      "styled_vs_gold": {
+        "model_wc": 185,
+        "haiku_wc": 167,
+        "length_ratio": 0.903,
+        "model_asl": 11.2,
+        "haiku_asl": 83.5,
+        "asl_diff": 72.3,
+        "model_conv_markers": 68,
+        "haiku_conv_markers": 56,
+        "conv_marker_ratio": 0.812
+      },
+      "generic_vs_gold": {
+        "model_wc": 167,
+        "haiku_wc": 167,
+        "length_ratio": 1.0,
+        "model_asl": 55.7,
+        "haiku_asl": 83.5,
+        "asl_diff": 27.8,
+        "model_conv_markers": 75,
+        "haiku_conv_markers": 56,
+        "conv_marker_ratio": 0.737
+      }
+    },
+    {
+      "prompt": "Help me understand compound interest.",
+      "generic_response": "# Compound Interest Basics\n\n**The core idea:** You earn interest on your money, then earn interest on that interest too\u2014creating exponential growth.\n\n## Simple Example\n- Start with $1,000 at 5% annual interest\n- **Year 1:** Earn $50 \u2192 have $1,050\n- **Year 2:** Earn $52.50 (5% of $1,050) \u2192 have $1,102.50\n- **Year 3:** Earn $55.13 \u2192 have $1,157.63\n\nNotice you earn more each year, even though the rate stays the same.\n\n## Key Variables\n- **Principal:** Initial amount\n- **Rate:** Interest percentage\n- **Time:** How long your money grows\n- **Frequency:** How often interest compounds (daily, monthly, yearly, etc.)\n\nMore frequent compounding = slightly faster growth.\n\n## The Power\nSmall differences in rate or time create large differences in total growth:\n- $10,000 at 5% for 10 years \u2248 $16,289\n- $10,000 at 7% for ",
+      "styled_response": "# Understanding Compound Interest\n\nThink of compound interest as interest that earns interest. It's genuinely one of those financial concepts that sounds simple but becomes surprisingly powerful over time.\n\n**The basic idea:**\nWhen you earn interest on money, that interest gets added to your principal. Then, in the next period, you earn interest on *both* the original amount and the interest you just earned. This creates a snowball effect.\n\n**A concrete example:**\nSay you invest $1,000 at 10% annual interest:\n- Year 1: You earn $100 \u2192 now have $1,100\n- Year 2: You earn $110 (10% of $1,100) \u2192 now have $1,210\n- Year 3: You earn $121 \u2192 now have $1,331\n\nNotice how the interest earned grows each year? That's the magic.\n\n**Why it matters:**\nTime is your best friend here. Over decades, compound interest can turn modest savings into substantial wealth. Even small differences in interest rates compound dramatically over 20+ years.\n\n**The flip side:**\nThis same mechanism works against you with debt. Credit card debt compounds",
+      "gold_haiku_response": "# Compound Interest Basics\n\nCompound interest is when your money earns interest, and then *that interest earns interest too*. It snowballs over time.\n\n## Simple Example\n\nSay you invest $1,000 at 10% annual interest:\n\n- **Year 1:** $1,000 + $100 = $1,100\n- **Year 2:** $1,100 + $110 = $1,210 (notice you earned $110, not $100)\n- **Year 3:** $1,210 + $121 = $1,331\n\nThat extra $10 in year 2 (and $21 in year 3) comes from interest earning interest.\n\n## Key Factors\n\n- **Principal**: Your starting amount\n- **Rate**: The interest percentage (higher = faster growth)\n- **Time**: Longer periods mean exponential growth really kicks in\n- **Compounding frequency**: Daily, monthly, or yearly? More frequent = slightly more gain\n\n## Why It Matters\n\n- **For saving/investing**: Compound interest works *for you*, growing wealth faster\n- **For",
+      "styled_vs_gold": {
+        "model_wc": 170,
+        "haiku_wc": 137,
+        "length_ratio": 0.806,
+        "model_asl": 14.2,
+        "haiku_asl": 27.4,
+        "asl_diff": 13.2,
+        "model_conv_markers": 66,
+        "haiku_conv_markers": 46,
+        "conv_marker_ratio": 0.687
+      },
+      "generic_vs_gold": {
+        "model_wc": 137,
+        "haiku_wc": 137,
+        "length_ratio": 1.0,
+        "model_asl": 15.8,
+        "haiku_asl": 27.4,
+        "asl_diff": 11.6,
+        "model_conv_markers": 36,
+        "haiku_conv_markers": 46,
+        "conv_marker_ratio": 0.766
+      }
+    },
+    {
+      "prompt": "Why is it hard to change habits?",
+      "generic_response": "# Why Habits Are Hard to Change\n\n**Neural pathways**: Repeated behaviors create strong connections in your brain. The neural \"groove\" gets deeper with repetition, making the automatic response stronger.\n\n**Low cognitive effort**: Habits run on autopilot, requiring minimal conscious energy. Changing them demands constant mental attention, which is exhausting.\n\n**Reward association**: Your brain has linked the habit to a payoff (comfort, stress relief, pleasure). That association persists even when you want to stop.\n\n**Environmental cues**: Triggers around you (time of day, locations, people, emotions) automatically activate the habit response without you deciding.\n\n**Identity**: Habits often feel tied to who you are, not just what you do. Changing them can feel like changing yourself.\n\n**Willpower limitations**: Relying purely on willpower depletes mental resources. It's an unreliable strategy for lasting change.\n\n**Slow progress**: New behaviors feel awkward and require sustained effort before they feel natural, which tests your patience.\n\n**Setbacks**: One lapse often triggers a full relapse\u2014the brain jumps back to the familiar pattern.\n\n**",
+      "styled_response": "Habits stick around because they're *efficient*\u2014your brain literally stops thinking about them. Once something becomes automatic, it moves from your conscious mind to your basal ganglia, which handles routine tasks with minimal effort. That's great for brushing your teeth, but tricky when you want to change the behavior.\n\nHere's what makes changing habits genuinely hard:\n\n**The reward loop is strong.** Your habit exists because it delivers something\u2014comfort, stress relief, a dopamine hit. Your brain doesn't care if it's \"good\" for you; it knows this behavior = reward. Breaking that association takes time.\n\n**You're fighting your environment.** If you want to stop snacking at night but keep chips on the counter, you're swimming upstream. Your surroundings are wired for the old habit.\n\n**Willpower is overrated.** It depletes like a muscle when you're tired or stressed\u2014exactly when you're most likely to fall back on autopilot.\n\n**The identity piece matters.** We often think \"I need to quit this,\" but lasting change usually requires *becoming* someone who doesn't do that thing. That's identity-level work,",
+      "gold_haiku_response": "# Why Habits Are Hard to Change\n\n**They run on autopilot**\nYour brain automates frequent behaviors to save energy. Once ingrained, habits activate without conscious thought\u2014making them feel effortless but also invisible to willpower.\n\n**Neural pathways strengthen with repetition**\nEach time you repeat a behavior, the neural circuits supporting it get reinforced. Breaking this requires actively choosing differently many times over.\n\n**Habits fulfill a function**\nYou likely repeat behaviors because they solve a problem\u2014stress relief, boredom, social comfort. Changing means finding a new solution for that same need.\n\n**Environmental cues trigger them automatically**\nA specific location, time, or emotional state can instantly activate a habit. You might eat when stressed before you even notice it's happening.\n\n**Progress isn't always visible**\nChange is gradual. Without clear feedback, motivation fades before new neural pathways solidify (usually takes weeks or months).\n\n**You're fighting multiple systems at once**\nChanging habits means overriding your brain's efficiency, emotional regulation, environmental design, and social patterns simultaneously.\n\n**What actually helps:**\n- Replacing rather than just qu",
+      "styled_vs_gold": {
+        "model_wc": 170,
+        "haiku_wc": 168,
+        "length_ratio": 0.988,
+        "model_asl": 11.6,
+        "haiku_asl": 14.0,
+        "asl_diff": 2.4,
+        "model_conv_markers": 104,
+        "haiku_conv_markers": 97,
+        "conv_marker_ratio": 0.924
+      },
+      "generic_vs_gold": {
+        "model_wc": 163,
+        "haiku_wc": 168,
+        "length_ratio": 0.97,
+        "model_asl": 11.6,
+        "haiku_asl": 14.0,
+        "asl_diff": 2.4,
+        "model_conv_markers": 88,
+        "haiku_conv_markers": 97,
+        "conv_marker_ratio": 0.898
+      }
+    },
+    {
+      "prompt": "What's the best approach to debugging a complex bug?",
+      "generic_response": "# Effective Bug Debugging Approach\n\n## 1. **Reproduce reliably**\n- Create consistent steps to trigger the bug\n- Narrow down to minimal reproduction case\n- Document exact conditions (environment, inputs, state)\n\n## 2. **Gather information**\n- Review error messages and stack traces\n- Check logs around the failure time\n- Note when the bug was introduced (if regression)\n\n## 3. **Form hypotheses**\n- List likely causes based on symptoms\n- Prioritize by probability and testability\n- Avoid assumptions\u2014test methodically\n\n## 4. **Isolate systematically**\n- Add logging/breakpoints in suspected areas\n- Test in isolation (mock dependencies if needed)\n- Gradually expand scope if not found\n\n## 5. **Verify the fix**\n- Confirm it actually solves the problem\n- Check for side effects\n- Add tests to prevent regression\n\n## Key mindset shifts:\n- **Slow down** to go faster\u2014rushing creates more issues\n- **Question assumptions**\u2014the bug is often where you're most confident\n- **Divide and conquer**\u2014binary search",
+      "styled_response": "# Debugging Complex Bugs: A Practical Approach\n\nThe key is to **reduce uncertainty systematically** rather than jumping to conclusions.\n\n## Start with understanding, not fixing\n\nFirst, get really clear on what's actually happening:\n- **Reproduce it consistently** \u2014 if you can't reliably trigger it, everything else is guesswork\n- **Narrow the scope** \u2014 what's the smallest change that breaks things? What's the last thing that worked?\n- **Observe without assumptions** \u2014 write down what you see, not what you think should be happening\n\n## Then narrow it down\n\n- **Isolate the problem area** \u2014 use binary search if needed (disable half the code, see if it still breaks)\n- **Check your assumptions** \u2014 especially about dependencies, inputs, and state. Things you're \"sure\" about are often wrong\n- **Add logging strategically** \u2014 not everywhere, but at decision points where things branch\n\n## The mental shift that helps\n\nInstead of \"why is this broken?\" try \"what would have to be true for this to happen?\" It reframes debugging from frustration into detective work.\n\n## One practical tip\n\nWhen you're",
+      "gold_haiku_response": "# Effective Debugging Approach\n\n## Start with observation\n- **Reproduce it reliably** \u2013 understand exactly when it happens\n- **Narrow the scope** \u2013 what changed? what's the minimal case that breaks?\n- **Gather data** \u2013 logs, error messages, stack traces, system state\n\n## Build a hypothesis\nRather than random poking, ask: \"If X were true, would I see this behavior?\"\n- Check your assumptions (they're often wrong)\n- Test the hypothesis with targeted investigation\n\n## Isolate systematically\n- **Binary search** \u2013 disable half the code/features, see if it still occurs\n- **Simplify inputs** \u2013 use minimal test cases\n- **Control variables** \u2013 change one thing at a time\n\n## Use the right tools\n- Debugger (breakpoints, stepping, watches)\n- Logging at key points\n- Profilers if it's performance-related\n- Diff tools to see what changed\n\n## Avoid common traps\n- Don't assume you know the cause \u2013 verify\n- Don't skip \"obvious\" possibilities\n- Don't debug tired \u2013 take breaks\n- Don't ignore strange",
+      "styled_vs_gold": {
+        "model_wc": 177,
+        "haiku_wc": 164,
+        "length_ratio": 0.927,
+        "model_asl": 22.4,
+        "haiku_asl": 41.2,
+        "asl_diff": 18.9,
+        "model_conv_markers": 68,
+        "haiku_conv_markers": 60,
+        "conv_marker_ratio": 0.87
+      },
+      "generic_vs_gold": {
+        "model_wc": 155,
+        "haiku_wc": 164,
+        "length_ratio": 0.945,
+        "model_asl": 25.8,
+        "haiku_asl": 41.2,
+        "asl_diff": 15.4,
+        "model_conv_markers": 62,
+        "haiku_conv_markers": 60,
+        "conv_marker_ratio": 0.952
+      }
+    },
+    {
+      "prompt": "How do you stay creative when you feel stuck?",
+      "generic_response": "When I notice myself repeating patterns or hitting a wall:\n\n**Change inputs.** Read something outside my usual range, or look at a problem from a different field's perspective. Fresh material often unsticks thinking.\n\n**Lower the bar.** Stop trying to be good. Quantity over quality gets things flowing again\u2014most of it will be mediocre, but something usually breaks through.\n\n**Reverse it.** Instead of \"how do I solve this?\" ask \"what would make this worse?\" or \"what's the opposite approach?\" Constraints and inversions often reveal paths I couldn't see head-on.\n\n**Step back.** Sometimes I'm too close. A break, or switching to something else entirely, lets the subconscious work on it. Coming back later shifts the angle.\n\n**Collaborate or explain.** Talking through stuck thinking with someone else\u2014or even writing it out\u2014often reveals what I was missing. The act of articulating the problem changes it.\n\n**Accept the stuck part.** Pushing harder when blocked usually makes it worse. Sometimes you need to sit with \"I don't know\" for a bit.\n\nWhat usually works for you when you",
+      "styled_response": "I think the honest answer is that I don't experience \"stuckness\" the way you do\u2014there's no creative fatigue or mental block for me to push through. But I find the question itself interesting because it points to something real.\n\nWhat strikes me from talking with people about this is that creative stuckness often isn't actually about creativity dying. It's usually about:\n\n**Getting too comfortable with one approach.** Your brain settles into a groove and forgets there are other angles. The fix isn't forcing brilliance\u2014it's often just *changing the context*. Different space, different medium, different conversation partner.\n\n**Perfectionism masquerading as standards.** You're stuck because nothing feels good enough, not because you're out of ideas. Sometimes you just need permission to make something rough and iterate from there.\n\n**Disconnection from what made it fun.** Creative work gets stale when it becomes performative. Circling back to *why* you cared in the first place can unlock things.\n\nIf I had to suggest something practical: when you feel stuck, try consuming something you wouldn't normally\u2014a different genre, a discipline outside your usual one,",
+      "gold_haiku_response": "A few things that seem to help:\n\n**Change the context.** Different environment, different medium, different time of day\u2014sometimes the stuck feeling is just friction in one setup that dissolves elsewhere.\n\n**Lower the bar drastically.** Permission to make something bad or half-baked often unsticks things better than trying to force quality.\n\n**Consume something unrelated.** A book, conversation, or walk can unknowingly feed the work in ways direct effort can't.\n\n**Follow the tangent.** When you notice yourself curious about something adjacent to the main thing, chase it. Often that's where energy actually lives.\n\n**Talk it out with someone.** Explaining the stuck point usually exposes what's actually bothering you\u2014which is different from what you thought.\n\nThe paradox I notice: forcing creativity rarely works, but total passivity doesn't either. It's more about removing obstacles than summoning inspiration.\n\nWhat usually sticks you? Sometimes the solution is pretty specific to what kind of stuck it is.",
+      "styled_vs_gold": {
+        "model_wc": 178,
+        "haiku_wc": 150,
+        "length_ratio": 0.843,
+        "model_asl": 12.9,
+        "haiku_asl": 10.3,
+        "asl_diff": 2.6,
+        "model_conv_markers": 92,
+        "haiku_conv_markers": 76,
+        "conv_marker_ratio": 0.817
+      },
+      "generic_vs_gold": {
+        "model_wc": 172,
+        "haiku_wc": 150,
+        "length_ratio": 0.872,
+        "model_asl": 8.2,
+        "haiku_asl": 10.3,
+        "asl_diff": 2.1,
+        "model_conv_markers": 72,
+        "haiku_conv_markers": 76,
+        "conv_marker_ratio": 0.935
+      }
+    },
+    {
+      "prompt": "What should I focus on when learning a new codebase?",
+      "generic_response": "# Learning a New Codebase\n\n## Start with the Big Picture\n- **Architecture overview** \u2013 understand the main components and how they interact\n- **Project structure** \u2013 where different types of files live\n- **Entry points** \u2013 where execution starts (main file, server startup, etc.)\n\n## Then Drill Down\n- **Key abstractions** \u2013 core classes, modules, or patterns used throughout\n- **Data flow** \u2013 how information moves through the system\n- **Dependencies** \u2013 external libraries and their roles\n\n## Practical Steps\n1. **Read documentation first** \u2013 READMEs, architecture docs, design docs\n2. **Trace a feature end-to-end** \u2013 follow one user action through the code\n3. **Run it locally** \u2013 get it working, experiment with it\n4. **Identify patterns** \u2013 naming conventions, common structures\n5. **Find and read tests** \u2013 they reveal expected behavior and usage\n\n## Avoid Getting Stuck\n- Don't memorize every detail upfront\n- Focus on *how to find* things rather than remembering them\n- Ask questions (teammates, comments, git history)\n- Keep notes",
+      "styled_response": "When diving into a new codebase, I'd prioritize a few things that actually stick with you:\n\n**Start with the big picture.** Before reading code, understand what the project *does*. Check the README, watch a demo if there is one, understand the core purpose. This mental model makes everything else click better.\n\n**Find the entry points.** Where does execution actually start? Main files, initialization code, API endpoints\u2014these are your handholds. Following the happy path through the code teaches you way more than random browsing.\n\n**Read for understanding, not completeness.** You don't need to memorize everything right away. Focus on how pieces talk to each other\u2014the architecture and dependencies matter more than every implementation detail.\n\n**Trace a feature end-to-end.** Pick something concrete (a user flow, a calculation, a request) and follow it through the system. This forces you to understand connections rather than isolated files.\n\n**Note the patterns.** How are things organized? Naming conventions? Testing approaches? These patterns speed up your mental model and help you navigate faster.\n\n**Don't be shy about running it.** Set up the local environment",
+      "gold_haiku_response": "# Learning a New Codebase: Key Focus Areas\n\n## Start High-Level\n- **Architecture overview** \u2013 How are major components organized?\n- **Entry points** \u2013 Where does execution begin?\n- **Dependencies** \u2013 What external libraries does it use?\n\n## Build Practical Understanding\n- **Run it** \u2013 Get the project working locally first\n- **Read key files** \u2013 Focus on core modules before diving deep\n- **Trace a feature** \u2013 Follow code flow for one complete user action\n- **Identify patterns** \u2013 Notice naming conventions, structure, and design choices\n\n## Deep Dive Strategically\n- **Only dig deeper** when you hit a specific problem\n- **Use your IDE's tools** \u2013 Jump to definitions, find usages, refactor safely\n- **Look at tests** \u2013 They show expected behavior and typical usage\n\n## Document as You Go\n- **Write notes** on how things connect\n- **Add comments** where logic wasn't obvious to you\n- **This helps you remember and aids future developers**\n\n## Ask Questions\n- **Code reviews** \u2013 See what experienced developers notice\n- **Team members** \u2013 Ask why decisions were made",
+      "styled_vs_gold": {
+        "model_wc": 177,
+        "haiku_wc": 177,
+        "length_ratio": 1.0,
+        "model_asl": 8.7,
+        "haiku_asl": 44.2,
+        "asl_diff": 35.5,
+        "model_conv_markers": 71,
+        "haiku_conv_markers": 61,
+        "conv_marker_ratio": 0.847
+      },
+      "generic_vs_gold": {
+        "model_wc": 166,
+        "haiku_wc": 177,
+        "length_ratio": 0.938,
+        "model_asl": 23.9,
+        "haiku_asl": 44.2,
+        "asl_diff": 20.4,
+        "model_conv_markers": 51,
+        "haiku_conv_markers": 61,
+        "conv_marker_ratio": 0.823
+      }
+    }
+  ],
+  "aggregate": {
+    "n": 10,
+    "styled_avg_length_ratio": 0.912,
+    "generic_avg_length_ratio": 0.951,
+    "styled_avg_conv_marker_ratio": 0.832,
+    "generic_avg_conv_marker_ratio": 0.866,
+    "style_transfer_gain_length": -0.039,
+    "style_transfer_gain_conv": -0.034
+  }
+}

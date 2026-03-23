@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "run_name": "sdft_gpt_oss_20b_transcripts_large_v1",
+  "lora_rank": 32,
+  "n_steps": 1000,
+  "batch_size": 8,
+  "grad_accum": 8,
+  "lr": 0.0001,
+  "eval_every": 100,
+  "n_train_examples": 5000,
+  "n_eval_examples": 500,
+  "dataset": "ultrachat_200k",
+  "notes": "Larger SDFT run: 5k examples, 1000 steps, rank 32."
+}
