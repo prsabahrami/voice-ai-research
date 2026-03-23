@@ -1,211 +1,187 @@
-#!/usr/bin/env python3
 """
-Shared benchmark harness for kernel optimization research sprint.
-Owned by coolstufs. Used by all tracks.
+harness.py - Core timing harness for kernel optimization research.
 
-Usage:
-    from harness import benchmark_kernel
-
-    result = benchmark_kernel(
-        fn_optimized=my_kernel,
-        fn_baseline=baseline_kernel,
-        args=(x, y),
-        n_warmup=10,
-        n_timed=100,
-        hypothesis_id="h001",
-        kernel_type="GEMM",
-        method="tiled GEMM with shared memory",
-    )
+Features:
+  - GPU warmup (10 iterations) when CUDA available, else CPU warmup
+  - 100 timed iterations per benchmark
+  - Reports p50, p90, p99 latency in microseconds
+  - Correctness check: max absolute error vs reference implementation
+  - Supports attention, gemm, and fused_ops kernel types
 """
 
 import time
-import json
+import math
+import statistics
 import torch
-import numpy as np
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Callable, List, Optional, Any, Tuple
+from typing import Callable, List, Dict, Any, Optional, Tuple
 
 
-RESULTS_PATH = Path("/home/ubuntu/kernel-research/results/results.jsonl")
+WARMUP_ITERS = 10
+TIMED_ITERS = 100
 
-# Success criteria
-SPEEDUP_THRESHOLD = 1.10        # 10% improvement
-VARIANCE_THRESHOLD = 1.05       # p99/p50 < 1.05
-MAX_ABS_ERR_FP16 = 1e-4         # max absolute error for FP16
-REQUIRED_BATCH_SIZES = [1, 8, 32]
+KERNEL_TYPES = ("attention", "gemm", "fused_ops")
 
 
-def time_kernel_us(fn: Callable, args: Tuple, n_warmup: int = 10, n_timed: int = 100) -> List[float]:
-    """Run fn(*args) and return list of latencies in microseconds."""
-    device = None
-    for a in args:
-        if isinstance(a, torch.Tensor):
-            device = a.device
-            break
+def _cuda_available() -> bool:
+    return torch.cuda.is_available()
 
-    # Warmup
-    for _ in range(n_warmup):
-        out = fn(*args)
-    if device is not None and device.type == "cuda":
+
+def _time_fn_cpu(fn: Callable, *args, n_iter: int = TIMED_ITERS) -> List[float]:
+    """Time a function on CPU. Returns list of elapsed times in seconds."""
+    times = []
+    for _ in range(n_iter):
+        t0 = time.perf_counter()
+        fn(*args)
+        t1 = time.perf_counter()
+        times.append(t1 - t0)
+    return times
+
+
+def _time_fn_gpu(fn: Callable, *args, n_iter: int = TIMED_ITERS) -> List[float]:
+    """Time a function on GPU using CUDA events. Returns elapsed times in seconds."""
+    times = []
+    for _ in range(n_iter):
+        start = torch.cuda.Event(enable_timing=True)
+        end = torch.cuda.Event(enable_timing=True)
+        start.record()
+        fn(*args)
+        end.record()
+        torch.cuda.synchronize()
+        times.append(start.elapsed_time(end) / 1000.0)  # ms -> s
+    return times
+
+
+def warmup(fn: Callable, *args):
+    """Run warmup iterations (GPU sync-aware)."""
+    for _ in range(WARMUP_ITERS):
+        fn(*args)
+    if _cuda_available():
         torch.cuda.synchronize()
 
-    # Timed runs
-    times_us = []
-    for _ in range(n_timed):
-        if device is not None and device.type == "cuda":
-            torch.cuda.synchronize()
-            start = time.perf_counter()
-            out = fn(*args)
-            torch.cuda.synchronize()
-        else:
-            start = time.perf_counter()
-            out = fn(*args)
-        end = time.perf_counter()
-        times_us.append((end - start) * 1e6)
 
-    return times_us
+def _percentile(sorted_data: List[float], pct: float) -> float:
+    """Compute a percentile from sorted data (linear interpolation)."""
+    n = len(sorted_data)
+    if n == 0:
+        return float('nan')
+    idx = (pct / 100.0) * (n - 1)
+    lo = int(idx)
+    hi = lo + 1
+    frac = idx - lo
+    if hi >= n:
+        return sorted_data[-1]
+    return sorted_data[lo] * (1 - frac) + sorted_data[hi] * frac
 
 
-def compute_percentiles(times_us: List[float]) -> dict:
-    arr = np.array(times_us)
+def compute_latency_stats(times_sec: List[float]) -> Dict[str, float]:
+    """Given a list of elapsed times in seconds, return p50/p90/p99/mean in microseconds."""
+    sorted_t = sorted(times_sec)
+    us = [t * 1e6 for t in sorted_t]
     return {
-        "p50_us": float(np.percentile(arr, 50)),
-        "p90_us": float(np.percentile(arr, 90)),
-        "p99_us": float(np.percentile(arr, 99)),
-        "mean_us": float(np.mean(arr)),
-        "std_us": float(np.std(arr)),
-        "variance_ratio": float(np.percentile(arr, 99) / max(np.percentile(arr, 50), 1e-9)),
+        "p50_us":  _percentile(us, 50),
+        "p90_us":  _percentile(us, 90),
+        "p99_us":  _percentile(us, 99),
+        "mean_us": statistics.mean(us),
     }
 
 
-def check_correctness(
-    fn_optimized: Callable,
-    fn_baseline: Callable,
-    args: Tuple,
-    dtype: torch.dtype = torch.float16,
-) -> dict:
-    """Compare outputs and return max absolute error."""
-    with torch.no_grad():
-        out_opt = fn_optimized(*args)
-        out_base = fn_baseline(*args)
+def correctness_check(reference_output: torch.Tensor,
+                      candidate_output: torch.Tensor) -> float:
+    """Returns the max absolute error between reference and candidate outputs."""
+    ref = reference_output.detach().float()
+    cand = candidate_output.detach().float()
+    return float(torch.max(torch.abs(ref - cand)).item())
 
-    if isinstance(out_opt, (list, tuple)):
-        out_opt = out_opt[0]
-    if isinstance(out_base, (list, tuple)):
-        out_base = out_base[0]
 
-    out_opt = out_opt.float()
-    out_base = out_base.float()
-
-    max_abs_err = float(torch.max(torch.abs(out_opt - out_base)).item())
-    rel_err = float(torch.max(torch.abs(out_opt - out_base) / (torch.abs(out_base) + 1e-8)).item())
-
+def _run_attention_benchmark(batch_size: int, device: torch.device,
+                              use_gpu: bool) -> Dict[str, Any]:
+    from baseline_kernels import naive_attention, make_attention_inputs
+    from optimized_kernels import tiled_attention
+    q, k, v = make_attention_inputs(batch_size, device=device)
+    warmup(naive_attention, q, k, v)
+    warmup(tiled_attention, q, k, v)
+    if use_gpu:
+        base_times = _time_fn_gpu(naive_attention, q, k, v)
+        opt_times = _time_fn_gpu(tiled_attention, q, k, v)
+    else:
+        base_times = _time_fn_cpu(naive_attention, q, k, v)
+        opt_times = _time_fn_cpu(tiled_attention, q, k, v)
+    ref_out = naive_attention(q, k, v)
+    opt_out = tiled_attention(q, k, v)
+    max_err = correctness_check(ref_out, opt_out)
     return {
-        "max_abs_err": max_abs_err,
-        "rel_err": rel_err,
-        "passed_correctness": max_abs_err < MAX_ABS_ERR_FP16,
+        "kernel_type": "attention",
+        "baseline": compute_latency_stats(base_times),
+        "optimized": compute_latency_stats(opt_times),
+        "correctness_max_abs_err": max_err,
+        "device": str(device),
     }
 
 
-def benchmark_kernel(
-    fn_optimized: Callable,
-    fn_baseline: Callable,
-    args: Tuple,
-    hypothesis_id: str,
-    kernel_type: str,
-    method: str,
-    batch_sizes: Optional[List[int]] = None,
-    n_warmup: int = 10,
-    n_timed: int = 100,
-    agent: str = "unknown",
-    notes: str = "",
-    make_args_for_batch: Optional[Callable] = None,
-) -> dict:
-    """
-    Full benchmark: correctness check + timing across batch sizes.
-
-    If make_args_for_batch is provided, it will be called as make_args_for_batch(batch_size)
-    to get args for each batch size. Otherwise, uses the provided args for all batch sizes.
-    """
-    if batch_sizes is None:
-        batch_sizes = REQUIRED_BATCH_SIZES
-
-    # Correctness check
-    corr = check_correctness(fn_optimized, fn_baseline, args)
-
-    # Timing per batch size
-    batch_results = {}
-    all_passed = corr["passed_correctness"]
-
-    for bs in batch_sizes:
-        if make_args_for_batch is not None:
-            bs_args = make_args_for_batch(bs)
-        else:
-            bs_args = args
-
-        times_baseline = time_kernel_us(fn_baseline, bs_args, n_warmup, n_timed)
-        times_opt = time_kernel_us(fn_optimized, bs_args, n_warmup, n_timed)
-
-        stats_base = compute_percentiles(times_baseline)
-        stats_opt = compute_percentiles(times_opt)
-
-        speedup = stats_base["p50_us"] / max(stats_opt["p50_us"], 1e-9)
-        passed_speedup = speedup >= SPEEDUP_THRESHOLD
-        passed_variance = stats_opt["variance_ratio"] < VARIANCE_THRESHOLD
-
-        batch_results[bs] = {
-            "baseline": stats_base,
-            "optimized": stats_opt,
-            "speedup": speedup,
-            "passed_speedup": passed_speedup,
-            "passed_variance": passed_variance,
-        }
-
-        if not (passed_speedup and passed_variance):
-            all_passed = False
-
-    # Build result record
-    best_batch = list(batch_results.keys())[0]
-    result = {
-        "hypothesis_id": hypothesis_id,
-        "kernel_type": kernel_type,
-        "method": method,
-        "baseline_us": batch_results[best_batch]["baseline"]["p50_us"],
-        "optimized_us": batch_results[best_batch]["optimized"]["p50_us"],
-        "speedup": batch_results[best_batch]["speedup"],
-        "correctness_max_abs_err": corr["max_abs_err"],
-        "batch_sizes_tested": batch_sizes,
-        "passed_criteria": all_passed and corr["passed_correctness"],
-        "notes": notes,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "agent": agent,
-        "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
-        "batch_results": batch_results,
-        "correctness": corr,
+def _run_gemm_benchmark(batch_size: int, device: torch.device,
+                        use_gpu: bool) -> Dict[str, Any]:
+    from baseline_kernels import standard_gemm, make_gemm_inputs
+    from optimized_kernels import blocked_gemm
+    a, b = make_gemm_inputs(batch_size, device=device)
+    warmup(standard_gemm, a, b)
+    warmup(blocked_gemm, a, b)
+    if use_gpu:
+        base_times = _time_fn_gpu(standard_gemm, a, b)
+        opt_times = _time_fn_gpu(blocked_gemm, a, b)
+    else:
+        base_times = _time_fn_cpu(standard_gemm, a, b)
+        opt_times = _time_fn_cpu(blocked_gemm, a, b)
+    ref_out = standard_gemm(a, b)
+    opt_out = blocked_gemm(a, b)
+    max_err = correctness_check(ref_out, opt_out)
+    return {
+        "kernel_type": "gemm",
+        "baseline": compute_latency_stats(base_times),
+        "optimized": compute_latency_stats(opt_times),
+        "correctness_max_abs_err": max_err,
+        "device": str(device),
     }
 
-    # Write to results.jsonl
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(RESULTS_PATH, "a") as f:
-        # Write compact version (without full batch_results)
-        compact = {k: v for k, v in result.items() if k not in ("batch_results",)}
-        f.write(json.dumps(compact) + "\n")
 
-    return result
+def _run_fused_ops_benchmark(batch_size: int, device: torch.device,
+                              use_gpu: bool) -> Dict[str, Any]:
+    from baseline_kernels import unfused_softmax_cast, make_fused_ops_inputs
+    from optimized_kernels import fused_softmax_cast
+    x = make_fused_ops_inputs(batch_size, device=device)
+    warmup(unfused_softmax_cast, x)
+    warmup(fused_softmax_cast, x)
+    if use_gpu:
+        base_times = _time_fn_gpu(unfused_softmax_cast, x)
+        opt_times = _time_fn_gpu(fused_softmax_cast, x)
+    else:
+        base_times = _time_fn_cpu(unfused_softmax_cast, x)
+        opt_times = _time_fn_cpu(fused_softmax_cast, x)
+    ref_out = unfused_softmax_cast(x)
+    opt_out = fused_softmax_cast(x)
+    max_err = correctness_check(ref_out, opt_out)
+    return {
+        "kernel_type": "fused_ops",
+        "baseline": compute_latency_stats(base_times),
+        "optimized": compute_latency_stats(opt_times),
+        "correctness_max_abs_err": max_err,
+        "device": str(device),
+    }
 
 
-def print_result(result: dict):
-    """Pretty-print a benchmark result."""
-    print(f"\n{'='*60}")
-    print(f"Hypothesis: {result['hypothesis_id']} | {result['kernel_type']} | {result['method']}")
-    print(f"Speedup: {result['speedup']:.3f}x | Max abs err: {result['correctness_max_abs_err']:.2e}")
-    print(f"Passed criteria: {result['passed_criteria']}")
-    print(f"Baseline: {result['baseline_us']:.1f} us | Optimized: {result['optimized_us']:.1f} us")
-    print(f"{'='*60}\n")
+_KERNEL_RUNNERS = {
+    "attention": _run_attention_benchmark,
+    "gemm":      _run_gemm_benchmark,
+    "fused_ops": _run_fused_ops_benchmark,
+}
 
 
-if __name__ == "__main__":
-    print("Harness loaded. Import benchmark_kernel to use.")
-    print(f"Results will be written to: {RESULTS_PATH}")
-    print(f"Success criteria: speedup>={SPEEDUP_THRESHOLD}x, variance_ratio<{VARIANCE_THRESHOLD}, max_abs_err<{MAX_ABS_ERR_FP16}")
+def run_benchmark(kernel_type: str, batch_size: int,
+                  device: Optional[torch.device] = None) -> Dict[str, Any]:
+    """Run the benchmark for the given kernel_type and batch_size."""
+    if kernel_type not in KERNEL_TYPES:
+        raise ValueError(f"Unknown kernel_type {kernel_type!r}. Choose from {KERNEL_TYPES}")
+    use_gpu = _cuda_available()
+    if device is None:
+        device = torch.device("cuda" if use_gpu else "cpu")
+    runner = _KERNEL_RUNNERS[kernel_type]
+    return runner(batch_size, device, use_gpu)
