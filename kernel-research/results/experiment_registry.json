@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "description": "Experiment registry for kernel research sprint",
+  "success_criteria": {
+    "speedup_min": 1.1,
+    "variance_ratio_max": 1.05,
+    "max_abs_err": 0.0001,
+    "batch_sizes": [
+      1,
+      8,
+      32
+    ],
+    "gpu": "H100 80GB"
+  },
+  "baseline": {
+    "attention": "torch.nn.functional.scaled_dot_product_attention",
+    "GEMM": "torch.matmul (cuBLAS)",
+    "fused-ops": "separate PyTorch ops"
+  },
+  "experiments": [
+    {
+      "id": "h001-fp8-attention",
+      "hypothesis_id": "h001",
+      "assigned_to": "miniQuant",
+      "status": "pending",
+      "priority": 1,
+      "method": "FP8 end-to-end attention",
+      "kernel_type": "attention"
+    },
+    {
+      "id": "h002-fused-norm-rope-qkv",
+      "hypothesis_id": "h002",
+      "assigned_to": "coolstufs",
+      "status": "pending",
+      "priority": 2,
+      "method": "Fused RMSNorm+RoPE+QKV",
+      "kernel_type": "fused-ops"
+    },
+    {
+      "id": "h003-w4a8-splitk",
+      "hypothesis_id": "h003",
+      "assigned_to": "miniQuant",
+      "status": "pending",
+      "priority": 3,
+      "method": "W4A8 SplitK decode GEMM",
+      "kernel_type": "GEMM"
+    },
+    {
+      "id": "h004-cuda-graphs",
+      "hypothesis_id": "h004",
+      "assigned_to": "coolstufs",
+      "status": "pending",
+      "priority": 4,
+      "method": "CUDA Graphs decode loop",
+      "kernel_type": "other"
+    },
+    {
+      "id": "h018-compile",
+      "hypothesis_id": "h018",
+      "assigned_to": "ooo",
+      "status": "pending",
+      "priority": 5,
+      "method": "torch.compile reduce-overhead",
+      "kernel_type": "attention"
+    },
+    {
+      "id": "h005-fa3-fp8-mla",
+      "hypothesis_id": "h005",
+      "assigned_to": "ooo",
+      "status": "pending",
+      "priority": 6,
+      "method": "FA3 FP8 MLA decoding",
+      "kernel_type": "attention"
+    },
+    {
+      "id": "h-cpu-sdpa",
+      "hypothesis_id": "h-cpu-sdpa",
+      "assigned_to": "coolstufs",
+      "status": "completed",
+      "priority": 7,
+      "method": "torch SDPA vs naive",
+      "kernel_type": "attention",
+      "result_speedup": 5.0,
+      "passed": true
+    },
+    {
+      "id": "h-cpu-gemm-threads",
+      "hypothesis_id": "h-cpu-gemm-threads",
+      "assigned_to": "coolstufs",
+      "status": "completed",
+      "priority": 8,
+      "method": "OMP_NUM_THREADS=16",
+      "kernel_type": "GEMM",
+      "result_speedup": 5.78,
+      "passed": true
+    },
+    {
+      "id": "h-cpu-batched-gemm",
+      "hypothesis_id": "h-cpu-batched-gemm",
+      "assigned_to": "coolstufs",
+      "status": "completed",
+      "priority": 9,
+      "method": "Vectorized batched GEMM",
+      "kernel_type": "GEMM",
+      "result_speedup": 1.55,
+      "passed": true
+    },
+    {
+      "id": "h-cpu-optimal-batch",
+      "hypothesis_id": "h-cpu-optimal-batch",
+      "assigned_to": "coolstufs",
+      "status": "completed",
+      "priority": 10,
+      "method": "Optimal batch B*=8",
+      "kernel_type": "fused-ops",
+      "result_speedup": 2.0,
+      "passed": true
+    },
+    {
+      "id": "h-cpu-memory-layout",
+      "hypothesis_id": "h-cpu-memory-layout",
+      "assigned_to": "coolstufs",
+      "status": "completed_failed",
+      "priority": 11,
+      "method": "C vs F order",
+      "kernel_type": "GEMM",
+      "result_speedup": 1.09,
+      "passed": false
+    },
+    {
+      "id": "h-cpu-int8-rejected",
+      "hypothesis_id": "h-cpu-int8-rejected",
+      "assigned_to": "coolstufs",
+      "status": "completed_failed",
+      "priority": 12,
+      "method": "INT8 on CPU",
+      "kernel_type": "GEMM",
+      "result_speedup": 0.01,
+      "passed": false
+    }
+  ]
+}
