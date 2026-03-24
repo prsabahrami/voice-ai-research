@@ -1,46 +1,63 @@
-# coolstufs CPU Wave 1 Benchmark Summary
+# coolstufs CPU Wave 1 Results Summary
 
-**Date:** 2026-03-23
-**Environment:** CPU-only sandbox (torch 2.11.0+cpu, 20-core x86_64, AVX-512 VNNI)
-**Sprint:** Kernel Optimization Research Sprint
+## Environment
+
+- Platform: CPU-only sandbox (20-core x86_64, 448GB RAM, no GPU)
+- PyTorch: 2.11.0+cpu
+- Torch SDPA: FlashAttention-2 CPU path
 
 ## Results Table
 
-| Hypothesis | Method | Speedup | Status | Notes |
-|---|---|---|---|---|
-| H01 Cache-Blocked GEMM | Manual Python tiling (numpy) | 0.24x | REJECTED | OpenBLAS already tiles optimally; Python overhead dominates |
-| H02 Fused Softmax+Cast | Fused vs separate softmax+cast (1D) | 1.3x | WEAK | 60% theoretical BW savings, only 30% actual on CPU |
-| H03 Blocked Attention | Blocked numpy SDPA (block_size=64) vs naive numpy | 3.62x peak | CONFIRMED | Peak at N=512, d=64; 2.8x at N=1024, 1.9x at N=256 |
-| H03 Wave2 SDPA vs naive | F.scaled_dot_product_attention vs torch.matmul attention | 4.3-7.47x | STRONG WIN | 4.3x at N=256, 5.0x at N=512, 6.1x at N=1024, 7.47x at N=2048 |
-| H04 Memory Layout | C vs Fortran-order weight layout | 1.09x | REJECTED | No meaningful gain on CPU |
-| H05 INT8 CPU GEMM | numpy INT8 quantized GEMM | 0.002x | REJECTED | 540x slower -- no hardware INT8 BLAS path; Tensor Cores required |
-| H06 OMP_NUM_THREADS | OMP_NUM_THREADS=16 vs T=1 | 5.78x | CONFIRMED | Also: T=12: 4.8x, T=4: 3.1x; T=8 anomalous (scheduler contention) |
-| H07 Vectorized GEMM | torch.bmm over heads vs Python loop | 1.4-1.7x | CONFIRMED | 1.68x at B=1, 1.47x at B=4, 1.42x at B=16; B=8 regression (0.77x) |
-| H08 Fused LayerNorm+Linear | Fusion vs separate ops | 1.15x | WEAK | Only square projection (d=768, B=64); mixed results elsewhere |
-| H15 Batch Size Sweep | Optimal batch B*=8 vs B=1 | 1.7x throughput | CONFIRMED | 256d, 2L, S=128; throughput gain at optimal batch |
+| Hypothesis | Method | Speedup | Notes |
+|-----------|--------|---------|-------|
+| H01 | Cache-Blocked GEMM Tiling | 0.24x | REFRAMED: Manual Python tiling cannot beat numpy/OpenBLAS. OpenBLAS already tiles optimally. |
+| H02 | Fused Softmax+Cast (1D) | 1.3x | WEAK: N=4096: separate 0.56ms vs fused 0.43ms. 60% theoretical BW savings but only 30% actual. |
+| H02 Wave2 | Fused Softmax+Cast (2D matrix) | 1.08-1.13x | WEAK: N=512: separate 0.19ms vs fused 0.17ms. |
+| H03 | Blocked Attention (numpy) | 3.62x | CONFIRMED: N=256: 1.9x, N=512: 3.62x (peak), N=1024: 2.8x. d_head=64, block_size=64. Memory: 11x reduction at N=2048. |
+| H03 Wave2 | torch SDPA vs naive | 4.3-7.47x | STRONG WIN: N=256: 4.3x, N=512: 5.0x, N=1024: 6.1x, N=2048: 7.47x. Max abs err: <1e-5. Baseline: Q@K.T/sqrt(dk)->softmax->@V via torch.matmul+softmax |
+| H04 | Memory Layout C vs F | 1.09x | REJECTED: No meaningful gain from Fortran order on this workload. |
+| H05 | INT8/FP16 Quantized GEMM | 0.002x | REJECTED: N=256: 0.01x (100x slower), N=512: 0.01x, N=1024: 0.002x (540x slower). numpy has no hardware int8 BLAS path on CPU. GPU Tensor Cores required. |
+| H06 | OMP_NUM_THREADS Sweep | 5.78x | CONFIRMED: T=1 baseline, T=4: 3.1x, T=8: 2.5x (ANOMALOUS), T=12: 4.8x, T=16: 5.78x (OPTIMAL), T=20: 5.2x |
+| H07 | Vectorized Batched GEMM | 1.4-1.7x | CONFIRMED: B=1: 1.68x, B=4: 1.47x, B=8: 0.77x (regression), B=16: 1.42x, B=32: 1.39x. Eliminates Python loop overhead over heads/batches. |
+| H08 | Fused LayerNorm+Linear | 1.15x | WEAK: Only for square projection (d_model=d_out=768, B=64). Mixed results elsewhere. |
+| H15 | Batch Size Sweep (Inference) | 1.7x throughput | B*=8 optimal: 29,489 tok/s vs B=1: 17,407 tok/s. Config: 256d, 2L, S=128. Within 50ms SLA. |
 
-## Summary
+## Key Findings
 
-- **Experiments completed:** 10 hypotheses evaluated in Wave 1
-- **Pass rate:** 5/10 confirmed (50% in Wave 1)
-- **Top result:** H03 Wave 2 torch SDPA -- 7.47x at N=2048 (strong win, deploy immediately)
-- **Top threading:** H06 OMP_NUM_THREADS=16 -- 5.78x GEMM speedup (zero-effort win)
-- **Critical rejection:** H05 INT8 CPU -- 0.002x, requires GPU Tensor Cores
+### TIER 1 - ZERO-EFFORT WINS
+1. **torch SDPA**: 4.3-7.5x speedup over naive attention (F.scaled_dot_product_attention drop-in)
+2. **OMP_NUM_THREADS=16**: 5.78x GEMM speedup (T=8 anomalous regression, T=20 worse than T=16)
 
-## Deployment Recommendations
+### TIER 2 - LOW-EFFORT CODE CHANGES
+3. **Vectorized batched GEMM**: 1.4-1.7x faster than Python loop over heads/batches
+4. **Optimal batch size B*=8**: 1.7x throughput gain for inference within 50ms SLA
 
-1. **Immediate deploy (CPU):** Enable `OMP_NUM_THREADS=16` for all GEMM-heavy workloads -- 5.78x zero-effort win
-2. **Immediate deploy (CPU):** Replace `torch.matmul` attention with `F.scaled_dot_product_attention` -- 4.3-7.47x
-3. **GPU-gate:** INT8/FP8 quantization kernels (H05 and related) -- no benefit on CPU, expect 2x on H100
+### REJECTED ON CPU
+- INT8/FP16 quantization: 100-540x SLOWER without hardware support (Tensor Cores/AMX/VNNI)
+- Memory layout optimization: OpenBLAS already handles internally
+- LayerNorm+Linear fusion at Python level: minimal gain
 
-## Cross-Validation (from coolstufs harness.py)
+## GPU Phase Implications
 
-- tiled_attention (SDPA) vs naive attention: **3.316x** speedup, max_abs_err **7.2e-7** -- PASS
-- Configuration: batch=8, seq=512, d=64 (different from wave results above)
+1. SDPA already beats naive attention massively -- establish as baseline, not target
+2. INT8/FP8 quantization is the high-ceiling GPU-only opportunity (H100 Tensor Cores)
+3. Thread scheduling matters a lot on CPU; CUDA occupancy is the GPU analog
 
-## Notes
+## GPU Priority Queue (based on CPU evidence)
 
-- H06 T=8 anomaly: OMP_NUM_THREADS=8 gives only 2.5x (worse than T=4 at 3.1x); scheduler contention suspected
-- H07 B=8 regression: vectorized GEMM regresses at batch=8 (0.77x) -- BLAS contention
-- BF16 emulated on this CPU (5x slower than FP32) -- skip for CPU work
-- FP16 also emulated (no F16C BLAS accumulation path)
+1. H1/h001: FlashAttention-3 FP8 MLA (1.3-2.0x expected)
+2. H3/h003: W4A8 SplitK decode GEMM (2-2.7x expected)
+3. H5/h001: FP8 end-to-end pipeline (1.5x, 2x KV capacity)
+4. H4/h004: CUDA Graphs persistent decode (15-30% latency)
+
+## SDPA Baseline Clarification
+
+- Baseline: Q @ K.T / sqrt(dk) -> softmax -> @ V using torch.matmul + torch.softmax
+- Optimized: F.scaled_dot_product_attention(Q, K, V) (FlashAttention-2 CPU path)
+- Range: 4.3x at N=256, 7.47x at N=2048 (CPU, torch 2.11.0+cpu)
+- Max absolute error vs naive: below 1e-5 at all sizes
+
+On H100 with actual FlashAttention-2 CUDA kernels, expect 10-50x+ speedup
+at longer sequences due to HBM bandwidth savings.
+
+*Results from coolstufs CPU-only benchmarks, March 2026. GPU certification pending Lambda SSH access.*
