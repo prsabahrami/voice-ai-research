@@ -4,9 +4,9 @@ Last updated: 2026-03-23 22:51 UTC
 
 ## Summary
 
-- Total experiments: 15 (CPU benchmarks, Wave 1)
-- Passed criteria: 12 (80%)
-- Failed: 3 (cache-blocked GEMM Python 0.24x, memory layout 1.09x, INT8 CPU 0.002x)
+- Total experiments: 21 (CPU benchmarks, Wave 1+2)
+- Passed criteria: 16 (76.2%)
+- Failed: 5 (cache-blocked GEMM Python 0.24x, memory layout 1.09x, INT8 CPU 0.002x, block-sparse Python loop overhead 0.3x, optimal einsum B=1 0.87x)
 - Certified results: 0 (GPU certification pending Lambda SSH)
 
 ## Success Criteria
@@ -111,3 +111,54 @@ Files (30+):
 ## Certified Results
 
 None yet. GPU benchmarks needed.
+
+
+## Wave 2 CPU Results (branch-000023-02, 2026-03-24)
+
+Added experiments (Wave 2 CPU):
+
+- h-cpu-kvcache-128
+  - Method: "KV-Cache incremental decode vs full recompute"
+  - Speedup: 54.0
+  - Passed: true
+  - Config: "B=1, H=32, d=128, cache_len=128, CPU"
+  - Max abs error: 3e-7
+
+- h-cpu-kvcache-512
+  - Method: "KV-Cache incremental decode vs full recompute"
+  - Speedup: 18.0
+  - Passed: true
+  - Config: "B=1, H=32, d=128, cache_len=512, CPU"
+  - Max abs error: 3e-7
+
+- h-cpu-kvcache-2048
+  - Method: "KV-Cache incremental decode vs full recompute"
+  - Speedup: 69.0
+  - Passed: true
+  - Config: "B=1, H=32, d=128, cache_len=2048, CPU"
+  - Max abs error: 3e-7
+
+- h-cpu-blocksparse-2048
+  - Method: "Block-sparse attention vs dense SDPA"
+  - Speedup: 0.3
+  - Passed: false
+  - Config: "B=1, H=8, d=64, seq_len=2048, CPU"
+  - Note: "Python loop overhead negates FLOP reduction; needs CUDA kernel"
+
+- h-cpu-einsum-b1
+  - Method: "Optimal einsum contraction vs sequential matmul"
+  - Speedup: 0.87
+  - Passed: false
+  - Config: "B=1, H=8, S=512, d=64, CPU"
+
+- h-cpu-einsum-b8
+  - Method: "Optimal einsum contraction vs sequential matmul"
+  - Speedup: 1.13
+  - Passed: true
+  - Config: "B=8, H=8, S=512, d=64, CPU"
+
+
+## Triton verification
+
+Triton flash attention online-softmax tiling verified correct on CPU: 9/9 tests pass, max abs errors 3e-7 to 8e-7. Bug in Python reference (tiled_attention_reference batch_shape) fixed in commit d55745dc86.
+
