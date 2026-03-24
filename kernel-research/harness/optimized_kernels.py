@@ -46,7 +46,7 @@ def tiled_attention_reference(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor,
     """
     scale = 1.0 / math.sqrt(q.size(-1))
     S = q.size(-2)
-    batch_shape = q.shape[:-2]
+    batch_shape = q.shape[:-1]
     device, dtype = q.device, q.dtype
 
     m_i = torch.full((*batch_shape,), float('-inf'), device=device, dtype=dtype)
