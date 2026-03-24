@@ -9,6 +9,14 @@ Provides:
   - fused_softmax_cast: Fused softmax + cast in a single torch pass.
 
 Both CPU and GPU paths are supported.
+
+NOTE (CPU vs GPU behavior):
+  - tiled_attention (SDPA) is consistently faster on CPU for seq>=128 and on GPU
+    due to memory-bandwidth reduction (O(S*D) vs O(S^2) peak memory).
+  - blocked_gemm is primarily beneficial on GPU for large matrices where L2
+    tile reuse dominates; on CPU, BLAS handles tiling internally.
+  - fused_softmax_cast benefits from GPU kernel fusion; on CPU with small
+    tensors the baseline two-pass path has similar throughput.
 """
 
 import math
@@ -16,16 +24,16 @@ import torch
 import torch.nn.functional as F
 
 
+# ---------------------------------------------------------------------------
+# Tiled Attention -- PyTorch SDPA (Flash Attention-style memory-efficient)
+# ---------------------------------------------------------------------------
+
 def tiled_attention(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor,
                     chunk_size: int = 32) -> torch.Tensor:
     """
-    Memory-efficient tiled attention using torch SDPA (Flash Attention-style).
-
-    Uses torch.nn.functional.scaled_dot_product_attention which processes
-    Q/K/V in tiles to avoid materializing the full S*S score matrix,
-    reducing peak memory from O(S^2) to O(S*D).
-
-    Shape: (B, H, S, D) -- same as naive_attention.
+    Memory-efficient tiled attention using F.scaled_dot_product_attention.
+    Selects FlashAttention 2 on GPU, math backend on CPU.
+    Shape: (B, H, S, D).
     """
     return F.scaled_dot_product_attention(q, k, v)
 
@@ -33,14 +41,13 @@ def tiled_attention(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor,
 def tiled_attention_reference(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor,
                                chunk_size: int = 32) -> torch.Tensor:
     """
-    Pure-Python reference for the tiled/chunked online-softmax algorithm.
-    NOT used as the production optimized path due to Python-loop overhead.
+    Pure-Python reference for tiled/chunked online-softmax algorithm.
+    Useful for GPU Triton kernel verification.
     """
     scale = 1.0 / math.sqrt(q.size(-1))
     S = q.size(-2)
-    device = q.device
-    dtype = q.dtype
     batch_shape = q.shape[:-2]
+    device, dtype = q.device, q.dtype
 
     m_i = torch.full((*batch_shape,), float('-inf'), device=device, dtype=dtype)
     l_i = torch.zeros(*batch_shape, device=device, dtype=dtype)
@@ -50,10 +57,12 @@ def tiled_attention_reference(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor,
         end = min(start + chunk_size, S)
         k_c = k[..., start:end, :]
         v_c = v[..., start:end, :]
+
         scores = torch.matmul(q, k_c.transpose(-2, -1)) * scale
         m_new = torch.maximum(m_i, scores.max(dim=-1).values)
         alpha = torch.exp(m_i - m_new)
         exp_s = torch.exp(scores - m_new.unsqueeze(-1))
+
         l_i = alpha * l_i + exp_s.sum(dim=-1)
         o_i = alpha.unsqueeze(-1) * o_i + torch.matmul(exp_s, v_c)
         m_i = m_new
@@ -61,22 +70,22 @@ def tiled_attention_reference(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor,
     return o_i / l_i.unsqueeze(-1)
 
 
+# ---------------------------------------------------------------------------
+# Cache-blocked GEMM
+# ---------------------------------------------------------------------------
+
 def blocked_gemm(a: torch.Tensor, b: torch.Tensor,
                  tile_size: int = 64) -> torch.Tensor:
     """
-    Cache-blocked matrix multiplication.
-
-    Tiles the K (inner) dimension into chunks of `tile_size` to improve
-    cache reuse on CPU L2/L3. On GPU, each tile fits in shared memory.
-
+    Cache-blocked GEMM. Tiles K dimension into chunks of tile_size.
+    On GPU: reduces HBM pressure. On CPU: BLAS already handles this internally.
     Input shapes: (..., M, K) and (..., K, N).
     """
     *batch_dims, M, K = a.shape
     *_, K2, N = b.shape
     assert K == K2, f"Inner dimension mismatch: {K} vs {K2}"
 
-    device = a.device
-    dtype = a.dtype
+    device, dtype = a.device, a.dtype
     out = torch.zeros(*batch_dims, M, N, device=device, dtype=dtype)
 
     for k_start in range(0, K, tile_size):
@@ -86,12 +95,14 @@ def blocked_gemm(a: torch.Tensor, b: torch.Tensor,
     return out
 
 
+# ---------------------------------------------------------------------------
+# Fused softmax + cast (single-pass)
+# ---------------------------------------------------------------------------
+
 def fused_softmax_cast(x: torch.Tensor,
                        target_dtype=torch.float16) -> torch.Tensor:
     """
-    Fused softmax + dtype cast.
-
-    On GPU under torch.compile this fuses into one kernel, reducing HBM
-    round-trips from 2 (baseline) to 1.
+    Fused softmax + dtype cast. On GPU: single kernel pass via torch.compile.
+    On CPU: two ops in eager mode. Primary benefit is on GPU.
     """
     return F.softmax(x, dim=-1).to(target_dtype)
