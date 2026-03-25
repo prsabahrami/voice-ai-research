@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """
 Attention Benchmark Harness: Naive vs FlashAttention-2 (SDPA) on H100
-Measures: latency (ms), bandwidth (GB/s), peak VRAM (bytes), numerical error vs fp32 baseline.
+=====================================================================
+Measures: latency (ms), bandwidth (GB/s), peak VRAM (bytes), numerical error vs fp32.
 Configs: batch {1, 8, 32} x seqlen {512, 2048, 8192} x dtype {fp16, bf16}
-Output: results.jsonl (one JSON object per config)
+Output: ~/voice-ai-research/kernels/benchmarks/results.jsonl (one JSON object per config)
+
+Usage:
+    python bench.py                     # Run on GPU (or CPU fallback)
+    python bench.py --output custom.jsonl  # Custom output path
 """
 
 import json
@@ -11,7 +16,10 @@ import os
 import sys
 import time
 import gc
+import math
 import traceback
+import argparse
+from datetime import datetime, timezone
 
 import torch
 import torch.nn.functional as F
@@ -20,86 +28,154 @@ import torch.nn.functional as F
 NUM_HEADS = 32
 HEAD_DIM = 128
 WARMUP_ITERS = 10
-BENCH_ITERS = 50
+BENCH_ITERS = 100   # 100 timed iterations (org convention)
 BATCH_SIZES = [1, 8, 32]
 SEQ_LENGTHS = [512, 2048, 8192]
 DTYPES = {"fp16": torch.float16, "bf16": torch.bfloat16}
 
-RESULTS_PATH = os.path.expanduser("~/voice-ai-research/kernels/benchmarks/results.jsonl")
+DEFAULT_RESULTS_PATH = os.path.expanduser(
+    "~/voice-ai-research/kernels/benchmarks/results.jsonl"
+)
 
-# ---- H100 SXM constants ----
-H100_HBM_BW_GBS = 3350.0   # GB/s theoretical peak HBM3
-H100_BF16_TFLOPS = 989.4    # TFLOPS BF16 tensor core
+# H100 SXM constants
+H100_HBM_BW_GBS = 3350.0     # GB/s theoretical peak HBM3
+H100_BF16_TFLOPS = 989.4      # TFLOPS BF16 tensor core
+H100_FP16_TFLOPS = 989.4      # Same for FP16 tensor core
+H100_L2_BYTES = 50 * 1024**2  # 50 MB L2 cache
 
 
 def get_device():
     if torch.cuda.is_available():
         return torch.device("cuda")
-    print("WARNING: No CUDA device found. Running on CPU (timings meaningless).", file=sys.stderr)
+    print("WARNING: No CUDA device. Running on CPU (timings not meaningful).",
+          file=sys.stderr)
     return torch.device("cpu")
 
 
+# ---- Attention Implementations ----
+
 def naive_attention(q, k, v, scale):
     """Standard scaled dot-product attention (materializes full NxN matrix)."""
-    # q, k, v: (B, H, N, D)
-    attn_weights = torch.matmul(q, k.transpose(-2, -1)) * scale  # (B, H, N, N)
+    attn_weights = torch.matmul(q, k.transpose(-2, -1)) * scale
     attn_weights = torch.softmax(attn_weights, dim=-1)
-    out = torch.matmul(attn_weights, v)  # (B, H, N, D)
-    return out
+    return torch.matmul(attn_weights, v)
 
 
 def sdpa_flash_attention(q, k, v, scale):
-    """PyTorch SDPA with flash_attention backend (dispatches to cuDNN FA2/FA3 on H100)."""
-    with torch.nn.attention.sdpa_kernel([torch.nn.attention.SDPBackend.FLASH_ATTENTION]):
-        out = F.scaled_dot_product_attention(q, k, v, scale=scale)
-    return out
+    """PyTorch SDPA with flash_attention backend (cuDNN FA2/FA3 on H100)."""
+    with torch.nn.attention.sdpa_kernel(
+        [torch.nn.attention.SDPBackend.FLASH_ATTENTION]
+    ):
+        return F.scaled_dot_product_attention(q, k, v, scale=scale)
+
+
+def sdpa_efficient_attention(q, k, v, scale):
+    """PyTorch SDPA with efficient_attention (xformers-like) backend."""
+    with torch.nn.attention.sdpa_kernel(
+        [torch.nn.attention.SDPBackend.EFFICIENT_ATTENTION]
+    ):
+        return F.scaled_dot_product_attention(q, k, v, scale=scale)
 
 
 def sdpa_math_attention(q, k, v, scale):
-    """PyTorch SDPA with math backend (reference implementation)."""
-    with torch.nn.attention.sdpa_kernel([torch.nn.attention.SDPBackend.MATH]):
-        out = F.scaled_dot_product_attention(q, k, v, scale=scale)
-    return out
+    """PyTorch SDPA with math backend (reference)."""
+    with torch.nn.attention.sdpa_kernel(
+        [torch.nn.attention.SDPBackend.MATH]
+    ):
+        return F.scaled_dot_product_attention(q, k, v, scale=scale)
 
 
-def compute_fp32_reference(q_fp32, k_fp32, v_fp32, scale):
-    """Compute fp32 reference for numerical error comparison."""
-    with torch.no_grad():
-        return naive_attention(q_fp32, k_fp32, v_fp32, scale)
+def sdpa_auto_attention(q, k, v, scale):
+    """PyTorch SDPA auto-dispatch (best available backend)."""
+    return F.scaled_dot_product_attention(q, k, v, scale=scale)
 
+
+# ---- Flash-attn package wrapper (loaded lazily) ----
+
+_flash_attn_func = None
+
+
+def _load_flash_attn():
+    global _flash_attn_func
+    if _flash_attn_func is not None:
+        return True
+    try:
+        from flash_attn import flash_attn_func as fa2
+        _flash_attn_func = fa2
+        return True
+    except ImportError:
+        return False
+
+
+def flash_attn_pkg_attention(q, k, v, scale):
+    """flash-attn package (requires pip install flash-attn). Input (B,H,N,D)."""
+    q_t = q.transpose(1, 2).contiguous()
+    k_t = k.transpose(1, 2).contiguous()
+    v_t = v.transpose(1, 2).contiguous()
+    out = _flash_attn_func(q_t, k_t, v_t, softmax_scale=scale)
+    return out.transpose(1, 2)
+
+
+# ---- Metrics ----
 
 def numerical_error(out, ref_fp32):
-    """Compute L-inf and relative L2 error against fp32 reference."""
-    out_fp32 = out.float()
+    """L-inf and relative L2 error against fp32 reference."""
+    out32 = out.float()
     ref = ref_fp32.float()
-    diff = (out_fp32 - ref).abs()
+    diff = (out32 - ref).abs()
     linf = diff.max().item()
     l2_err = torch.norm(diff).item()
     l2_ref = torch.norm(ref).item()
-    rel_l2 = l2_err / (l2_ref + 1e-12)
+    rel_l2 = l2_err / max(l2_ref, 1e-12)
     return linf, rel_l2
 
 
 def attention_flops(batch, seqlen, num_heads, head_dim):
-    """FLOPs for standard attention: 2*B*H*N*N*D (QK^T) + 2*B*H*N*N*D (attn@V) + softmax overhead."""
-    # QK^T: 2*B*H*N*D*N = 2*B*H*N^2*D
-    # attn@V: 2*B*H*N*N*D = 2*B*H*N^2*D
-    # Total dominant: 4*B*H*N^2*D
+    """FLOPs for attention: 4*B*H*N^2*D (QK^T matmul + attn@V matmul)."""
     return 4 * batch * num_heads * seqlen * seqlen * head_dim
 
 
-def attention_bytes(batch, seqlen, num_heads, head_dim, dtype_bytes):
-    """Memory traffic estimate: read Q,K,V + write O. Minimum for memory-bound analysis."""
-    # Q, K, V each: B*H*N*D elements
-    # O: B*H*N*D elements
-    # Total: 4 * B*H*N*D * dtype_bytes
-    return 4 * batch * num_heads * seqlen * head_dim * dtype_bytes
+def attention_io_bytes(batch, seqlen, num_heads, head_dim, elem_bytes):
+    """Minimum memory traffic: read Q,K,V + write O."""
+    return 4 * batch * num_heads * seqlen * head_dim * elem_bytes
 
 
-def benchmark_kernel(fn, q, k, v, scale, device, warmup=WARMUP_ITERS, iters=BENCH_ITERS):
-    """Benchmark a kernel using CUDA events for accurate GPU timing."""
+def arithmetic_intensity(flops, io_bytes):
+    """FLOPs per byte of memory traffic."""
+    return flops / max(io_bytes, 1) if io_bytes > 0 else float("inf")
+
+
+def roofline_class(flops, io_bytes, peak_tflops=H100_BF16_TFLOPS,
+                   peak_bw_gbs=H100_HBM_BW_GBS):
+    """Classify as compute-bound or memory-bound on H100."""
+    ai = arithmetic_intensity(flops, io_bytes)
+    ridge_point = (peak_tflops * 1e12) / (peak_bw_gbs * 1e9)
+    return "compute-bound" if ai >= ridge_point else "memory-bound"
+
+
+# ---- L2 Cache Flush ----
+
+_flush_buf = None
+
+
+def flush_l2(device):
+    """Write to a large buffer to flush L2 cache."""
+    global _flush_buf
+    if device.type != "cuda":
+        return
+    if _flush_buf is None or _flush_buf.device != device:
+        _flush_buf = torch.empty(256 * 1024 * 1024 // 4, dtype=torch.float32,
+                                 device=device)
+    _flush_buf.zero_()
+
+
+# ---- Benchmark Engine ----
+
+def benchmark_kernel(fn, q, k, v, scale, device,
+                     warmup=WARMUP_ITERS, iters=BENCH_ITERS,
+                     cold_cache=True):
+    """Benchmark with CUDA events. Returns timing dict."""
     if device.type == "cpu":
-        # CPU fallback timing
         for _ in range(warmup):
             _ = fn(q, k, v, scale)
         times = []
@@ -109,130 +185,164 @@ def benchmark_kernel(fn, q, k, v, scale, device, warmup=WARMUP_ITERS, iters=BENC
             t1 = time.perf_counter()
             times.append((t1 - t0) * 1000.0)
         times.sort()
+        n = len(times)
         return {
-            "median_ms": times[len(times)//2],
-            "mean_ms": sum(times)/len(times),
+            "median_ms": times[n // 2],
+            "mean_ms": sum(times) / n,
             "min_ms": times[0],
-            "p90_ms": times[int(0.9*len(times))],
-            "p99_ms": times[int(0.99*len(times))],
+            "p90_ms": times[int(0.9 * n)],
+            "p99_ms": times[min(int(0.99 * n), n - 1)],
         }
 
-    # GPU timing with CUDA events
-    start_events = [torch.cuda.Event(enable_timing=True) for _ in range(iters)]
-    end_events = [torch.cuda.Event(enable_timing=True) for _ in range(iters)]
+    starts = [torch.cuda.Event(enable_timing=True) for _ in range(iters)]
+    ends = [torch.cuda.Event(enable_timing=True) for _ in range(iters)]
 
-    # Warmup
     for _ in range(warmup):
         _ = fn(q, k, v, scale)
     torch.cuda.synchronize()
 
-    # Benchmark
     for i in range(iters):
-        start_events[i].record()
+        if cold_cache:
+            flush_l2(device)
+        starts[i].record()
         _ = fn(q, k, v, scale)
-        end_events[i].record()
+        ends[i].record()
     torch.cuda.synchronize()
 
-    times = [s.elapsed_time(e) for s, e in zip(start_events, end_events)]
-    times.sort()
+    times = sorted(s.elapsed_time(e) for s, e in zip(starts, ends))
+    n = len(times)
     return {
-        "median_ms": times[len(times)//2],
-        "mean_ms": sum(times)/len(times),
+        "median_ms": times[n // 2],
+        "mean_ms": sum(times) / n,
         "min_ms": times[0],
-        "p90_ms": times[int(0.9*len(times))],
-        "p99_ms": times[int(0.99*len(times))],
+        "p90_ms": times[int(0.9 * n)],
+        "p99_ms": times[min(int(0.99 * n), n - 1)],
     }
 
 
-def get_peak_vram(fn, q, k, v, scale, device):
-    """Measure peak VRAM usage for a single forward pass."""
-    if device.type == "cpu":
+def measure_peak_vram(fn, q, k, v, scale, device):
+    """Peak VRAM for a single forward pass."""
+    if device.type != "cuda":
         return 0
     torch.cuda.reset_peak_memory_stats(device)
     torch.cuda.synchronize()
     _ = fn(q, k, v, scale)
     torch.cuda.synchronize()
-    peak = torch.cuda.max_memory_allocated(device)
-    return peak
+    return torch.cuda.max_memory_allocated(device)
 
 
-def run_single_config(batch, seqlen, dtype_name, dtype, device, results_file):
-    """Run naive + flash attention benchmarks for one config, write results to file."""
+# ---- Single Config Runner ----
+
+def run_config(batch, seqlen, dtype_name, dtype, device, results_fp):
+    """Run all kernels for one (batch, seqlen, dtype) config."""
     scale = HEAD_DIM ** -0.5
-    dtype_bytes = 2  # fp16 and bf16 are both 2 bytes
+    elem_bytes = 2
+    flops = attention_flops(batch, seqlen, NUM_HEADS, HEAD_DIM)
+    io_bytes = attention_io_bytes(batch, seqlen, NUM_HEADS, HEAD_DIM, elem_bytes)
+    ai = arithmetic_intensity(flops, io_bytes)
+    rc = roofline_class(flops, io_bytes)
 
-    print(f"\n{'='*70}")
-    print(f"Config: batch={batch}, seqlen={seqlen}, dtype={dtype_name}, heads={NUM_HEADS}, head_dim={HEAD_DIM}")
-    print(f"{'='*70}")
+    tag = f"B={batch} N={seqlen} {dtype_name} H={NUM_HEADS} D={HEAD_DIM}"
+    print(f"\n{'='*72}")
+    print(f"  {tag}  |  AI={ai:.1f} FLOP/B  |  {rc}")
+    print(f"{'='*72}")
 
-    # Estimate memory needed for naive attention (full N*N matrix)
-    naive_mem_gb = batch * NUM_HEADS * seqlen * seqlen * dtype_bytes / (1024**3)
-    skip_naive = naive_mem_gb > 40  # Skip if would use > 40GB for attention matrix alone
+    naive_matrix_gb = batch * NUM_HEADS * seqlen * seqlen * elem_bytes / 1e9
+    skip_naive = naive_matrix_gb > 40
 
-    # Generate inputs
-    torch.manual_seed(42)
+    seed = hash((batch, seqlen, dtype_name)) % (2**32)
+    torch.manual_seed(seed)
     q = torch.randn(batch, NUM_HEADS, seqlen, HEAD_DIM, device=device, dtype=dtype)
     k = torch.randn(batch, NUM_HEADS, seqlen, HEAD_DIM, device=device, dtype=dtype)
     v = torch.randn(batch, NUM_HEADS, seqlen, HEAD_DIM, device=device, dtype=dtype)
 
-    # FP32 reference (on same device, may OOM for large configs)
     fp32_ref = None
-    try:
-        if not skip_naive:
-            q32 = q.float()
-            k32 = k.float()
-            v32 = v.float()
-            with torch.no_grad():
-                fp32_ref = compute_fp32_reference(q32, k32, v32, scale)
-            del q32, k32, v32
-            if device.type == "cuda":
-                torch.cuda.empty_cache()
-    except (torch.cuda.OutOfMemoryError, RuntimeError) as e:
-        print(f"  FP32 reference OOM: {e}")
-        fp32_ref = None
-
-    flops = attention_flops(batch, seqlen, NUM_HEADS, HEAD_DIM)
-    mem_bytes = attention_bytes(batch, seqlen, NUM_HEADS, HEAD_DIM, dtype_bytes)
-
-    results = []
-
-    # ---- Naive Attention ----
-    if skip_naive:
-        print(f"  SKIP naive attention (estimated {naive_mem_gb:.1f} GB for attn matrix)")
-        naive_result = {
-            "kernel": "naive_attention",
-            "batch": batch,
-            "seqlen": seqlen,
-            "dtype": dtype_name,
-            "num_heads": NUM_HEADS,
-            "head_dim": HEAD_DIM,
-            "status": "SKIPPED",
-            "reason": f"attn matrix would use {naive_mem_gb:.1f} GB",
-        }
-        results.append(naive_result)
-    else:
+    if not skip_naive:
         try:
+            with torch.no_grad():
+                fp32_ref = naive_attention(q.float(), k.float(), v.float(), scale)
+        except (torch.cuda.OutOfMemoryError, RuntimeError):
+            print("  fp32 reference OOM -- skipping error metrics for naive")
+            fp32_ref = None
             gc.collect()
             if device.type == "cuda":
                 torch.cuda.empty_cache()
-                torch.cuda.reset_peak_memory_stats(device)
 
+    results = []
+
+    kernels = []
+
+    if skip_naive:
+        print(f"  SKIP naive: attn matrix ~{naive_matrix_gb:.1f} GB")
+        results.append({
+            "kernel": "naive_attention", "batch": batch, "seqlen": seqlen,
+            "dtype": dtype_name, "num_heads": NUM_HEADS, "head_dim": HEAD_DIM,
+            "status": "SKIPPED",
+            "reason": f"attn matrix {naive_matrix_gb:.1f} GB exceeds 40 GB limit",
+        })
+    else:
+        kernels.append(("naive_attention", naive_attention))
+
+    flash_ok = False
+    if device.type == "cuda":
+        try:
             with torch.no_grad():
-                timing = benchmark_kernel(naive_attention, q, k, v, scale, device)
-                peak_vram = get_peak_vram(naive_attention, q, k, v, scale, device)
+                _t = sdpa_flash_attention(
+                    q[:1, :, :min(64, seqlen), :],
+                    k[:1, :, :min(64, seqlen), :],
+                    v[:1, :, :min(64, seqlen), :], scale)
+            del _t
+            flash_ok = True
+        except RuntimeError:
+            pass
 
-                # Numerical error
-                linf, rel_l2 = (0.0, 0.0)
+    if flash_ok:
+        kernels.append(("sdpa_flash", sdpa_flash_attention))
+    else:
+        eff_ok = False
+        if device.type == "cuda":
+            try:
+                with torch.no_grad():
+                    _t = sdpa_efficient_attention(
+                        q[:1, :, :min(64, seqlen), :],
+                        k[:1, :, :min(64, seqlen), :],
+                        v[:1, :, :min(64, seqlen), :], scale)
+                del _t
+                eff_ok = True
+            except RuntimeError:
+                pass
+        if eff_ok:
+            kernels.append(("sdpa_efficient", sdpa_efficient_attention))
+        else:
+            kernels.append(("sdpa_auto", sdpa_auto_attention))
+
+    if _load_flash_attn() and device.type == "cuda":
+        kernels.append(("flash_attn_pkg", flash_attn_pkg_attention))
+
+    for kname, kfn in kernels:
+        gc.collect()
+        if device.type == "cuda":
+            torch.cuda.empty_cache()
+            torch.cuda.reset_peak_memory_stats(device)
+
+        try:
+            with torch.no_grad():
+                timing = benchmark_kernel(kfn, q, k, v, scale, device)
+                peak_vram = measure_peak_vram(kfn, q, k, v, scale, device)
+
+                linf, rel_l2 = 0.0, 0.0
                 if fp32_ref is not None:
-                    out = naive_attention(q, k, v, scale)
+                    out = kfn(q, k, v, scale)
                     linf, rel_l2 = numerical_error(out, fp32_ref)
                     del out
 
-            tflops = (flops / 1e12) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-            bw_gbs = (mem_bytes / 1e9) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
+            med_s = timing["median_ms"] / 1000.0
+            tflops = (flops / 1e12) / med_s if med_s > 0 else 0
+            bw_gbs = (io_bytes / 1e9) / med_s if med_s > 0 else 0
+            util_pct = (tflops / H100_BF16_TFLOPS * 100) if tflops > 0 else 0
 
-            naive_result = {
-                "kernel": "naive_attention",
+            rec = {
+                "kernel": kname,
                 "batch": batch,
                 "seqlen": seqlen,
                 "dtype": dtype_name,
@@ -244,262 +354,43 @@ def run_single_config(batch, seqlen, dtype_name, dtype, device, results_file):
                 "min_ms": round(timing["min_ms"], 4),
                 "p90_ms": round(timing["p90_ms"], 4),
                 "p99_ms": round(timing["p99_ms"], 4),
-                "tflops": round(tflops, 2),
+                "tflops": round(tflops, 3),
                 "bandwidth_gbs": round(bw_gbs, 2),
                 "peak_vram_bytes": peak_vram,
                 "peak_vram_mb": round(peak_vram / (1024**2), 1),
-                "linf_vs_fp32": linf,
-                "rel_l2_vs_fp32": rel_l2,
+                "linf_vs_fp32": float(f"{linf:.6e}"),
+                "rel_l2_vs_fp32": float(f"{rel_l2:.6e}"),
                 "flops": flops,
-                "mem_bytes_estimate": mem_bytes,
+                "io_bytes": io_bytes,
+                "arithmetic_intensity": round(ai, 1),
+                "roofline_class": rc,
+                "h100_util_pct": round(util_pct, 2),
+                "warmup_iters": WARMUP_ITERS,
+                "bench_iters": BENCH_ITERS,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
-            results.append(naive_result)
-            print(f"  Naive:  median={timing['median_ms']:.3f}ms  TFLOPS={tflops:.2f}  BW={bw_gbs:.1f} GB/s  VRAM={peak_vram/(1024**2):.0f}MB  Linf={linf:.2e}  relL2={rel_l2:.2e}")
+            results.append(rec)
+
+            print(f"  {kname:<22} med={timing['median_ms']:>9.3f}ms  "
+                  f"TFLOPS={tflops:>7.2f}  BW={bw_gbs:>8.1f} GB/s  "
+                  f"VRAM={peak_vram/(1024**2):>7.0f}MB  "
+                  f"Linf={linf:.2e}  relL2={rel_l2:.2e}  "
+                  f"util={util_pct:.1f}%")
 
         except (torch.cuda.OutOfMemoryError, RuntimeError) as e:
-            print(f"  Naive attention OOM/error: {e}")
-            naive_result = {
-                "kernel": "naive_attention",
-                "batch": batch,
-                "seqlen": seqlen,
-                "dtype": dtype_name,
-                "num_heads": NUM_HEADS,
-                "head_dim": HEAD_DIM,
-                "status": "OOM",
-                "error": str(e),
-            }
-            results.append(naive_result)
+            print(f"  {kname:<22} ERROR: {e}")
+            results.append({
+                "kernel": kname, "batch": batch, "seqlen": seqlen,
+                "dtype": dtype_name, "num_heads": NUM_HEADS,
+                "head_dim": HEAD_DIM, "status": "OOM", "error": str(e),
+            })
             if device.type == "cuda":
                 torch.cuda.empty_cache()
 
-    # ---- SDPA Flash Attention ----
-    try:
-        gc.collect()
-        if device.type == "cuda":
-            torch.cuda.empty_cache()
-            torch.cuda.reset_peak_memory_stats(device)
-
-        with torch.no_grad():
-            # Test if flash backend is available
-            flash_available = True
-            try:
-                test_out = sdpa_flash_attention(q[:1, :, :64, :], k[:1, :, :64, :], v[:1, :, :64, :], scale)
-                del test_out
-            except RuntimeError as e:
-                print(f"  Flash backend not available: {e}")
-                flash_available = False
-
-            if flash_available:
-                timing = benchmark_kernel(sdpa_flash_attention, q, k, v, scale, device)
-                peak_vram = get_peak_vram(sdpa_flash_attention, q, k, v, scale, device)
-
-                linf, rel_l2 = (0.0, 0.0)
-                if fp32_ref is not None:
-                    out = sdpa_flash_attention(q, k, v, scale)
-                    linf, rel_l2 = numerical_error(out, fp32_ref)
-                    del out
-
-                tflops = (flops / 1e12) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-                bw_gbs = (mem_bytes / 1e9) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-
-                flash_result = {
-                    "kernel": "sdpa_flash_attention",
-                    "batch": batch,
-                    "seqlen": seqlen,
-                    "dtype": dtype_name,
-                    "num_heads": NUM_HEADS,
-                    "head_dim": HEAD_DIM,
-                    "status": "OK",
-                    "median_ms": round(timing["median_ms"], 4),
-                    "mean_ms": round(timing["mean_ms"], 4),
-                    "min_ms": round(timing["min_ms"], 4),
-                    "p90_ms": round(timing["p90_ms"], 4),
-                    "p99_ms": round(timing["p99_ms"], 4),
-                    "tflops": round(tflops, 2),
-                    "bandwidth_gbs": round(bw_gbs, 2),
-                    "peak_vram_bytes": peak_vram,
-                    "peak_vram_mb": round(peak_vram / (1024**2), 1),
-                    "linf_vs_fp32": linf,
-                    "rel_l2_vs_fp32": rel_l2,
-                    "flops": flops,
-                    "mem_bytes_estimate": mem_bytes,
-                }
-                results.append(flash_result)
-                print(f"  Flash:  median={timing['median_ms']:.3f}ms  TFLOPS={tflops:.2f}  BW={bw_gbs:.1f} GB/s  VRAM={peak_vram/(1024**2):.0f}MB  Linf={linf:.2e}  relL2={rel_l2:.2e}")
-            else:
-                # Fall back to SDPA efficient_attention or math
-                print("  Trying SDPA efficient_attention backend...")
-                try:
-                    with torch.nn.attention.sdpa_kernel([torch.nn.attention.SDPBackend.EFFICIENT_ATTENTION]):
-                        test_out = F.scaled_dot_product_attention(q[:1, :, :64, :], k[:1, :, :64, :], v[:1, :, :64, :], scale=scale)
-                    del test_out
-
-                    def sdpa_efficient(q, k, v, scale):
-                        with torch.nn.attention.sdpa_kernel([torch.nn.attention.SDPBackend.EFFICIENT_ATTENTION]):
-                            return F.scaled_dot_product_attention(q, k, v, scale=scale)
-
-                    timing = benchmark_kernel(sdpa_efficient, q, k, v, scale, device)
-                    peak_vram = get_peak_vram(sdpa_efficient, q, k, v, scale, device)
-                    linf, rel_l2 = (0.0, 0.0)
-                    if fp32_ref is not None:
-                        out = sdpa_efficient(q, k, v, scale)
-                        linf, rel_l2 = numerical_error(out, fp32_ref)
-                        del out
-
-                    tflops = (flops / 1e12) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-                    bw_gbs = (mem_bytes / 1e9) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-
-                    flash_result = {
-                        "kernel": "sdpa_efficient_attention",
-                        "batch": batch,
-                        "seqlen": seqlen,
-                        "dtype": dtype_name,
-                        "num_heads": NUM_HEADS,
-                        "head_dim": HEAD_DIM,
-                        "status": "OK",
-                        "note": "flash backend unavailable, using efficient_attention",
-                        "median_ms": round(timing["median_ms"], 4),
-                        "mean_ms": round(timing["mean_ms"], 4),
-                        "min_ms": round(timing["min_ms"], 4),
-                        "p90_ms": round(timing["p90_ms"], 4),
-                        "p99_ms": round(timing["p99_ms"], 4),
-                        "tflops": round(tflops, 2),
-                        "bandwidth_gbs": round(bw_gbs, 2),
-                        "peak_vram_bytes": peak_vram,
-                        "peak_vram_mb": round(peak_vram / (1024**2), 1),
-                        "linf_vs_fp32": linf,
-                        "rel_l2_vs_fp32": rel_l2,
-                        "flops": flops,
-                        "mem_bytes_estimate": mem_bytes,
-                    }
-                    results.append(flash_result)
-                    print(f"  Efficient: median={timing['median_ms']:.3f}ms  TFLOPS={tflops:.2f}  BW={bw_gbs:.1f} GB/s  VRAM={peak_vram/(1024**2):.0f}MB")
-                except Exception as e2:
-                    print(f"  Efficient attention also failed: {e2}")
-                    # Try with default SDPA (auto-dispatch)
-                    def sdpa_auto(q, k, v, scale):
-                        return F.scaled_dot_product_attention(q, k, v, scale=scale)
-
-                    timing = benchmark_kernel(sdpa_auto, q, k, v, scale, device)
-                    peak_vram = get_peak_vram(sdpa_auto, q, k, v, scale, device)
-                    linf, rel_l2 = (0.0, 0.0)
-                    if fp32_ref is not None:
-                        out = sdpa_auto(q, k, v, scale)
-                        linf, rel_l2 = numerical_error(out, fp32_ref)
-                        del out
-
-                    tflops = (flops / 1e12) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-                    bw_gbs = (mem_bytes / 1e9) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-
-                    flash_result = {
-                        "kernel": "sdpa_auto",
-                        "batch": batch,
-                        "seqlen": seqlen,
-                        "dtype": dtype_name,
-                        "num_heads": NUM_HEADS,
-                        "head_dim": HEAD_DIM,
-                        "status": "OK",
-                        "note": "flash+efficient unavailable, auto backend",
-                        "median_ms": round(timing["median_ms"], 4),
-                        "mean_ms": round(timing["mean_ms"], 4),
-                        "min_ms": round(timing["min_ms"], 4),
-                        "p90_ms": round(timing["p90_ms"], 4),
-                        "p99_ms": round(timing["p99_ms"], 4),
-                        "tflops": round(tflops, 2),
-                        "bandwidth_gbs": round(bw_gbs, 2),
-                        "peak_vram_bytes": peak_vram,
-                        "peak_vram_mb": round(peak_vram / (1024**2), 1),
-                        "linf_vs_fp32": linf,
-                        "rel_l2_vs_fp32": rel_l2,
-                        "flops": flops,
-                        "mem_bytes_estimate": mem_bytes,
-                    }
-                    results.append(flash_result)
-                    print(f"  Auto SDPA: median={timing['median_ms']:.3f}ms")
-
-    except (torch.cuda.OutOfMemoryError, RuntimeError) as e:
-        print(f"  SDPA OOM/error: {e}")
-        flash_result = {
-            "kernel": "sdpa_flash_attention",
-            "batch": batch,
-            "seqlen": seqlen,
-            "dtype": dtype_name,
-            "num_heads": NUM_HEADS,
-            "head_dim": HEAD_DIM,
-            "status": "OOM",
-            "error": str(e),
-        }
-        results.append(flash_result)
-        if device.type == "cuda":
-            torch.cuda.empty_cache()
-
-    # ---- Try flash-attn package if installed ----
-    try:
-        from flash_attn import flash_attn_func
-        gc.collect()
-        if device.type == "cuda":
-            torch.cuda.empty_cache()
-            torch.cuda.reset_peak_memory_stats(device)
-
-        # flash_attn_func expects (B, N, H, D) layout
-        q_fa = q.transpose(1, 2).contiguous()  # (B, N, H, D)
-        k_fa = k.transpose(1, 2).contiguous()
-        v_fa = v.transpose(1, 2).contiguous()
-
-        def fa2_kernel(q, k, v, scale):
-            return flash_attn_func(q, k, v, softmax_scale=scale)
-
-        with torch.no_grad():
-            timing = benchmark_kernel(fa2_kernel, q_fa, k_fa, v_fa, scale, device)
-            peak_vram = get_peak_vram(fa2_kernel, q_fa, k_fa, v_fa, scale, device)
-
-            linf, rel_l2 = (0.0, 0.0)
-            if fp32_ref is not None:
-                out_fa = fa2_kernel(q_fa, k_fa, v_fa, scale)
-                # Convert back to (B, H, N, D) for comparison
-                out_fa = out_fa.transpose(1, 2)
-                linf, rel_l2 = numerical_error(out_fa, fp32_ref)
-                del out_fa
-
-        tflops = (flops / 1e12) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-        bw_gbs = (mem_bytes / 1e9) / (timing["median_ms"] / 1000.0) if timing["median_ms"] > 0 else 0
-
-        fa2_result = {
-            "kernel": "flash_attn_2_package",
-            "batch": batch,
-            "seqlen": seqlen,
-            "dtype": dtype_name,
-            "num_heads": NUM_HEADS,
-            "head_dim": HEAD_DIM,
-            "status": "OK",
-            "median_ms": round(timing["median_ms"], 4),
-            "mean_ms": round(timing["mean_ms"], 4),
-            "min_ms": round(timing["min_ms"], 4),
-            "p90_ms": round(timing["p90_ms"], 4),
-            "p99_ms": round(timing["p99_ms"], 4),
-            "tflops": round(tflops, 2),
-            "bandwidth_gbs": round(bw_gbs, 2),
-            "peak_vram_bytes": peak_vram,
-            "peak_vram_mb": round(peak_vram / (1024**2), 1),
-            "linf_vs_fp32": linf,
-            "rel_l2_vs_fp32": rel_l2,
-            "flops": flops,
-            "mem_bytes_estimate": mem_bytes,
-        }
-        results.append(fa2_result)
-        print(f"  FA2pkg: median={timing['median_ms']:.3f}ms  TFLOPS={tflops:.2f}  BW={bw_gbs:.1f} GB/s  VRAM={peak_vram/(1024**2):.0f}MB  Linf={linf:.2e}  relL2={rel_l2:.2e}")
-        del q_fa, k_fa, v_fa
-    except ImportError:
-        pass  # flash-attn package not installed
-    except Exception as e:
-        print(f"  flash-attn package error: {e}")
-
-    # Write results
     for r in results:
-        with open(results_file, "a") as f:
+        with open(results_fp, "a") as f:
             f.write(json.dumps(r) + "\n")
 
-    # Cleanup
     del q, k, v
     if fp32_ref is not None:
         del fp32_ref
@@ -510,104 +401,165 @@ def run_single_config(batch, seqlen, dtype_name, dtype, device, results_file):
     return results
 
 
-def print_env_info(device):
-    """Print environment information."""
-    print("=" * 70)
-    print("ATTENTION BENCHMARK HARNESS")
-    print("=" * 70)
-    print(f"PyTorch version: {torch.__version__}")
-    print(f"CUDA available: {torch.cuda.is_available()}")
+# ---- Environment Info ----
+
+def print_env(device):
+    """Print full environment report."""
+    print("=" * 72)
+    print("  ATTENTION BENCHMARK HARNESS")
+    print("  Naive vs FlashAttention-2 (SDPA) -- H100 80GB")
+    print("=" * 72)
+    print(f"  PyTorch     : {torch.__version__}")
+    print(f"  CUDA avail  : {torch.cuda.is_available()}")
     if torch.cuda.is_available():
-        print(f"CUDA version: {torch.version.cuda}")
-        print(f"Device: {torch.cuda.get_device_name(device)}")
-        print(f"Device capability: {torch.cuda.get_device_capability(device)}")
-        total_mem = torch.cuda.get_device_properties(device).total_mem
-        print(f"Total VRAM: {total_mem / (1024**3):.1f} GB")
+        print(f"  CUDA version: {torch.version.cuda}")
+        name = torch.cuda.get_device_name(device)
+        cap = torch.cuda.get_device_capability(device)
+        mem = torch.cuda.get_device_properties(device).total_mem
+        print(f"  GPU         : {name}")
+        print(f"  SM Compute  : {cap[0]}.{cap[1]}")
+        print(f"  VRAM        : {mem / (1024**3):.1f} GB")
     try:
         import triton
-        print(f"Triton version: {triton.__version__}")
+        print(f"  Triton      : {triton.__version__}")
     except ImportError:
-        print("Triton: not installed")
+        print("  Triton      : not installed")
     try:
         import flash_attn
-        print(f"flash-attn version: {flash_attn.__version__}")
+        print(f"  flash-attn  : {flash_attn.__version__}")
     except ImportError:
-        print("flash-attn: not installed")
+        print("  flash-attn  : not installed")
 
-    # Check SDPA backends
     if torch.cuda.is_available():
-        print("\nSDPA Backend availability:")
-        q_test = torch.randn(1, 1, 64, 128, device=device, dtype=torch.float16)
-        for backend_name, backend in [
+        print("\n  SDPA backends:")
+        q_t = torch.randn(1, 1, 64, 128, device=device, dtype=torch.float16)
+        for bname, backend in [
             ("FLASH_ATTENTION", torch.nn.attention.SDPBackend.FLASH_ATTENTION),
             ("EFFICIENT_ATTENTION", torch.nn.attention.SDPBackend.EFFICIENT_ATTENTION),
             ("MATH", torch.nn.attention.SDPBackend.MATH),
         ]:
             try:
                 with torch.nn.attention.sdpa_kernel([backend]):
-                    _ = F.scaled_dot_product_attention(q_test, q_test, q_test)
-                print(f"  {backend_name}: available")
+                    _ = F.scaled_dot_product_attention(q_t, q_t, q_t)
+                print(f"    {bname}: YES")
             except RuntimeError:
-                print(f"  {backend_name}: NOT available")
-        del q_test
+                print(f"    {bname}: NO")
+        del q_t
         torch.cuda.empty_cache()
-    print("=" * 70)
 
+    print(f"\n  Config: heads={NUM_HEADS}, head_dim={HEAD_DIM}, "
+          f"warmup={WARMUP_ITERS}, iters={BENCH_ITERS}")
+    print(f"  Batches: {BATCH_SIZES}")
+    print(f"  SeqLens: {SEQ_LENGTHS}")
+    print(f"  Dtypes : {list(DTYPES.keys())}")
+    print("=" * 72)
+
+
+# ---- Main ----
 
 def main():
+    parser = argparse.ArgumentParser(description="Attention benchmark harness")
+    parser.add_argument("--output", type=str, default=DEFAULT_RESULTS_PATH,
+                        help="Output JSONL path")
+    args = parser.parse_args()
+
     device = get_device()
-    print_env_info(device)
+    print_env(device)
 
-    # Prepare output directory
-    os.makedirs(os.path.dirname(RESULTS_PATH), exist_ok=True)
+    results_path = args.output
+    os.makedirs(os.path.dirname(os.path.abspath(results_path)), exist_ok=True)
 
-    # Clear previous results
-    if os.path.exists(RESULTS_PATH):
-        os.remove(RESULTS_PATH)
+    if os.path.exists(results_path):
+        os.remove(results_path)
 
     all_results = []
-    total_configs = len(BATCH_SIZES) * len(SEQ_LENGTHS) * len(DTYPES)
-    config_num = 0
+    total = len(BATCH_SIZES) * len(SEQ_LENGTHS) * len(DTYPES)
+    idx = 0
 
     for dtype_name, dtype in DTYPES.items():
         for batch in BATCH_SIZES:
             for seqlen in SEQ_LENGTHS:
-                config_num += 1
-                print(f"\n[{config_num}/{total_configs}]", end="")
+                idx += 1
+                print(f"\n[{idx}/{total}]", end="")
                 try:
-                    results = run_single_config(batch, seqlen, dtype_name, dtype, device, RESULTS_PATH)
-                    all_results.extend(results)
+                    res = run_config(batch, seqlen, dtype_name, dtype,
+                                     device, results_path)
+                    all_results.extend(res)
                 except Exception as e:
-                    print(f"\nFATAL ERROR for config batch={batch} seqlen={seqlen} dtype={dtype_name}: {e}")
+                    print(f"\nFATAL: B={batch} N={seqlen} {dtype_name}: {e}")
                     traceback.print_exc()
-                    error_result = {
-                        "kernel": "ERROR",
-                        "batch": batch,
-                        "seqlen": seqlen,
-                        "dtype": dtype_name,
-                        "status": "FATAL_ERROR",
-                        "error": str(e),
+                    err = {
+                        "kernel": "FATAL_ERROR", "batch": batch,
+                        "seqlen": seqlen, "dtype": dtype_name,
+                        "status": "FATAL_ERROR", "error": str(e),
                     }
-                    with open(RESULTS_PATH, "a") as f:
-                        f.write(json.dumps(error_result) + "\n")
-                    all_results.append(error_result)
+                    with open(results_path, "a") as f:
+                        f.write(json.dumps(err) + "\n")
+                    all_results.append(err)
 
-    # Print summary table
-    print("\n\n" + "=" * 100)
-    print("SUMMARY TABLE")
-    print("=" * 100)
-    print(f"{'Kernel':<28} {'Batch':>5} {'SeqLen':>6} {'DType':>5} {'Med ms':>8} {'TFLOPS':>7} {'BW GB/s':>8} {'VRAM MB':>8} {'Linf':>10} {'relL2':>10}")
-    print("-" * 100)
+    # Summary table
+    print("\n\n" + "=" * 110)
+    print("  SUMMARY TABLE")
+    print("=" * 110)
+    hdr = (f"{'Kernel':<22} {'B':>3} {'N':>5} {'DT':>4} "
+           f"{'Med ms':>9} {'TFLOPS':>7} {'BW GB/s':>8} {'VRAM MB':>8} "
+           f"{'Linf':>10} {'relL2':>10} {'Util%':>6}")
+    print(hdr)
+    print("-" * 110)
     for r in all_results:
         if r.get("status") == "OK":
-            print(f"{r['kernel']:<28} {r['batch']:>5} {r['seqlen']:>6} {r['dtype']:>5} {r['median_ms']:>8.3f} {r['tflops']:>7.2f} {r['bandwidth_gbs']:>8.1f} {r['peak_vram_mb']:>8.0f} {r.get('linf_vs_fp32', 0):>10.2e} {r.get('rel_l2_vs_fp32', 0):>10.2e}")
+            print(f"{r['kernel']:<22} {r['batch']:>3} {r['seqlen']:>5} "
+                  f"{r['dtype']:>4} {r['median_ms']:>9.3f} "
+                  f"{r['tflops']:>7.2f} {r['bandwidth_gbs']:>8.1f} "
+                  f"{r['peak_vram_mb']:>8.0f} "
+                  f"{r.get('linf_vs_fp32',0):>10.2e} "
+                  f"{r.get('rel_l2_vs_fp32',0):>10.2e} "
+                  f"{r.get('h100_util_pct',0):>6.1f}")
         elif r.get("status") == "SKIPPED":
-            print(f"{r['kernel']:<28} {r['batch']:>5} {r['seqlen']:>6} {r['dtype']:>5} {'SKIPPED':>8} {r.get('reason', '')}")
+            print(f"{r['kernel']:<22} {r['batch']:>3} {r['seqlen']:>5} "
+                  f"{r['dtype']:>4} {'SKIPPED':>9}  {r.get('reason','')}")
         else:
-            print(f"{r['kernel']:<28} {r['batch']:>5} {r['seqlen']:>6} {r['dtype']:>5} {r.get('status', 'ERR'):>8}")
+            print(f"{r['kernel']:<22} {r.get('batch',''):>3} "
+                  f"{r.get('seqlen',''):>5} {r.get('dtype',''):>4} "
+                  f"{r.get('status','ERR'):>9}")
 
-    print(f"\nResults written to: {RESULTS_PATH}")
-    print(f"Total configs: {config_num}, Total results: {len(all_results)}")
+    print(f"\nResults: {results_path}")
+    print(f"Configs: {idx}, Records: {len(all_results)}")
+
+    # Speedup summary
+    print("\n" + "=" * 80)
+    print("  SPEEDUP: sdpa_flash / naive_attention")
+    print("=" * 80)
+    naive_map = {}
+    flash_map = {}
+    for r in all_results:
+        if r.get("status") != "OK":
+            continue
+        key = (r["batch"], r["seqlen"], r["dtype"])
+        if r["kernel"] == "naive_attention":
+            naive_map[key] = r
+        elif r["kernel"] in ("sdpa_flash", "sdpa_efficient", "sdpa_auto",
+                             "flash_attn_pkg"):
+            flash_map.setdefault(key, r)
+
+    for key in sorted(naive_map.keys()):
+        n = naive_map[key]
+        if key in flash_map:
+            f = flash_map[key]
+            speedup = n["median_ms"] / f["median_ms"] if f["median_ms"] > 0 else 0
+            print(f"  B={key[0]:>2} N={key[1]:>5} {key[2]:>4}  "
+                  f"naive={n['median_ms']:>8.3f}ms  "
+                  f"flash={f['median_ms']:>8.3f}ms  "
+                  f"speedup={speedup:>6.2f}x")
+        else:
+            print(f"  B={key[0]:>2} N={key[1]:>5} {key[2]:>4}  "
+                  f"naive={n['median_ms']:>8.3f}ms  flash=N/A")
+
+    for key in sorted(flash_map.keys()):
+        if key not in naive_map:
+            f = flash_map[key]
+            print(f"  B={key[0]:>2} N={key[1]:>5} {key[2]:>4}  "
+                  f"naive=SKIPPED  flash={f['median_ms']:>8.3f}ms")
 
 
 if __name__ == "__main__":
