@@ -1,0 +1,8 @@
+{"batch": 1, "seqlen": 512, "quant_type": "int8", "mean_ms": 0.3905, "p95_ms": 0.4519, "tok_per_sec": 2560.7, "mem_savings_pct": 75.0}
+{"batch": 1, "seqlen": 512, "quant_type": "fp8", "mean_ms": 0.4201, "p95_ms": 0.5831, "tok_per_sec": 2380.4, "mem_savings_pct": 75.0}
+{"batch": 1, "seqlen": 2048, "quant_type": "int8", "mean_ms": 1.2477, "p95_ms": 1.3093, "tok_per_sec": 801.5, "mem_savings_pct": 75.0}
+{"batch": 1, "seqlen": 2048, "quant_type": "fp8", "mean_ms": 1.239, "p95_ms": 1.2742, "tok_per_sec": 807.1, "mem_savings_pct": 75.0}
+{"batch": 8, "seqlen": 512, "quant_type": "int8", "mean_ms": 2.435, "p95_ms": 2.6312, "tok_per_sec": 3285.4, "mem_savings_pct": 75.0}
+{"batch": 8, "seqlen": 512, "quant_type": "fp8", "mean_ms": 2.4018, "p95_ms": 2.7598, "tok_per_sec": 3330.8, "mem_savings_pct": 75.0}
+{"batch": 8, "seqlen": 2048, "quant_type": "int8", "mean_ms": 186.5981, "p95_ms": 204.4127, "tok_per_sec": 42.9, "mem_savings_pct": 75.0}
+{"batch": 8, "seqlen": 2048, "quant_type": "fp8", "mean_ms": 179.4773, "p95_ms": 194.5935, "tok_per_sec": 44.6, "mem_savings_pct": 75.0}
